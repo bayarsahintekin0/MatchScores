@@ -1,4 +1,4 @@
-package com.bayarsahintekin.matchscores.ui.components
+package com.bayarsahintekin.matchscores.ui.components.teams
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -8,26 +8,23 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bayarsahintekin.domain.entity.ListResponseEntity
 import com.bayarsahintekin.domain.entity.TeamEntity
-import com.bayarsahintekin.matchscores.R
 import com.bayarsahintekin.matchscores.ui.theme.BlueGradient
 import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
 import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
@@ -36,7 +33,7 @@ import com.bayarsahintekin.matchscores.util.TeamLogosObject
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TeamsScreen(teamsViewModel: TeamsViewModel = hiltViewModel()) {
+fun TeamsScreen(teamsViewModel: TeamsViewModel = hiltViewModel(), onTeamClicked: (teamId: Int) -> Unit) {
 
     val teamsUiState = teamsViewModel.uiState.collectAsState()
     /*Column(
@@ -57,13 +54,13 @@ fun TeamsScreen(teamsViewModel: TeamsViewModel = hiltViewModel()) {
         }
     }*/
     teamsUiState.value.data?.let {
-        HomeScreen(teams = it)
+        HomeScreen(teams = it,onTeamClicked)
     }
 }
 
 @ExperimentalFoundationApi
 @Composable
-fun HomeScreen(teams: ListResponseEntity) {
+fun HomeScreen(teams: ListResponseEntity, onTeamClicked: (teamId: Int) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 120.dp),
         contentPadding = PaddingValues(8.dp),
@@ -71,14 +68,18 @@ fun HomeScreen(teams: ListResponseEntity) {
             .fillMaxSize()
     ) {
         items(teams.data) { team ->
-            TeamItem(item = team)
+            TeamItem(item = team,onTeamClicked)
         }
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun TeamItem(item: TeamEntity) {
+fun TeamItem(item: TeamEntity,onTeamClicked: (teamId: Int) -> Unit) {
     Card(modifier = Modifier.padding(4.dp),
+        onClick = {
+           onTeamClicked.invoke(item.id)
+        },
         border = BorderStroke(1.dp,Brush.horizontalGradient(
         arrayListOf(BlueGradient, YellowGradient, PinkGradient)
     ))) {

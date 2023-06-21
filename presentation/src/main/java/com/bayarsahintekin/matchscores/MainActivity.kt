@@ -5,46 +5,35 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.camera.core.Preview
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.bayarsahintekin.domain.entity.ListResponseEntity
+import androidx.navigation.navArgument
 import com.bayarsahintekin.matchscores.ui.components.GamesScreen
 import com.bayarsahintekin.matchscores.ui.components.PlayersScreen
 import com.bayarsahintekin.matchscores.ui.components.StatsScreen
-import com.bayarsahintekin.matchscores.ui.components.TeamsScreen
+import com.bayarsahintekin.matchscores.ui.components.teams.TeamDetailScreen
+import com.bayarsahintekin.matchscores.ui.components.teams.TeamsScreen
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -78,7 +67,14 @@ class MainActivity : ComponentActivity() {
                 StatsScreen()
             }
             composable(BottomNavItem.Teams.screen_route) {
-                TeamsScreen()
+                TeamsScreen(
+                    onTeamClicked = {
+                        navController.navigate(BottomNavItem.TeamDetail.screen_route.replace(
+                            oldValue = "{teamId}",
+                            newValue = it.toString()
+                        ))
+                    }
+                )
             }
             composable(BottomNavItem.Games.screen_route) {
                 GamesScreen()
@@ -86,12 +82,17 @@ class MainActivity : ComponentActivity() {
             composable(BottomNavItem.Players.screen_route) {
                 PlayersScreen()
             }
+            composable(BottomNavItem.TeamDetail.screen_route,
+                arguments = listOf(navArgument("teamId") { type = NavType.IntType })) {
+                it.arguments?.getInt("teamId")?.let { it1 -> TeamDetailScreen(teamId = it1) }
+            }
         }
     }
 
     sealed class BottomNavItem(var title:String, var icon:Int, var screen_route:String){
         object Stats : BottomNavItem("Stats", R.drawable.ic_stats,"stats")
         object Teams: BottomNavItem("Teams",R.drawable.ic_team,"teams")
+        object TeamDetail: BottomNavItem("TeamDetail",R.drawable.ic_team,"teams/{teamId}")
         object Games: BottomNavItem("Games",R.drawable.ic_games,"games")
         object Players: BottomNavItem("Players",R.drawable.ic_player,"players")
     }
