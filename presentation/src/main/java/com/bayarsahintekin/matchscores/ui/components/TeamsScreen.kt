@@ -1,29 +1,45 @@
 package com.bayarsahintekin.matchscores.ui.components
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.bayarsahintekin.domain.entity.ListResponseEntity
+import com.bayarsahintekin.domain.entity.TeamEntity
 import com.bayarsahintekin.matchscores.R
+import com.bayarsahintekin.matchscores.ui.theme.BlueGradient
+import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
+import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
 import com.bayarsahintekin.matchscores.ui.viewmodel.TeamsViewModel
+import com.bayarsahintekin.matchscores.util.TeamLogosObject
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TeamsScreen(teamsViewModel: TeamsViewModel = hiltViewModel()) {
 
     val teamsUiState = teamsViewModel.uiState.collectAsState()
-    Column(
+    /*Column(
         modifier = Modifier
             .fillMaxSize()
             .background(colorResource(id = R.color.teal_700))
@@ -37,6 +53,50 @@ fun TeamsScreen(teamsViewModel: TeamsViewModel = hiltViewModel()) {
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp
+            )
+        }
+    }*/
+    teamsUiState.value.data?.let {
+        HomeScreen(teams = it)
+    }
+}
+
+@ExperimentalFoundationApi
+@Composable
+fun HomeScreen(teams: ListResponseEntity) {
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(minSize = 120.dp),
+        contentPadding = PaddingValues(8.dp),
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        items(teams.data) { team ->
+            TeamItem(item = team)
+        }
+    }
+}
+
+@Composable
+fun TeamItem(item: TeamEntity) {
+    Card(modifier = Modifier.padding(4.dp),
+        border = BorderStroke(1.dp,Brush.horizontalGradient(
+        arrayListOf(BlueGradient, YellowGradient, PinkGradient)
+    ))) {
+        Column(Modifier.fillMaxSize()) {
+            Image(
+                painter = painterResource(id = TeamLogosObject.getTeamLogo(item.abbreviation)),
+                contentDescription = item.name,
+                modifier = Modifier
+                    .height(80.dp)
+                    .padding(top = 8.dp)
+                    .align(alignment = Alignment.CenterHorizontally)
+            )
+            Text(
+                text = item.name,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .align(alignment = Alignment.CenterHorizontally)
+                    .padding(top = 8.dp, bottom = 8.dp)
             )
         }
     }

@@ -9,6 +9,7 @@ import androidx.camera.core.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.BottomNavigation
@@ -70,7 +71,9 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun NavigationGraph(navController: NavHostController) {
-        NavHost(navController, startDestination = BottomNavItem.Stats.screen_route) {
+        NavHost(navController,
+            startDestination = BottomNavItem.Teams.screen_route,
+            modifier = Modifier.padding(bottom = 44.dp)) {
             composable(BottomNavItem.Stats.screen_route) {
                 StatsScreen()
             }
