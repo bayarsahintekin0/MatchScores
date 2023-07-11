@@ -1,7 +1,8 @@
 package com.bayarsahintekin.data.repository
 
-import com.aliasadi.data.exception.DataNotAvailableException
+import com.bayarsahintekin.data.exception.DataNotAvailableException
 import com.bayarsahintekin.data.entity.ListResponse
+import com.bayarsahintekin.data.entity.TeamData
 import com.bayarsahintekin.data.entity.TeamsKeyDbData
 import com.bayarsahintekin.data.entity.toDomain
 import com.bayarsahintekin.data.local.teams.TeamDao
@@ -52,5 +53,13 @@ class TeamsLocalDataSource(
 
     override suspend fun saveTeams(teamEntities: ListResponseEntity) = withContext(executor.asCoroutineDispatcher()){
         teamDao.saveTeams(teamEntities.toDbData())
+    }
+
+    override suspend fun getTeam(id: String): Result<TeamEntity> = withContext(executor.asCoroutineDispatcher()){
+        val team = teamDao.getTeam(id).toDomain()
+        return@withContext Result.Success(team.toDomain())
+    }
+    override suspend fun deleteTeam(id: String)  = withContext(executor.asCoroutineDispatcher()){
+        teamDao.deleteTeam(id)
     }
 }

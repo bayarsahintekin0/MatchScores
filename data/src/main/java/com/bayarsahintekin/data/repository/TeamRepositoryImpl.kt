@@ -19,4 +19,10 @@ class TeamRepositoryImpl(
         remote.getTeams()
     })
 
+    override suspend fun getTeam(id: String): Result<TeamEntity> = local.getTeam(id).getResult({
+        it
+    },{
+        remote.getTeam(id)
+    })
+
 }

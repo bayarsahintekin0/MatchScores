@@ -9,7 +9,6 @@ import com.bayarsahintekin.domain.entity.TeamEntity
 data class TeamsDbData(
     @ColumnInfo("id")
     @PrimaryKey val id: Int = 0,
-
     @ColumnInfo("abbreviation")
     val abbreviation: String= "",
     @ColumnInfo("city")

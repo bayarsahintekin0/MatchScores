@@ -15,6 +15,15 @@ interface TeamDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveTeams(teams: ListResponseDbData)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveTeam(teamsDbData: TeamsDbData)
+
+    @Query("DELETE FROM teams WHERE id = :teamId")
+    suspend fun deleteTeam(teamId: String)
+
+    @Query("SELECT * FROM teams WHERE id = :teamId" )
+    suspend fun getTeam(teamId: String):TeamsDbData
+
     @Query("DELETE FROM teams")
     suspend fun clearTeams()
 }

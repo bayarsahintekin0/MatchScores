@@ -7,4 +7,6 @@ import com.bayarsahintekin.domain.utils.Result
 interface TeamRepository {
 
     suspend fun getTeams(): Result<ListResponseEntity>
+
+    suspend fun getTeam(id: String): Result<TeamEntity>
 }

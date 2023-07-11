@@ -10,6 +10,7 @@ import com.bayarsahintekin.data.repository.TeamRepositoryImpl
 import com.bayarsahintekin.data.repository.TeamsLocalDataSource
 import com.bayarsahintekin.data.utils.DiskExecutor
 import com.bayarsahintekin.domain.repository.TeamRepository
+import com.bayarsahintekin.domain.usecase.TeamUseCase
 import com.bayarsahintekin.domain.usecase.TeamsUseCase
 import dagger.Module
 import dagger.Provides
@@ -59,5 +60,10 @@ class DataModule {
     @Provides
     fun provideTeamsUseCase(teamRepository: TeamRepository): TeamsUseCase {
         return TeamsUseCase(teamRepository)
+    }
+
+    @Provides
+    fun provideTeamUseCase(teamRepository: TeamRepository): TeamUseCase {
+        return TeamUseCase(teamRepository)
     }
 }

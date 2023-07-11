@@ -42,8 +42,6 @@ class TeamsViewModel @Inject constructor(
 
         getTeams().onSuccess {
             val stateData: ListResponseEntity
-            val a = it
-            val da = it
 
             val teamsData = arrayListOf<TeamEntity>()
             for(i in it.data){
