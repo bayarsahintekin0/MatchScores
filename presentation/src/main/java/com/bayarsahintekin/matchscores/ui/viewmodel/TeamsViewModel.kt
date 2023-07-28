@@ -27,7 +27,8 @@ class TeamsViewModel @Inject constructor(
 
     data class TeamsUiState(
         val isLoading: Boolean = true,
-        val data: ListResponseEntity? = null
+        val data: ListResponseEntity? = null,
+        val title: String = "Teams"
     )
 
     private val _uiState = MutableStateFlow(TeamsUiState())

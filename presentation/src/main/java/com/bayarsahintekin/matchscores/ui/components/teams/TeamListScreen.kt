@@ -54,13 +54,13 @@ fun TeamsScreen(teamsViewModel: TeamsViewModel = hiltViewModel(), onTeamClicked:
         }
     }*/
     teamsUiState.value.data?.let {
-        HomeScreen(teams = it,onTeamClicked)
+        TeamsHomeScreen(teams = it,onTeamClicked)
     }
 }
 
 @ExperimentalFoundationApi
 @Composable
-fun HomeScreen(teams: ListResponseEntity, onTeamClicked: (teamId: Int) -> Unit) {
+fun TeamsHomeScreen(teams: ListResponseEntity, onTeamClicked: (teamId: Int) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 120.dp),
         contentPadding = PaddingValues(8.dp),

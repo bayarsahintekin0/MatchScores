@@ -5,4 +5,6 @@
     <string name="conference">Conference</string>
     <string name="division">Division</string>
     <string name="short_name">Short Name</string>
+    <string name="teams">Teams</string>
+    <string name="team_detail">Team Detail\n</string>
 </resources>
