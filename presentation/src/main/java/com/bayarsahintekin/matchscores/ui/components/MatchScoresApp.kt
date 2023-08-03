@@ -13,11 +13,15 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -41,21 +45,33 @@ fun NavigationGraph(navController: NavHostController) {
         startDestination = BottomNavItem.Teams.screen_route,
         modifier = Modifier.padding(bottom = 44.dp)) {
         composable(BottomNavItem.Stats.screen_route) {
-            ProvideAppBarTitle { Text("Stats") }
+            ProvideAppBarTitle {
+                Text("Stats" ,modifier = Modifier, fontSize = 18.sp)
+            }
             ProvideAppBarBackButton {
                 IconButton(
                     onClick = {},
-                    content = {}
+                    content = {
+                        Icon(
+                            imageVector = Icons.Default.Home,
+                            contentDescription = "home"
+                        )
+                    }
                 )
             }
             StatsScreen()
         }
         composable(BottomNavItem.Teams.screen_route) {
-            ProvideAppBarTitle { Text("Teams") }
+            ProvideAppBarTitle { Text("Teams", fontSize = 18.sp) }
             ProvideAppBarBackButton {
                 IconButton(
                     onClick = {},
-                    content = {}
+                    content = {
+                        Icon(
+                            imageVector = Icons.Default.Home,
+                            contentDescription = "home"
+                        )
+                    }
                 )
             }
             TeamsScreen(
@@ -68,28 +84,38 @@ fun NavigationGraph(navController: NavHostController) {
             )
         }
         composable(BottomNavItem.Games.screen_route) {
-            ProvideAppBarTitle { Text("Games") }
+            ProvideAppBarTitle { Text("Games",fontSize = 18.sp) }
             ProvideAppBarBackButton {
                 IconButton(
                     onClick = {},
-                    content = {}
+                    content = {
+                        Icon(
+                            imageVector = Icons.Default.Home,
+                            contentDescription = "home"
+                        )
+                    }
                 )
             }
             GamesScreen()
         }
         composable(BottomNavItem.Players.screen_route) {
-            ProvideAppBarTitle { Text("Players") }
+            ProvideAppBarTitle { Text("Players",fontSize = 18.sp) }
             ProvideAppBarBackButton {
                 IconButton(
                     onClick = {},
-                    content = {}
+                    content = {
+                        Icon(
+                            imageVector = Icons.Default.Home,
+                            contentDescription = "home"
+                        )
+                    }
                 )
             }
             PlayersScreen()
         }
         composable(BottomNavItem.TeamDetail.screen_route,
             arguments = listOf(navArgument("teamId") { type = NavType.IntType })) {
-            ProvideAppBarTitle { Text("Team Detail") }
+            ProvideAppBarTitle { Text("Team Detail",fontSize = 18.sp) }
             ProvideAppBarBackButton {
                 IconButton(
                     onClick = { backPressDispatcher?.onBackPressedDispatcher?.onBackPressed() },
@@ -110,8 +136,8 @@ fun NavigationGraph(navController: NavHostController) {
 }
 
 sealed class BottomNavItem(var title:String, var icon:Int, var screen_route:String){
-    object Stats : BottomNavItem("Stats", R.drawable.ic_stats,"stats")
-    object Teams: BottomNavItem("Teams", R.drawable.ic_team,"teams")
+    object Stats : BottomNavItem("Stats", R.drawable.stats,"stats")
+    object Teams: BottomNavItem("Teams", R.drawable.teams,"teams")
     object TeamDetail: BottomNavItem("TeamDetail", R.drawable.ic_team,"teams/{teamId}")
     object Games: BottomNavItem("Games", R.drawable.ic_games,"games")
     object Players: BottomNavItem("Players", R.drawable.ic_player,"players")
