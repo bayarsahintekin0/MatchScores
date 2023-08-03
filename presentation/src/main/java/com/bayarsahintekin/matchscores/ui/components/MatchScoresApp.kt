@@ -127,10 +127,7 @@ fun NavigationGraph(navController: NavHostController) {
                     }
                 )
             }
-            it.arguments?.getInt("teamId")?.let { it1 -> TeamDetailScreen(teamId = it1,
-                onBackClicked = {
-                    navController.navigateUp()
-                }) }
+            it.arguments?.getInt("teamId")?.let { it1 -> TeamDetailScreen(teamId = it1) }
         }
     }
 }

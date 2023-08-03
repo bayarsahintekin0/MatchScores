@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">MatchScores</string>
-    <string name="team_name">Team Name\n\n</string>
-    <string name="city">City\n</string>
+    <string name="team_name">Team Name</string>
+    <string name="city">City</string>
     <string name="conference">Conference</string>
     <string name="division">Division</string>
     <string name="short_name">Short Name</string>
     <string name="teams">Teams</string>
     <string name="team_detail">Team Detail\n</string>
+    <string name="full_name">Full Name</string>
 </resources>

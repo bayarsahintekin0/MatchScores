@@ -37,11 +37,10 @@ class TeamDetailViewModel @Inject constructor(
     fun onInitialState(teamId: String) = launchOnMainImmediate {
 
         getTeamDetail(teamId).onSuccess {
-            val stateData: TeamEntity
 
             val teamsData = arrayListOf<TeamEntity>()
 
-            stateData = TeamEntity(
+            val stateData: TeamEntity = TeamEntity(
                 id = it.id,
                 abbreviation = it.abbreviation,
                 city = it.city,
@@ -61,6 +60,6 @@ class TeamDetailViewModel @Inject constructor(
         }
     }
 
-    suspend fun getTeamDetail(teamId: String): Result<TeamEntity> = teamUseCase.invoke(teamId = teamId)
+    private suspend fun getTeamDetail(teamId: String): Result<TeamEntity> = teamUseCase.invoke(teamId = teamId)
 
 }
