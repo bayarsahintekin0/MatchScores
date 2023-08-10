@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.bayarsahintekin.domain.entity.ListResponseEntity
+import com.bayarsahintekin.domain.entity.TeamListEntity
 import com.bayarsahintekin.domain.entity.TeamEntity
 import com.bayarsahintekin.matchscores.ui.theme.BlueGradient
 import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
@@ -60,7 +60,7 @@ fun TeamsScreen(teamsViewModel: TeamsViewModel = hiltViewModel(), onTeamClicked:
 
 @ExperimentalFoundationApi
 @Composable
-fun TeamsHomeScreen(teams: ListResponseEntity, onTeamClicked: (teamId: Int) -> Unit) {
+fun TeamsHomeScreen(teams: TeamListEntity, onTeamClicked: (teamId: Int) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 120.dp),
         contentPadding = PaddingValues(8.dp),

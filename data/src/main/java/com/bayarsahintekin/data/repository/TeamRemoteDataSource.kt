@@ -1,11 +1,14 @@
 package com.bayarsahintekin.data.repository
 
-import com.bayarsahintekin.data.entity.ListResponse
-import com.bayarsahintekin.data.entity.TeamData
-import com.bayarsahintekin.data.entity.toDomain
+import com.bayarsahintekin.data.entity.players.PlayerListData
+import com.bayarsahintekin.data.entity.players.toDomain
+import com.bayarsahintekin.data.entity.teams.TeamData
+import com.bayarsahintekin.data.entity.teams.TeamListData
+import com.bayarsahintekin.data.entity.teams.toDomain
 import com.bayarsahintekin.data.remote.ScoreServices
-import com.bayarsahintekin.domain.entity.ListResponseEntity
+import com.bayarsahintekin.domain.entity.PlayerListEntity
 import com.bayarsahintekin.domain.entity.TeamEntity
+import com.bayarsahintekin.domain.entity.TeamListEntity
 import com.bayarsahintekin.domain.utils.Result
 
 /**
@@ -14,31 +17,34 @@ import com.bayarsahintekin.domain.utils.Result
 class TeamRemoteDataSource(
     private val scoreService: ScoreServices
 ) : TeamDataSource.Remote {
-    override suspend fun getTeams(): Result<ListResponseEntity> =
+    override suspend fun getTeams(): Result<TeamListEntity> =
         try {
             val result = scoreService.getAllTeams()
             Result.Success(
-                ListResponse(
+                TeamListData(
                     data = result.data,
                     meta = result.meta
-                ).toDomain())
+                ).toDomain()
+            )
         } catch (e: Exception) {
             Result.Error(e)
         }
 
     override suspend fun getTeam(id: String): Result<TeamEntity> =
         try {
-           val result = scoreService.getTeam(id)
+            val result = scoreService.getTeam(id)
             Result.Success(
-                TeamData(id = result.id,
-                abbreviation = result.abbreviation,
-                city = result.city,
-                conference = result.conference,
-                division = result.division,
-                fullName = result.fullName,
-                name = result.name).toDomain()
+                TeamData(
+                    id = result.id,
+                    abbreviation = result.abbreviation,
+                    city = result.city,
+                    conference = result.conference,
+                    division = result.division,
+                    fullName = result.fullName,
+                    name = result.name
+                ).toDomain()
             )
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Result.Error(e)
         }
 }

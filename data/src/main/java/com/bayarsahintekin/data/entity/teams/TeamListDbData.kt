@@ -1,12 +1,14 @@
-package com.bayarsahintekin.data.entity
+package com.bayarsahintekin.data.entity.teams
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.bayarsahintekin.data.entity.MetaDbData
+import com.bayarsahintekin.data.entity.toData
 import com.bayarsahintekin.data.mapper.MetaTypeConverter
 import com.bayarsahintekin.data.mapper.TeamsConverters
-import com.bayarsahintekin.domain.entity.ListResponseEntity
+import com.bayarsahintekin.domain.entity.TeamListEntity
 
 @Entity(tableName = "list_response")
 data class ListResponseDbData(
@@ -19,7 +21,7 @@ data class ListResponseDbData(
     val meta: MetaDbData
 )
 
-fun ListResponseDbData.toDomain() = ListResponseEntity(
+fun ListResponseDbData.toDomain() = TeamListEntity(
     data = data.map { it.toData() },
     meta = meta.toData()
 )

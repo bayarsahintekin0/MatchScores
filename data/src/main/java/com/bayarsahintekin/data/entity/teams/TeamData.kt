@@ -1,4 +1,4 @@
-package com.bayarsahintekin.data.entity
+package com.bayarsahintekin.data.entity.teams
 
 import com.bayarsahintekin.domain.entity.TeamEntity
 import com.google.gson.annotations.SerializedName

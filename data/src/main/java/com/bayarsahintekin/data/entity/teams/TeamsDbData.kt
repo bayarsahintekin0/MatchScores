@@ -1,4 +1,4 @@
-package com.bayarsahintekin.data.entity
+package com.bayarsahintekin.data.entity.teams
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

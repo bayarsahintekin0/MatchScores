@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.bayarsahintekin.data.entity.ListResponseDbData
-import com.bayarsahintekin.data.entity.TeamsDbData
+import com.bayarsahintekin.data.entity.teams.ListResponseDbData
+import com.bayarsahintekin.data.entity.teams.TeamsDbData
 
 @Dao
 interface TeamDao {
@@ -22,7 +22,7 @@ interface TeamDao {
     suspend fun deleteTeam(teamId: String)
 
     @Query("SELECT * FROM teams WHERE id = :teamId" )
-    suspend fun getTeam(teamId: String):TeamsDbData
+    suspend fun getTeam(teamId: String): TeamsDbData
 
     @Query("DELETE FROM teams")
     suspend fun clearTeams()

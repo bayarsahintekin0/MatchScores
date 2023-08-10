@@ -3,13 +3,18 @@ package com.bayarsahintekin.matchscores.di
 import com.bayarsahintekin.data.local.teams.TeamDao
 import com.bayarsahintekin.data.local.teams.TeamsKeyDao
 import com.bayarsahintekin.data.remote.ScoreServices
+import com.bayarsahintekin.data.repository.PlayerDataSource
+import com.bayarsahintekin.data.repository.PlayerRemoteDataSource
+import com.bayarsahintekin.data.repository.PlayerRepositoryImpl
 import com.bayarsahintekin.data.repository.TeamDataSource
 import com.bayarsahintekin.data.repository.TeamRemoteDataSource
 import com.bayarsahintekin.data.repository.TeamRemoteMediator
 import com.bayarsahintekin.data.repository.TeamRepositoryImpl
 import com.bayarsahintekin.data.repository.TeamsLocalDataSource
 import com.bayarsahintekin.data.utils.DiskExecutor
+import com.bayarsahintekin.domain.repository.PlayersRepository
 import com.bayarsahintekin.domain.repository.TeamRepository
+import com.bayarsahintekin.domain.usecase.PlayersUseCase
 import com.bayarsahintekin.domain.usecase.TeamUseCase
 import com.bayarsahintekin.domain.usecase.TeamsUseCase
 import dagger.Module
@@ -30,6 +35,14 @@ class DataModule {
         teamRemoteMediator: TeamRemoteMediator
     ): TeamRepository {
         return TeamRepositoryImpl(teamRemote, teamLocal, teamRemoteMediator)
+    }
+
+    @Provides
+    @Singleton
+    fun providePlayerRepository(
+        playerRemote: PlayerDataSource.Remote,
+    ): PlayersRepository {
+        return PlayerRepositoryImpl(playerRemote)
     }
 
     @Provides
@@ -58,6 +71,12 @@ class DataModule {
     }
 
     @Provides
+    @Singleton
+    fun providePlayerRemoveDataSource(scoreServices: ScoreServices): PlayerDataSource.Remote {
+        return PlayerRemoteDataSource(scoreServices)
+    }
+
+    @Provides
     fun provideTeamsUseCase(teamRepository: TeamRepository): TeamsUseCase {
         return TeamsUseCase(teamRepository)
     }
@@ -65,5 +84,10 @@ class DataModule {
     @Provides
     fun provideTeamUseCase(teamRepository: TeamRepository): TeamUseCase {
         return TeamUseCase(teamRepository)
+    }
+
+    @Provides
+    fun providePlayersUseCase(playersRepository: PlayersRepository): PlayersUseCase {
+        return PlayersUseCase(playersRepository)
     }
 }

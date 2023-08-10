@@ -5,9 +5,8 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import com.bayarsahintekin.data.entity.TeamsDbData
-import com.bayarsahintekin.data.entity.TeamsKeyDbData
-import com.bayarsahintekin.domain.entity.TeamEntity
+import com.bayarsahintekin.data.entity.teams.TeamsDbData
+import com.bayarsahintekin.data.entity.teams.TeamsKeyDbData
 import com.bayarsahintekin.domain.utils.getResult
 
 private const val MOVIE_STARTING_PAGE_INDEX = 1

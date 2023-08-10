@@ -1,11 +1,11 @@
 package com.bayarsahintekin.data.mapper
 
-import com.bayarsahintekin.data.entity.ListResponseDbData
+import com.bayarsahintekin.data.entity.teams.ListResponseDbData
 import com.bayarsahintekin.data.entity.MetaDbData
-import com.bayarsahintekin.data.entity.TeamsDbData
-import com.bayarsahintekin.domain.entity.ListResponseEntity
+import com.bayarsahintekin.data.entity.teams.TeamsDbData
 import com.bayarsahintekin.domain.entity.MetaDataEntity
 import com.bayarsahintekin.domain.entity.TeamEntity
+import com.bayarsahintekin.domain.entity.TeamListEntity
 
 fun TeamEntity.toDbData() = TeamsDbData(
     id = id,
@@ -25,7 +25,7 @@ fun MetaDataEntity.toDbData() = MetaDbData(
     totalCount = totalCount,
 )
 
-fun ListResponseEntity.toDbData() = ListResponseDbData(
+fun TeamListEntity.toDbData() = ListResponseDbData(
     data = (data as List<TeamEntity>).map { it.toDbData() },
     meta = meta.toDbData()
 )

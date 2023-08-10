@@ -2,7 +2,7 @@ package com.bayarsahintekin.data.mapper
 
 import androidx.room.TypeConverter
 import com.bayarsahintekin.data.entity.MetaDbData
-import com.bayarsahintekin.data.entity.TeamsDbData
+import com.bayarsahintekin.data.entity.teams.TeamsDbData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
