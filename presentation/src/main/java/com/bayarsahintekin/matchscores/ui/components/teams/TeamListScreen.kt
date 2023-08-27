@@ -36,23 +36,6 @@ import com.bayarsahintekin.matchscores.util.TeamLogosObject
 fun TeamsScreen(teamsViewModel: TeamsViewModel = hiltViewModel(), onTeamClicked: (teamId: Int) -> Unit) {
 
     val teamsUiState = teamsViewModel.uiState.collectAsState()
-    /*Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.teal_700))
-            .wrapContentSize(Alignment.Center)
-    ) {
-        teamsUiState.value.data?.data?.get(0)?.name?.let {
-            Text(
-                text = it,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                textAlign = TextAlign.Center,
-                fontSize = 20.sp
-            )
-        }
-    }*/
     teamsUiState.value.data?.let {
         TeamsHomeScreen(teams = it,onTeamClicked)
     }

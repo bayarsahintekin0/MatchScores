@@ -8,7 +8,7 @@ import com.bayarsahintekin.domain.utils.Result
 class TeamRepositoryImpl(
     private val remote: TeamDataSource.Remote,
     private val local: TeamDataSource.Local,
-    private val remoteMediator: TeamRemoteMediator,
+    //private val remoteMediator: TeamRemoteMediator,
 ) : TeamRepository {
 
     override suspend fun getTeams(): Result<TeamListEntity> = remote.getTeams()

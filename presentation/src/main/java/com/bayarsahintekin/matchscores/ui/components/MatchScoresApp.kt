@@ -19,9 +19,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -35,6 +32,7 @@ import com.bayarsahintekin.matchscores.R
 import com.bayarsahintekin.matchscores.ui.components.base.MSTopAppBar
 import com.bayarsahintekin.matchscores.ui.components.base.ProvideAppBarBackButton
 import com.bayarsahintekin.matchscores.ui.components.base.ProvideAppBarTitle
+import com.bayarsahintekin.matchscores.ui.components.players.PlayersScreen
 import com.bayarsahintekin.matchscores.ui.components.teams.TeamDetailScreen
 import com.bayarsahintekin.matchscores.ui.components.teams.TeamsScreen
 
@@ -42,7 +40,7 @@ import com.bayarsahintekin.matchscores.ui.components.teams.TeamsScreen
 fun NavigationGraph(navController: NavHostController) {
     val backPressDispatcher = LocalOnBackPressedDispatcherOwner.current
     NavHost(navController,
-        startDestination = BottomNavItem.Teams.screen_route,
+        startDestination = BottomNavItem.Players.screen_route,
         modifier = Modifier.padding(bottom = 44.dp)) {
         composable(BottomNavItem.Stats.screen_route) {
             ProvideAppBarTitle {

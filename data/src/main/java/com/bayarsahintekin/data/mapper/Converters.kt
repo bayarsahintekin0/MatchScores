@@ -3,6 +3,7 @@ package com.bayarsahintekin.data.mapper
 import androidx.room.TypeConverter
 import com.bayarsahintekin.data.entity.MetaDbData
 import com.bayarsahintekin.data.entity.teams.TeamsDbData
+import com.bayarsahintekin.domain.entity.TeamEntity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
@@ -28,5 +29,15 @@ class MetaTypeConverter {
 
     @TypeConverter
     fun stringToApp(string: String): MetaDbData = Gson().fromJson(string, MetaDbData::class.java)
+
+}
+
+class TeamTypeConverter {
+
+    @TypeConverter
+    fun appToString(app: TeamEntity): String = Gson().toJson(app)
+
+    @TypeConverter
+    fun stringToApp(string: String): TeamEntity = Gson().fromJson(string, TeamEntity::class.java)
 
 }

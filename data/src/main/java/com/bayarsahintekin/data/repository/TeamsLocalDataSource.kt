@@ -1,5 +1,8 @@
 package com.bayarsahintekin.data.repository
 
+import androidx.paging.PagingSource
+import com.bayarsahintekin.data.entity.players.PlayersDbData
+import com.bayarsahintekin.data.entity.players.PlayersRemoteKeysDbData
 import com.bayarsahintekin.data.entity.teams.TeamListData
 import com.bayarsahintekin.data.entity.teams.TeamsKeyDbData
 import com.bayarsahintekin.data.entity.teams.toDomain
@@ -9,6 +12,7 @@ import com.bayarsahintekin.data.local.teams.TeamDao
 import com.bayarsahintekin.data.local.teams.TeamsKeyDao
 import com.bayarsahintekin.data.mapper.toDbData
 import com.bayarsahintekin.data.utils.DiskExecutor
+import com.bayarsahintekin.domain.entity.PlayerEntity
 import com.bayarsahintekin.domain.entity.TeamEntity
 import com.bayarsahintekin.domain.entity.TeamListEntity
 import com.bayarsahintekin.domain.utils.Result
@@ -21,7 +25,8 @@ class TeamsLocalDataSource(
     private val teamsKeyDao: TeamsKeyDao
 ):TeamDataSource.Local {
 
-    override suspend fun getTeams(): Result<TeamListEntity> =  withContext(executor.asCoroutineDispatcher()) {
+
+    /* override suspend fun getTeams(): Result<TeamListEntity> =  withContext(executor.asCoroutineDispatcher()) {
         val team = teamDao.getTeams()
         return@withContext if (team != null) {
             Result.Success(
@@ -61,5 +66,36 @@ class TeamsLocalDataSource(
     }
     override suspend fun deleteTeam(id: String)  = withContext(executor.asCoroutineDispatcher()){
         teamDao.deleteTeam(id)
+    }*/
+    override fun players(): PagingSource<Int, PlayersDbData> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getPlayers(): Result<List<PlayerEntity>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getPlayer(playerId: Int): Result<PlayerEntity> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun savePlayers(playerEntities: List<PlayerEntity>) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getLastRemoteKey(): PlayersRemoteKeysDbData? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun saveRemoteKey(key: PlayersRemoteKeysDbData) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun clearPlayers() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun clearRemoteKeys() {
+        TODO("Not yet implemented")
     }
 }

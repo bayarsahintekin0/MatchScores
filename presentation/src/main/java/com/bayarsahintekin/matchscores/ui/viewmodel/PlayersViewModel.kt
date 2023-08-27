@@ -1,5 +1,6 @@
 package com.bayarsahintekin.matchscores.ui.viewmodel
 
+import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.viewModelScope
 import com.bayarsahintekin.domain.entity.PlayerEntity
@@ -13,8 +14,10 @@ import com.bayarsahintekin.matchscores.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,14 +35,17 @@ class PlayersViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(PlayersUiState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly,_uiState.value)
 
+
+
     init {
-        onInitialState()
+        fetchData(20)
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    fun onInitialState() = launchOnMainImmediate {
 
-        getPlayers().onSuccess {
+
+
+    private fun fetchData(page: Int) =launchOnMainImmediate {
+        getAllPlayers(page).onSuccess {
             val stateData: PlayerListEntity
 
             val playersData = arrayListOf<PlayerEntity>()
@@ -68,7 +74,7 @@ class PlayersViewModel @Inject constructor(
 
         }
     }
-
-    private suspend fun getPlayers(): Result<PlayerListEntity> = playersUseCase.invoke()
+    private suspend fun getPlayers(page: Int): Result<PlayerListEntity> = playersUseCase.invoke(page)
+    private suspend fun getAllPlayers(page: Int): Result<PlayerListEntity> = playersUseCase.invoke(page)
 
 }

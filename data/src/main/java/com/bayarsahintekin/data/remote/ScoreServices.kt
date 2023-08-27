@@ -5,6 +5,7 @@ import com.bayarsahintekin.data.entity.teams.TeamData
 import com.bayarsahintekin.data.entity.teams.TeamListData
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ScoreServices {
 
@@ -15,5 +16,7 @@ interface ScoreServices {
     suspend fun getTeam(@Path("id") id: String): TeamData
 
     @GET("players")
-    suspend fun getAllPlayers():PlayerListData
+    suspend fun getAllPlayers(@Query("page") page: Int = 1):PlayerListData
+    @GET("players")
+    suspend fun searchPlayers(@Query("search") page: String = ""):PlayerListData
 }
