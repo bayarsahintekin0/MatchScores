@@ -69,6 +69,7 @@ class DataModule {
         return TeamRemoteMediator(teamLocalDataSource, teamRemoteDataSource)
     }*/
 
+    @Provides
     @Singleton
     fun providePlayersRemoteMediators(
         playerRemote: PlayerDataSource.Remote,
@@ -101,6 +102,12 @@ class DataModule {
     fun provideTeamsUseCase(teamRepository: TeamRepository): TeamsUseCase {
         return TeamsUseCase(teamRepository)
     }
+
+    @Provides
+    fun provideTeamUseCase(teamRepository: TeamRepository): TeamUseCase {
+        return TeamUseCase(teamRepository)
+    }
+
 
     @Provides
     fun providePlayersUseCase(playersRepository: PlayersRepository): PlayersUseCase {
