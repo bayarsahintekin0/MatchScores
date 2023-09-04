@@ -8,6 +8,9 @@ import com.bayarsahintekin.data.local.games.GameRemoteKeysDao
 import com.bayarsahintekin.data.local.players.PlayerDao
 import com.bayarsahintekin.data.local.players.PlayersDataBase
 import com.bayarsahintekin.data.local.players.PlayersKeyDao
+import com.bayarsahintekin.data.local.stats.StatsDao
+import com.bayarsahintekin.data.local.stats.StatsDataBase
+import com.bayarsahintekin.data.local.stats.StatsRemoteKeysDao
 import com.bayarsahintekin.data.local.teams.TeamDao
 import com.bayarsahintekin.data.local.teams.TeamsDatabase
 import com.bayarsahintekin.data.local.teams.TeamsKeyDao
@@ -73,5 +76,24 @@ class DataBaseModule {
     @Provides
     fun provideGameRemoteKeyDao(gameDataBase: GameDataBase): GameRemoteKeysDao {
         return gameDataBase.gameKeysDao()
+    }
+
+    /**
+     * Stats
+     */
+    @Provides
+    @Singleton
+    fun provideStatsDatabase(@ApplicationContext context: Context): StatsDataBase {
+        return Room.databaseBuilder(context, StatsDataBase::class.java, "stats.db").fallbackToDestructiveMigration().build()
+    }
+
+    @Provides
+    fun provideStatsDao(statsDataBase: StatsDataBase): StatsDao {
+        return statsDataBase.statsDao()
+    }
+
+    @Provides
+    fun provideStatsRemoteKeyDao(statsDataBase: StatsDataBase): StatsRemoteKeysDao {
+        return statsDataBase.statsKeyDao()
     }
 }

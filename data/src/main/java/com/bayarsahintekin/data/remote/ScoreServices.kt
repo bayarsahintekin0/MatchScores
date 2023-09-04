@@ -2,6 +2,7 @@ package com.bayarsahintekin.data.remote
 
 import com.bayarsahintekin.data.entity.games.GameListData
 import com.bayarsahintekin.data.entity.players.PlayerListData
+import com.bayarsahintekin.data.entity.stats.StatsListData
 import com.bayarsahintekin.data.entity.teams.TeamData
 import com.bayarsahintekin.data.entity.teams.TeamListData
 import retrofit2.http.GET
@@ -23,4 +24,7 @@ interface ScoreServices {
 
     @GET("games")
     suspend fun getAllGames(@Query("page") page: Int = 1):GameListData
+
+    @GET("stats")
+    suspend fun getAllStats(@Query("page") page: Int = 1):StatsListData
 }

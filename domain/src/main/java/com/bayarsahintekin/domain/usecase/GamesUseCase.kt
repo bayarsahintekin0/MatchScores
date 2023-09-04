@@ -9,5 +9,5 @@ class GamesUseCase (
 ) {
     suspend operator fun invoke(page: Int): Result<GameListEntity> = gameRepository.getAllGames(page)
 
-    fun getPlayers() = gameRepository.getGames()
+    fun getGames() = gameRepository.getGames()
 }

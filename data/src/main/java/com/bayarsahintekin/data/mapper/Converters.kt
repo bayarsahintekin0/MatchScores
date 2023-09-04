@@ -4,9 +4,11 @@ import androidx.room.TypeConverter
 import com.bayarsahintekin.data.entity.MetaDbData
 import com.bayarsahintekin.data.entity.games.GameDbData
 import com.bayarsahintekin.data.entity.players.PlayersDbData
+import com.bayarsahintekin.data.entity.stats.StatsDbData
 import com.bayarsahintekin.data.entity.teams.TeamsDbData
 import com.bayarsahintekin.domain.entity.GameEntity
 import com.bayarsahintekin.domain.entity.PlayerEntity
+import com.bayarsahintekin.domain.entity.StatsEntity
 import com.bayarsahintekin.domain.entity.TeamEntity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -54,6 +56,20 @@ class GameConverters {
     }
 }
 
+class StatsConverters {
+    var gson = Gson()
+    @TypeConverter
+    fun fromStringToStatList(value: String?): List<StatsDbData>? {
+        val listType: Type = object : TypeToken<List<StatsDbData?>?>() {}.type
+        return gson.fromJson<List<StatsDbData>>(value, listType)
+    }
+
+    @TypeConverter
+    fun fromStatListToString(date: List<StatsDbData>): String? {
+        return gson.toJson(date)
+    }
+}
+
 class MetaTypeConverter {
 
     @TypeConverter
@@ -89,5 +105,14 @@ class GameTypeConverter {
 
     @TypeConverter
     fun stringToGameEntity(string: String): GameEntity = Gson().fromJson(string, GameEntity::class.java)
+
+}
+
+class StatsTypeConverter {
+    @TypeConverter
+    fun statsEntityToString(app: StatsEntity): String = Gson().toJson(app)
+
+    @TypeConverter
+    fun stringToStatEntity(string: String): StatsEntity = Gson().fromJson(string, StatsEntity::class.java)
 
 }

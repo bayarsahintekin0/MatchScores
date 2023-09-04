@@ -34,6 +34,7 @@ import com.bayarsahintekin.matchscores.ui.components.base.ProvideAppBarBackButto
 import com.bayarsahintekin.matchscores.ui.components.base.ProvideAppBarTitle
 import com.bayarsahintekin.matchscores.ui.components.games.GamesScreen
 import com.bayarsahintekin.matchscores.ui.components.players.PlayersScreen
+import com.bayarsahintekin.matchscores.ui.components.stats.StatsScreen
 import com.bayarsahintekin.matchscores.ui.components.teams.TeamDetailScreen
 import com.bayarsahintekin.matchscores.ui.components.teams.TeamsScreen
 

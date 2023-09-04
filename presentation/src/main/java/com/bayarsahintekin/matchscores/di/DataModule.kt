@@ -4,6 +4,8 @@ import com.bayarsahintekin.data.local.games.GameDao
 import com.bayarsahintekin.data.local.games.GameRemoteKeysDao
 import com.bayarsahintekin.data.local.players.PlayerDao
 import com.bayarsahintekin.data.local.players.PlayersKeyDao
+import com.bayarsahintekin.data.local.stats.StatsDao
+import com.bayarsahintekin.data.local.stats.StatsRemoteKeysDao
 import com.bayarsahintekin.data.local.teams.TeamDao
 import com.bayarsahintekin.data.local.teams.TeamsKeyDao
 import com.bayarsahintekin.data.remote.ScoreServices
@@ -17,6 +19,11 @@ import com.bayarsahintekin.data.repository.players.PlayerRemoteDataSource
 import com.bayarsahintekin.data.repository.players.PlayerRepositoryImpl
 import com.bayarsahintekin.data.repository.players.PlayerLocalDataSource
 import com.bayarsahintekin.data.repository.players.PlayerRemoteMediators
+import com.bayarsahintekin.data.repository.stats.StatsDataSource
+import com.bayarsahintekin.data.repository.stats.StatsLocalDataSource
+import com.bayarsahintekin.data.repository.stats.StatsRemoteDataSource
+import com.bayarsahintekin.data.repository.stats.StatsRemoteMediators
+import com.bayarsahintekin.data.repository.stats.StatsRepositoryImpl
 import com.bayarsahintekin.data.repository.teams.TeamDataSource
 import com.bayarsahintekin.data.repository.teams.TeamRemoteDataSource
 import com.bayarsahintekin.data.repository.teams.TeamRepositoryImpl
@@ -24,9 +31,11 @@ import com.bayarsahintekin.data.repository.teams.TeamsLocalDataSource
 import com.bayarsahintekin.data.utils.DiskExecutor
 import com.bayarsahintekin.domain.repository.GameRepository
 import com.bayarsahintekin.domain.repository.PlayersRepository
+import com.bayarsahintekin.domain.repository.StatsRepository
 import com.bayarsahintekin.domain.repository.TeamRepository
 import com.bayarsahintekin.domain.usecase.GamesUseCase
 import com.bayarsahintekin.domain.usecase.PlayersUseCase
+import com.bayarsahintekin.domain.usecase.StatsUseCase
 import com.bayarsahintekin.domain.usecase.TeamUseCase
 import com.bayarsahintekin.domain.usecase.TeamsUseCase
 import dagger.Module
@@ -71,6 +80,16 @@ class DataModule {
 
     @Provides
     @Singleton
+    fun provideStatRepository(
+        remote: StatsDataSource.Remote,
+        local: StatsDataSource.Local,
+        remoteMediators: StatsRemoteMediators
+    ): StatsRepository {
+        return StatsRepositoryImpl(remote,local,remoteMediators)
+    }
+
+    @Provides
+    @Singleton
     fun provideTeamLocalDataSource(
         executor: DiskExecutor,
         teamDao: TeamDao,
@@ -95,6 +114,14 @@ class DataModule {
                                      playerDao: PlayerDao,
                                      playerRemoteKeyDao: PlayersKeyDao,): PlayerDataSource.Local {
         return PlayerLocalDataSource(executor,playerDao,playerRemoteKeyDao )
+    }
+
+    @Provides
+    @Singleton
+    fun provideStatLocalDataSource(executor: DiskExecutor,
+                                     statDao: StatsDao,
+                                     statRemoteKeyDao: StatsRemoteKeysDao,): StatsDataSource.Local {
+        return StatsLocalDataSource(executor,statDao,statRemoteKeyDao )
     }
 
    /* @Provides
@@ -126,6 +153,15 @@ class DataModule {
 
     @Provides
     @Singleton
+    fun provideStatRemoteMediators(
+        statsRemote: StatsDataSource.Remote,
+        statsLocal: StatsDataSource.Local
+    ): StatsRemoteMediators {
+        return StatsRemoteMediators(statsLocal, statsRemote)
+    }
+
+    @Provides
+    @Singleton
     fun provideTeamRemoteDataSource(scoreServices: ScoreServices): TeamDataSource.Remote {
         return TeamRemoteDataSource(scoreServices)
     }
@@ -140,6 +176,12 @@ class DataModule {
     @Singleton
     fun provideGameRemoteDataSource(scoreServices: ScoreServices): GameDataSource.Remote {
         return GameRemoteDataSource(scoreServices)
+    }
+
+    @Provides
+    @Singleton
+    fun provideStatRemoteDataSource(scoreServices: ScoreServices): StatsDataSource.Remote {
+        return StatsRemoteDataSource(scoreServices)
     }
 
     @Provides
@@ -161,5 +203,10 @@ class DataModule {
     @Provides
     fun provideGamesUseCase(gamesRepository: GameRepository): GamesUseCase {
         return GamesUseCase(gamesRepository)
+    }
+
+    @Provides
+    fun provideStatsUseCase(statsRepository: StatsRepository): StatsUseCase {
+        return StatsUseCase(statsRepository)
     }
 }
