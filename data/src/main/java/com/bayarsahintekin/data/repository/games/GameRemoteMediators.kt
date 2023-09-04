@@ -1,21 +1,21 @@
-package com.bayarsahintekin.data.repository
+package com.bayarsahintekin.data.repository.games
 
 import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import com.bayarsahintekin.data.entity.players.PlayersDbData
-import com.bayarsahintekin.data.entity.players.PlayersRemoteKeysDbData
+import com.bayarsahintekin.data.entity.games.GameDbData
+import com.bayarsahintekin.data.entity.games.GamesRemoteKeysDbData
 import com.bayarsahintekin.domain.utils.getResult
 
 @OptIn(ExperimentalPagingApi::class)
-class PlayersRemoteMediators(
-    private val local: PlayerDataSource.Local,
-    private val remote: PlayerDataSource.Remote
-) : RemoteMediator<Int, PlayersDbData>() {
+class GameRemoteMediators (
+    private val local: GameDataSource.Local,
+    private val remote: GameDataSource.Remote
+) : RemoteMediator<Int, GameDbData>() {
 
-    override suspend fun load(loadType: LoadType, state: PagingState<Int, PlayersDbData>): MediatorResult {
+    override suspend fun load(loadType: LoadType, state: PagingState<Int, GameDbData>): MediatorResult {
         val page = when (loadType) {
             LoadType.REFRESH -> 1
             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
@@ -27,18 +27,18 @@ class PlayersRemoteMediators(
         // There was a lag in loading the first page; as a result, it jumps to the end of the pagination.
         if (state.isEmpty() && page == 2) return MediatorResult.Success(endOfPaginationReached = false)
 
-        remote.getPlayers(page).getResult({ successResult ->
+        remote.getGames(page).getResult({ successResult ->
 
             if (loadType == LoadType.REFRESH) {
-                local.clearPlayers()
+                local.clearGames()
                 local.clearRemoteKeys()
             }
 
             val players = successResult.data
 
-            val key = PlayersRemoteKeysDbData(prevPage = players.meta?.currentPage?.minus(1), nextPage = players.meta?.nextPage)
+            val key = GamesRemoteKeysDbData(prevPage = players.meta?.currentPage?.minus(1), nextPage = players.meta?.nextPage)
 
-            local.savePlayers(players.data)
+            local.saveGames(players.data)
             local.saveRemoteKey(key)
 
             return MediatorResult.Success(endOfPaginationReached = players.meta?.totalPages == players.meta?.currentPage)

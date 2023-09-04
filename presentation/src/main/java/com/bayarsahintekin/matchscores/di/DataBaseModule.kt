@@ -2,6 +2,9 @@ package com.bayarsahintekin.matchscores.di
 
 import android.content.Context
 import androidx.room.Room
+import com.bayarsahintekin.data.local.games.GameDao
+import com.bayarsahintekin.data.local.games.GameDataBase
+import com.bayarsahintekin.data.local.games.GameRemoteKeysDao
 import com.bayarsahintekin.data.local.players.PlayerDao
 import com.bayarsahintekin.data.local.players.PlayersDataBase
 import com.bayarsahintekin.data.local.players.PlayersKeyDao
@@ -51,5 +54,24 @@ class DataBaseModule {
     @Provides
     fun providePlayerRemoteKeyDao(playersDataBase: PlayersDataBase): PlayersKeyDao {
         return playersDataBase.playerKeyDao()
+    }
+
+    /**
+     * Games
+     */
+    @Provides
+    @Singleton
+    fun provideGameDatabase(@ApplicationContext context: Context): GameDataBase {
+        return Room.databaseBuilder(context, GameDataBase::class.java, "games.db").fallbackToDestructiveMigration().build()
+    }
+
+    @Provides
+    fun provideGameDao(gamesDataBase: GameDataBase): GameDao {
+        return gamesDataBase.gamesDao()
+    }
+
+    @Provides
+    fun provideGameRemoteKeyDao(gameDataBase: GameDataBase): GameRemoteKeysDao {
+        return gameDataBase.gameKeysDao()
     }
 }

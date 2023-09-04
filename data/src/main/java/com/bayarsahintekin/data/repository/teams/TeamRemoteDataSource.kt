@@ -1,12 +1,9 @@
-package com.bayarsahintekin.data.repository
+package com.bayarsahintekin.data.repository.teams
 
-import com.bayarsahintekin.data.entity.players.PlayerListData
-import com.bayarsahintekin.data.entity.players.toDomain
 import com.bayarsahintekin.data.entity.teams.TeamData
 import com.bayarsahintekin.data.entity.teams.TeamListData
 import com.bayarsahintekin.data.entity.teams.toDomain
 import com.bayarsahintekin.data.remote.ScoreServices
-import com.bayarsahintekin.domain.entity.PlayerListEntity
 import com.bayarsahintekin.domain.entity.TeamEntity
 import com.bayarsahintekin.domain.entity.TeamListEntity
 import com.bayarsahintekin.domain.utils.Result

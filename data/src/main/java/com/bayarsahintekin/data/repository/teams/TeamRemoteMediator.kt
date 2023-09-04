@@ -1,4 +1,4 @@
-package com.bayarsahintekin.data.repository
+package com.bayarsahintekin.data.repository.teams
 
 import android.util.Log
 import androidx.paging.ExperimentalPagingApi

@@ -6,13 +6,13 @@ import com.bayarsahintekin.domain.entity.PlayerEntity
 import com.bayarsahintekin.domain.entity.PlayerListEntity
 
 data class PlayerListData(
-    var data: List<PlayerEntity> = arrayListOf(),
+    var data: List<PlayerData> = arrayListOf(),
     var meta: MetaData? = null
 )
 
 fun PlayerListData.toDomain() :PlayerListEntity {
     return PlayerListEntity(
-            data = data.map { it },
+            data = data.map { it.toDomain() },
             meta = meta?.toDomain()
         )
 

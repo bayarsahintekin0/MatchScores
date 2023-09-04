@@ -31,22 +31,6 @@ class PlayersViewModel @Inject constructor(
     dispatchers: DispatchersProvider
 ): BaseViewModel(dispatchers) {
 
-    data class PlayersUiState(
-        val isLoading: Boolean = true,
-        val data: PlayerListEntity? = null,
-        val title: String = "Players"
-    )
-
-    private val _uiState = MutableStateFlow(PlayersUiState())
-    val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly,_uiState.value)
-
-    private val _dataStateFlow = MutableStateFlow(PlayersUiState())
-    val dataStateFlow: StateFlow<PlayersUiState> get() = _dataStateFlow
-
-    val players = playersUseCase.getPlayers()
-
-
-
     var state by mutableStateOf(ScreenState())
 
     private val paginator = DefaultPaginator(
@@ -85,9 +69,6 @@ class PlayersViewModel @Inject constructor(
         }
     }
 
-
-    val playersData = arrayListOf<PlayerEntity>()
-
     private suspend fun getList(page: Int):List<PlayerEntity> {
         getAllPlayers(page = page).onSuccess {
             return it.data
@@ -95,36 +76,6 @@ class PlayersViewModel @Inject constructor(
             return emptyList()
         }
         return emptyList()
-    }
-    fun fetchData(page: Int) =launchOnMainImmediate {
-        getAllPlayers(page).onSuccess {
-
-            for(i in it.data){
-                playersData.add(
-                    PlayerEntity(
-                        id = i.id,
-                        firstName = i.firstName,
-                        heightFeet = i.heightFeet,
-                        heightInches = i.heightInches,
-                        lastName = i.lastName,
-                        position = i.position,
-                        team = i.team,
-                        weightPounds = i.weightPounds
-                    )
-                )
-            }
-            val stateData = PlayerListEntity(data = playersData, meta = it.meta)
-
-            _dataStateFlow.value = PlayersUiState(isLoading = false,data = stateData)
-            /*_uiState.update { teamsUiState ->
-                teamsUiState.copy(
-                    isLoading = false,
-                    data = stateData
-                )
-            }*/
-        }.onError {
-
-        }
     }
 
     data class ScreenState(
@@ -135,11 +86,6 @@ class PlayersViewModel @Inject constructor(
         val page: Int = 0
     )
 
-    sealed class ViewState {
-        object EmptyScreen : ViewState()
-        data class Loaded(val data: PlayerListEntity? = null, val loadingMore: Boolean) : ViewState()
-        object Loading : ViewState()
-    }
     //private suspend fun getPlayers(): Flow<PagingData<PlayerEntity>> = playersUseCase.getPlayers()
     suspend fun getAllPlayers(page: Int): Result<PlayerListEntity> = playersUseCase.invoke(page)
 

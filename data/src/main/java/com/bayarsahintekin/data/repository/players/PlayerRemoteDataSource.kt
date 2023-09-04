@@ -1,4 +1,4 @@
-package com.bayarsahintekin.data.repository
+package com.bayarsahintekin.data.repository.players
 
 import com.bayarsahintekin.data.entity.players.PlayerListData
 import com.bayarsahintekin.data.entity.players.toDomain
@@ -27,7 +27,7 @@ class PlayerRemoteDataSource (
             Result.Error(e)
         }
 
-    override suspend fun getPlayers(movieIds: List<Int>): Result<List<PlayerEntity>> {
+    override suspend fun getPlayers(idList: List<Int>): Result<List<PlayerEntity>> {
         TODO("Not yet implemented")
     }
 }

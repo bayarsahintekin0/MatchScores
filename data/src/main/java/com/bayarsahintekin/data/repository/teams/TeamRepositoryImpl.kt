@@ -1,4 +1,4 @@
-package com.bayarsahintekin.data.repository
+package com.bayarsahintekin.data.repository.teams
 
 import com.bayarsahintekin.domain.entity.TeamEntity
 import com.bayarsahintekin.domain.entity.TeamListEntity

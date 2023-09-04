@@ -1,22 +1,31 @@
 package com.bayarsahintekin.matchscores.di
 
+import com.bayarsahintekin.data.local.games.GameDao
+import com.bayarsahintekin.data.local.games.GameRemoteKeysDao
 import com.bayarsahintekin.data.local.players.PlayerDao
 import com.bayarsahintekin.data.local.players.PlayersKeyDao
 import com.bayarsahintekin.data.local.teams.TeamDao
 import com.bayarsahintekin.data.local.teams.TeamsKeyDao
 import com.bayarsahintekin.data.remote.ScoreServices
-import com.bayarsahintekin.data.repository.PlayerDataSource
-import com.bayarsahintekin.data.repository.PlayerRemoteDataSource
-import com.bayarsahintekin.data.repository.PlayerRepositoryImpl
-import com.bayarsahintekin.data.repository.PlayersLocalDataSource
-import com.bayarsahintekin.data.repository.PlayersRemoteMediators
-import com.bayarsahintekin.data.repository.TeamDataSource
-import com.bayarsahintekin.data.repository.TeamRemoteDataSource
-import com.bayarsahintekin.data.repository.TeamRepositoryImpl
-import com.bayarsahintekin.data.repository.TeamsLocalDataSource
+import com.bayarsahintekin.data.repository.games.GameDataSource
+import com.bayarsahintekin.data.repository.games.GameLocalDataSource
+import com.bayarsahintekin.data.repository.games.GameRemoteDataSource
+import com.bayarsahintekin.data.repository.games.GameRemoteMediators
+import com.bayarsahintekin.data.repository.games.GameRepositoryImpl
+import com.bayarsahintekin.data.repository.players.PlayerDataSource
+import com.bayarsahintekin.data.repository.players.PlayerRemoteDataSource
+import com.bayarsahintekin.data.repository.players.PlayerRepositoryImpl
+import com.bayarsahintekin.data.repository.players.PlayerLocalDataSource
+import com.bayarsahintekin.data.repository.players.PlayerRemoteMediators
+import com.bayarsahintekin.data.repository.teams.TeamDataSource
+import com.bayarsahintekin.data.repository.teams.TeamRemoteDataSource
+import com.bayarsahintekin.data.repository.teams.TeamRepositoryImpl
+import com.bayarsahintekin.data.repository.teams.TeamsLocalDataSource
 import com.bayarsahintekin.data.utils.DiskExecutor
+import com.bayarsahintekin.domain.repository.GameRepository
 import com.bayarsahintekin.domain.repository.PlayersRepository
 import com.bayarsahintekin.domain.repository.TeamRepository
+import com.bayarsahintekin.domain.usecase.GamesUseCase
 import com.bayarsahintekin.domain.usecase.PlayersUseCase
 import com.bayarsahintekin.domain.usecase.TeamUseCase
 import com.bayarsahintekin.domain.usecase.TeamsUseCase
@@ -45,9 +54,19 @@ class DataModule {
     fun providePlayerRepository(
         playerRemote: PlayerDataSource.Remote,
         local: PlayerDataSource.Local,
-        remoteMediators: PlayersRemoteMediators
+        remoteMediators: PlayerRemoteMediators
     ): PlayersRepository {
         return PlayerRepositoryImpl(playerRemote,local,remoteMediators)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGameRepository(
+        remote: GameDataSource.Remote,
+        local: GameDataSource.Local,
+        remoteMediators: GameRemoteMediators
+    ): GameRepository {
+        return GameRepositoryImpl(remote,local,remoteMediators)
     }
 
     @Provides
@@ -58,6 +77,24 @@ class DataModule {
         teamKeyDao: TeamsKeyDao,
     ): TeamDataSource.Local {
         return TeamsLocalDataSource(executor, teamDao, teamKeyDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGameLocalDataSource(
+        executor: DiskExecutor,
+        gameDao: GameDao,
+        gameRemoteKeysDao: GameRemoteKeysDao,
+    ): GameDataSource.Local {
+        return GameLocalDataSource(executor, gameDao, gameRemoteKeysDao)
+    }
+
+    @Provides
+    @Singleton
+    fun providePlayerLocalDataSource(executor: DiskExecutor,
+                                     playerDao: PlayerDao,
+                                     playerRemoteKeyDao: PlayersKeyDao,): PlayerDataSource.Local {
+        return PlayerLocalDataSource(executor,playerDao,playerRemoteKeyDao )
     }
 
    /* @Provides
@@ -74,8 +111,17 @@ class DataModule {
     fun providePlayersRemoteMediators(
         playerRemote: PlayerDataSource.Remote,
         playerLocal: PlayerDataSource.Local
-    ): PlayersRemoteMediators {
-        return PlayersRemoteMediators(playerLocal, playerRemote)
+    ): PlayerRemoteMediators {
+        return PlayerRemoteMediators(playerLocal, playerRemote)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGameRemoteMediators(
+        gameRemote: GameDataSource.Remote,
+        gameLocal: GameDataSource.Local
+    ): GameRemoteMediators {
+        return GameRemoteMediators(gameLocal, gameRemote)
     }
 
     @Provides
@@ -92,10 +138,8 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providePlayerLocalDataSource(executor: DiskExecutor,
-                                     playerDao: PlayerDao,
-                                     playerRemoteKeyDao: PlayersKeyDao,): PlayerDataSource.Local {
-        return PlayersLocalDataSource(executor,playerDao,playerRemoteKeyDao )
+    fun provideGameRemoteDataSource(scoreServices: ScoreServices): GameDataSource.Remote {
+        return GameRemoteDataSource(scoreServices)
     }
 
     @Provides
@@ -112,5 +156,10 @@ class DataModule {
     @Provides
     fun providePlayersUseCase(playersRepository: PlayersRepository): PlayersUseCase {
         return PlayersUseCase(playersRepository)
+    }
+
+    @Provides
+    fun provideGamesUseCase(gamesRepository: GameRepository): GamesUseCase {
+        return GamesUseCase(gamesRepository)
     }
 }

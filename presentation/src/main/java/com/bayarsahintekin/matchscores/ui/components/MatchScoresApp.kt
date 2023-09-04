@@ -32,6 +32,7 @@ import com.bayarsahintekin.matchscores.R
 import com.bayarsahintekin.matchscores.ui.components.base.MSTopAppBar
 import com.bayarsahintekin.matchscores.ui.components.base.ProvideAppBarBackButton
 import com.bayarsahintekin.matchscores.ui.components.base.ProvideAppBarTitle
+import com.bayarsahintekin.matchscores.ui.components.games.GamesScreen
 import com.bayarsahintekin.matchscores.ui.components.players.PlayersScreen
 import com.bayarsahintekin.matchscores.ui.components.teams.TeamDetailScreen
 import com.bayarsahintekin.matchscores.ui.components.teams.TeamsScreen

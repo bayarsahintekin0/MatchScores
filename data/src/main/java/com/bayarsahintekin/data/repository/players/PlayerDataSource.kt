@@ -1,4 +1,4 @@
-package com.bayarsahintekin.data.repository
+package com.bayarsahintekin.data.repository.players
 
 import androidx.paging.PagingSource
 import com.bayarsahintekin.data.entity.players.PlayersDbData
@@ -12,7 +12,7 @@ interface PlayerDataSource {
     interface Remote {
 
         suspend fun getPlayers(page: Int):Result<PlayerListEntity>
-        suspend fun getPlayers(movieIds: List<Int>): Result<List<PlayerEntity>>
+        suspend fun getPlayers(idLid: List<Int>): Result<List<PlayerEntity>>
         //suspend fun getPlayer(movieId: Int): Result<PlayerEntity>
         //suspend fun search(query: String, page: Int, limit: Int):Result<List<PlayerEntity>>
 

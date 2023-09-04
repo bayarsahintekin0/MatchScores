@@ -1,5 +1,6 @@
 package com.bayarsahintekin.data.remote
 
+import com.bayarsahintekin.data.entity.games.GameListData
 import com.bayarsahintekin.data.entity.players.PlayerListData
 import com.bayarsahintekin.data.entity.teams.TeamData
 import com.bayarsahintekin.data.entity.teams.TeamListData
@@ -19,4 +20,7 @@ interface ScoreServices {
     suspend fun getAllPlayers(@Query("page") page: Int = 1):PlayerListData
     @GET("players")
     suspend fun searchPlayers(@Query("search") page: String = ""):PlayerListData
+
+    @GET("games")
+    suspend fun getAllGames(@Query("page") page: Int = 1):GameListData
 }

@@ -7,6 +7,8 @@ import androidx.room.TypeConverters
 import com.bayarsahintekin.data.entity.players.PlayersDbData
 import com.bayarsahintekin.data.entity.players.PlayersRemoteKeysDbData
 import com.bayarsahintekin.data.mapper.MetaTypeConverter
+import com.bayarsahintekin.data.mapper.PlayerConverters
+import com.bayarsahintekin.data.mapper.PlayerTypeConverter
 import com.bayarsahintekin.data.mapper.TeamTypeConverter
 import com.bayarsahintekin.data.mapper.TeamsConverters
 
@@ -15,7 +17,9 @@ import com.bayarsahintekin.data.mapper.TeamsConverters
     version = 2,
     exportSchema = false
 )
-@TypeConverters(MetaTypeConverter::class, TeamsConverters::class,TeamTypeConverter::class)
+@TypeConverters(MetaTypeConverter::class, PlayerConverters::class,PlayerTypeConverter::class,
+    TeamTypeConverter::class,
+    TeamsConverters::class)
 abstract class PlayersDataBase : RoomDatabase() {
     abstract fun playerDao(): PlayerDao
     abstract fun playerKeyDao(): PlayersKeyDao

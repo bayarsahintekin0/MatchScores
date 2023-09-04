@@ -1,4 +1,4 @@
-package com.bayarsahintekin.data.repository
+package com.bayarsahintekin.data.repository.players
 
 import androidx.paging.PagingSource
 import com.bayarsahintekin.data.entity.players.PlayersDbData
@@ -14,11 +14,11 @@ import com.bayarsahintekin.domain.utils.Result
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.withContext
 
-class PlayersLocalDataSource(
+class PlayerLocalDataSource(
     private val executor: DiskExecutor,
     private val playerDao: PlayerDao,
     private val playersKeyDao: PlayersKeyDao
-):PlayerDataSource.Local {
+): PlayerDataSource.Local {
     override fun players(): PagingSource<Int, PlayersDbData> = playerDao.players()
 
     override suspend fun getPlayers(): Result<List<PlayerEntity>> = withContext(executor.asCoroutineDispatcher()) {

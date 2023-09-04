@@ -1,29 +1,19 @@
-package com.bayarsahintekin.data.repository
+package com.bayarsahintekin.data.repository.teams
 
 import androidx.paging.PagingSource
 import com.bayarsahintekin.data.entity.players.PlayersDbData
 import com.bayarsahintekin.data.entity.players.PlayersRemoteKeysDbData
-import com.bayarsahintekin.data.entity.teams.TeamListData
-import com.bayarsahintekin.data.entity.teams.TeamsKeyDbData
-import com.bayarsahintekin.data.entity.teams.toDomain
-import com.bayarsahintekin.data.entity.toDomain
-import com.bayarsahintekin.data.exception.DataNotAvailableException
 import com.bayarsahintekin.data.local.teams.TeamDao
 import com.bayarsahintekin.data.local.teams.TeamsKeyDao
-import com.bayarsahintekin.data.mapper.toDbData
 import com.bayarsahintekin.data.utils.DiskExecutor
 import com.bayarsahintekin.domain.entity.PlayerEntity
-import com.bayarsahintekin.domain.entity.TeamEntity
-import com.bayarsahintekin.domain.entity.TeamListEntity
 import com.bayarsahintekin.domain.utils.Result
-import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.withContext
 
 class TeamsLocalDataSource(
     private val executor: DiskExecutor,
     private val teamDao: TeamDao,
     private val teamsKeyDao: TeamsKeyDao
-):TeamDataSource.Local {
+): TeamDataSource.Local {
 
 
     /* override suspend fun getTeams(): Result<TeamListEntity> =  withContext(executor.asCoroutineDispatcher()) {

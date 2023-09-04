@@ -3,15 +3,24 @@ package com.bayarsahintekin.data.entity.players
 import com.bayarsahintekin.data.entity.teams.TeamData
 import com.bayarsahintekin.data.entity.teams.toDomain
 import com.bayarsahintekin.domain.entity.PlayerEntity
+import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+
+@Serializable
 data class PlayerData(
     var id: Int? = null,
-    var firstName: String? = null,
+    @SerialName("first_name") var firstName: String? = "",
+    @SerializedName("height_feed")
     var heightFeet: String? = null,
+    @SerializedName("height_inches")
     var heightInches: String? = null,
+    @SerializedName("last_name")
     var lastName: String? = null,
     var position: String? = null,
     var team: TeamData? = null,
+    @SerializedName("weight_pounds")
     var weightPounds: String? = null
 )
 

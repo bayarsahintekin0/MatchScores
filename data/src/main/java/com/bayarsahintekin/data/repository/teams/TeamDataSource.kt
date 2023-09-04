@@ -1,4 +1,4 @@
-package com.bayarsahintekin.data.repository
+package com.bayarsahintekin.data.repository.teams
 
 import androidx.paging.PagingSource
 import com.bayarsahintekin.data.entity.players.PlayersDbData
