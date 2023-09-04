@@ -10,15 +10,15 @@ import com.bayarsahintekin.data.entity.players.PlayersRemoteKeysDbData
 @Dao
 interface PlayersKeyDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveRemoteKey(keys: PlayersRemoteKeysDbData)
+     fun saveRemoteKey(keys: PlayersRemoteKeysDbData)
 
     @Query("SELECT * FROM players_remote_keys WHERE id=:id")
-    suspend fun getRemoteKeyByMovieId(id: Int): PlayersRemoteKeysDbData?
+     fun getRemoteKeyByMovieId(id: Int): PlayersRemoteKeysDbData?
 
     @Query("DELETE FROM players_remote_keys")
-    suspend fun clearRemoteKeys()
+     fun clearRemoteKeys()
 
     @Query("SELECT * FROM players_remote_keys WHERE id = (SELECT MAX(id) FROM players_remote_keys)")
-    suspend fun getLastRemoteKey(): PlayersRemoteKeysDbData?
+     fun getLastRemoteKey(): PlayersRemoteKeysDbData?
 
 }

@@ -8,19 +8,19 @@ import com.bayarsahintekin.domain.entity.TeamEntity
 @Entity(tableName = "teams")
 data class TeamsDbData(
     @ColumnInfo("id")
-    @PrimaryKey val id: Int = 0,
+    @PrimaryKey var id: Int = 0,
     @ColumnInfo("abbreviation")
-    val abbreviation: String= "",
+    var abbreviation: String= "",
     @ColumnInfo("city")
-    val city: String= "",
+    var city: String= "",
     @ColumnInfo("conference")
-    val conference: String = "",
+    var conference: String = "",
     @ColumnInfo("division")
-    val division: String = "",
+    var division: String = "",
     @ColumnInfo("fullName")
-    val fullName: String = "",
+    var fullName: String = "",
     @ColumnInfo("name")
-    val name: String = ""
+    var name: String = ""
 )
 
 fun TeamsDbData.toDomain() = TeamData(

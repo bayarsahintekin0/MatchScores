@@ -7,17 +7,17 @@ import com.bayarsahintekin.domain.entity.MetaDataEntity
 
 @Entity(tableName = "meta")
 data class MetaDbData(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
     @ColumnInfo("totalPages")
-    val totalPages: Int = 0,
+    var totalPages: Int = 0,
     @ColumnInfo("currentPage")
-    val currentPage: Int = 0,
+    var currentPage: Int = 0,
     @ColumnInfo("nextPage")
-    val nextPage: Int = 0,
+    var nextPage: Int = 0,
     @ColumnInfo("perPage")
-    val perPage: Int = 0,
+    var perPage: Int = 0,
     @ColumnInfo("totalCount")
-    val totalCount: Int = 0
+    var totalCount: Int = 0
 )
 
 fun MetaDbData.toDomain() = MetaData(

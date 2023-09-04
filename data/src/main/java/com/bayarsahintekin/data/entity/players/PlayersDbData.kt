@@ -8,14 +8,14 @@ import com.bayarsahintekin.domain.entity.TeamEntity
 
 @Entity(tableName = "players")
 data class PlayersDbData(
-    @PrimaryKey var id: Int? = null,
-    var firstName: String? = null,
-    var heightFeet: String? = null,
-    var heightInches: String? = null,
-    var lastName: String? = null,
-    var position: String? = null,
-    var team: TeamEntity? = null,
-    var weightPounds: String? = null
+    @PrimaryKey var id: Int? = 0,
+    var firstName: String? = "",
+    var heightFeet: String? = "",
+    var heightInches: String? = "",
+    var lastName: String? = "",
+    var position: String? = "",
+    var team: TeamEntity? = TeamEntity(0,"","","","","",""),
+    var weightPounds: String? = ""
 )
 
 fun PlayersDbData.toDomain() = PlayerEntity(

@@ -10,11 +10,11 @@ import com.bayarsahintekin.data.entity.teams.TeamsKeyDbData
 interface TeamsKeyDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveRemoteKey(keys: TeamsKeyDbData)
+     fun saveRemoteKey(keys: TeamsKeyDbData)
 
     @Query("DELETE FROM team_keys")
-    suspend fun clearRemoteKeys()
+     fun clearRemoteKeys()
 
     @Query("SELECT * FROM team_keys WHERE id = (SELECT MAX(id) FROM team_keys)")
-    suspend fun getLastRemoteKey(): TeamsKeyDbData?
+     fun getLastRemoteKey(): TeamsKeyDbData?
 }

@@ -11,6 +11,7 @@ import com.bayarsahintekin.domain.entity.PlayerListEntity
 import com.bayarsahintekin.domain.repository.PlayersRepository
 import com.bayarsahintekin.domain.utils.Result
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class PlayerRepositoryImpl(
@@ -19,15 +20,8 @@ class PlayerRepositoryImpl(
     private val remoteMediators: PlayersRemoteMediators
 ): PlayersRepository {
     @OptIn(ExperimentalPagingApi::class)
-    override suspend fun getPlayers(pageSize: Int): Flow<PagingData<PlayerEntity>> = Pager(
-        config = PagingConfig(
-            pageSize = pageSize,
-            enablePlaceholders = false
-        ),
-        remoteMediator = remoteMediators,
-        pagingSourceFactory = { local.players() }
-    ).flow.map { pagingData ->
-        pagingData.map { it.toDomain() }
+    override fun getPlayers(): Flow<List<PlayerEntity>> = flow {
+
     }
 
 

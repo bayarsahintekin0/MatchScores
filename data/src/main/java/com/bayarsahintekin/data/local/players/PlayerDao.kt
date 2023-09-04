@@ -16,12 +16,12 @@ interface PlayerDao {
     fun getPlayers(): List<PlayersDbData>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun savePlayers(players: List<PlayersDbData>)
+    fun savePlayers(players: List<PlayersDbData>)
 
     @Query("SELECT * FROM players WHERE id = :playerId")
-    suspend fun getPlayer(playerId: Int): PlayersDbData?
+    fun getPlayer(playerId: Int): PlayersDbData
 
     @Query("DELETE FROM players")
-    suspend fun clearPlayers()
+    fun clearPlayers()
 
 }
