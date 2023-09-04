@@ -41,7 +41,7 @@ import com.bayarsahintekin.matchscores.ui.components.teams.TeamsScreen
 fun NavigationGraph(navController: NavHostController) {
     val backPressDispatcher = LocalOnBackPressedDispatcherOwner.current
     NavHost(navController,
-        startDestination = BottomNavItem.Players.screen_route,
+        startDestination = BottomNavItem.Games.screen_route,
         modifier = Modifier.padding(bottom = 44.dp)) {
         composable(BottomNavItem.Stats.screen_route) {
             ProvideAppBarTitle {
