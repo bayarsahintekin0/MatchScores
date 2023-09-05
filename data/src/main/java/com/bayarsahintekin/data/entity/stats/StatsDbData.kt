@@ -15,6 +15,8 @@ import com.bayarsahintekin.data.entity.teams.toDomain
 import com.bayarsahintekin.domain.entity.GameEntity
 import com.bayarsahintekin.domain.entity.PlayerEntity
 import com.bayarsahintekin.domain.entity.StatsEntity
+import com.bayarsahintekin.domain.entity.StatsGameEntity
+import com.bayarsahintekin.domain.entity.StatsPlayerEntity
 import com.bayarsahintekin.domain.entity.TeamEntity
 
 @Entity(tableName = "stats")
@@ -32,13 +34,13 @@ data class StatsDbData(
     val ft_pct: Float = 0f,
     val fta: Int = 0,
     val ftm: Int = 0,
-    val game: GameEntity = GameEntity(0,"", TeamEntity(0,"","","","","",""),
-        0,0,false,0,"","", TeamEntity(0,"","","","","",""),
+    val game: StatsGameEntity = StatsGameEntity(0,"", 0,
+        0,0,false,0,"","", 0,
         0),
     val min: String = "",
     val oreb: Int = 0,
     val pf: Int = 0,
-    val player: PlayerEntity = PlayerEntity(0,"","","","","", TeamEntity(0,"","","","","",""),
+    val player: StatsPlayerEntity = StatsPlayerEntity(0,"","","","","", 0,
     ""),
     val pts: Int = 0,
     val reb: Int = 0,

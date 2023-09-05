@@ -8,10 +8,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 
-@Serializable
+
 data class PlayerData(
     var id: Int? = null,
-    @SerialName("first_name") var firstName: String? = "",
+    @SerializedName("first_name")
+    var firstName: String? = "",
     @SerializedName("height_feed")
     var heightFeet: String? = null,
     @SerializedName("height_inches")

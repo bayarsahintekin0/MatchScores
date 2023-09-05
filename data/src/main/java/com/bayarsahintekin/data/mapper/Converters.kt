@@ -9,6 +9,8 @@ import com.bayarsahintekin.data.entity.teams.TeamsDbData
 import com.bayarsahintekin.domain.entity.GameEntity
 import com.bayarsahintekin.domain.entity.PlayerEntity
 import com.bayarsahintekin.domain.entity.StatsEntity
+import com.bayarsahintekin.domain.entity.StatsGameEntity
+import com.bayarsahintekin.domain.entity.StatsPlayerEntity
 import com.bayarsahintekin.domain.entity.TeamEntity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -109,6 +111,19 @@ class GameTypeConverter {
 }
 
 class StatsTypeConverter {
+
+    @TypeConverter
+    fun statsPlayerEntityToString(app: StatsPlayerEntity): String = Gson().toJson(app)
+
+    @TypeConverter
+    fun stringToStatsPlayerEntity(string: String): StatsPlayerEntity = Gson().fromJson(string, StatsPlayerEntity::class.java)
+
+    @TypeConverter
+    fun statsGameEntityToString(app: StatsGameEntity): String = Gson().toJson(app)
+
+    @TypeConverter
+    fun stringToStatsGameEntity(string: String): StatsGameEntity = Gson().fromJson(string, StatsGameEntity::class.java)
+
     @TypeConverter
     fun statsEntityToString(app: StatsEntity): String = Gson().toJson(app)
 

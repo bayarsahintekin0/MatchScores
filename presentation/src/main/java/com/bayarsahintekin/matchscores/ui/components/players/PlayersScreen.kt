@@ -31,7 +31,6 @@ import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
 import com.bayarsahintekin.matchscores.ui.viewmodel.PlayersViewModel
 
 @SuppressLint("SuspiciousIndentation")
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PlayersScreen(playersViewModel: PlayersViewModel = hiltViewModel()) {
     val state = playersViewModel.state
