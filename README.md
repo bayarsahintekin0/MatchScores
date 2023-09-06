@@ -134,8 +134,8 @@ coming soon ...
 <!-- Roadmap -->
 ## :compass: Roadmap
 
-* [x] Todo 1
-* [ ] Todo 2
+* [x] Boilerplate Integration (Clean Architecture, MVVM)
+* [x] Jetpack Compose Integration
 
 Coming soon...
 
