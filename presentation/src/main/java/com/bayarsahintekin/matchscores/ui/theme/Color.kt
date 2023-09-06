@@ -61,3 +61,7 @@ val msDarkPrimaryInverse = Color(0xFF624000)
 val BlueGradient = "#5edeef".toColor()
 val YellowGradient = "#dce956".toColor()
 val PinkGradient = "#e98fc0".toColor()
+val TeamsBG = "#f5e5d7".toColor()
+
+val G1 = "#5A585A".toColor()
+val G2 = "#090947".toColor()
