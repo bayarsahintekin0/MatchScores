@@ -80,7 +80,10 @@ fun GameItem(game: GameEntity, onGameClicked: (id: Int) -> Unit) {
             formattedDate?.let { Text(text = it, modifier = Modifier.align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp)
             ) }
-            Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.Center) {
+                /**
+                 * Visitor Team
+                 */
                 Image(
                     painter = painterResource(id = TeamLogosObject.getTeamLogo(game.visitorTeam.abbreviation)),
                     contentDescription = null,
@@ -92,15 +95,20 @@ fun GameItem(game: GameEntity, onGameClicked: (id: Int) -> Unit) {
                 )
                 Text(
                     text = game.visitorTeam.name,
-                    fontSize = 18.sp,
+                    fontSize = 14.sp,
                     modifier = Modifier
                         .padding(8.dp)
                         .align(Alignment.CenterVertically)
                 )
+
+                /**
+                 * Scoreboard
+                 */
                 Card(
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(top = 8.dp, bottom = 8.dp),
+                    elevation = 8.dp
                 ) {
                     Text(
                         text = game.visitorTeamScore.toString() + " - " + game.homeTeamScore,
@@ -111,9 +119,12 @@ fun GameItem(game: GameEntity, onGameClicked: (id: Int) -> Unit) {
 
                     )
                 }
+                /**
+                 * Home Team
+                 */
                 Text(
                     text = game.homeTeam.name,
-                    fontSize = 18.sp,
+                    fontSize = 14.sp,
                     modifier = Modifier
                         .padding(8.dp)
                         .align(Alignment.CenterVertically)

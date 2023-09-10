@@ -76,7 +76,7 @@ fun TeamItem(item: TeamEntity,onTeamClicked: (teamId: Int) -> Unit) {
         border = BorderStroke(1.dp,Brush.horizontalGradient(
         arrayListOf(BlueGradient, YellowGradient, PinkGradient)
     ))) {
-        Column(Modifier.fillMaxSize().background(color = TeamsBG)) {
+        Column(Modifier.fillMaxSize()) {
             Image(
                 painter = painterResource(id = TeamLogosObject.getTeamLogo(item.abbreviation)),
                 contentDescription = item.name,
