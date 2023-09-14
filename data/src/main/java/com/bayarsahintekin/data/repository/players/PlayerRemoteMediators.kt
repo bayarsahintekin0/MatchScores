@@ -9,6 +9,7 @@ import com.bayarsahintekin.data.entity.players.PlayersDbData
 import com.bayarsahintekin.data.entity.players.PlayersRemoteKeysDbData
 import com.bayarsahintekin.domain.utils.getResult
 
+const val MOVIE_STARTING_PAGE_INDEX = 1
 @OptIn(ExperimentalPagingApi::class)
 class PlayerRemoteMediators(
     private val local: PlayerDataSource.Local,
@@ -34,14 +35,21 @@ class PlayerRemoteMediators(
                 local.clearRemoteKeys()
             }
 
-            val players = successResult.data
+            val players = successResult.data.data
 
-            val key = PlayersRemoteKeysDbData(prevPage = players.meta?.currentPage?.minus(1), nextPage = players.meta?.nextPage)
+            val endOfPaginationReached = players.isEmpty()
 
-            local.savePlayers(players.data)
+            val prevPage = if (page == MOVIE_STARTING_PAGE_INDEX) null else page - 1
+            val nextPage = if (endOfPaginationReached) null else page + 1
+
+            val key = PlayersRemoteKeysDbData(prevPage = prevPage, nextPage = nextPage)
+
+            local.savePlayers(players)
             local.saveRemoteKey(key)
 
-            return MediatorResult.Success(endOfPaginationReached = players.meta?.totalPages == players.meta?.currentPage)
+            Log.i("***","prev:$prevPage next:$nextPage ,endOf:$endOfPaginationReached")
+
+            return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         }, { errorResult ->
             return MediatorResult.Error(errorResult.error)
         })

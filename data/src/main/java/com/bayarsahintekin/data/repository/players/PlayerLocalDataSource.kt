@@ -31,7 +31,7 @@ class PlayerLocalDataSource(
     }
 
     override suspend fun getPlayer(playerId: Int): Result<PlayerEntity> = withContext(executor.asCoroutineDispatcher()) {
-        return@withContext playerDao.getPlayer(playerId = playerId)?.let {
+        return@withContext playerDao.getPlayer(playerId = playerId).let {
             Result.Success(it.toDomain())
         } ?: Result.Error(DataNotAvailableException())
     }

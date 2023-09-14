@@ -12,7 +12,6 @@ interface PlayerDataSource {
     interface Remote {
 
         suspend fun getPlayers(page: Int):Result<PlayerListEntity>
-        suspend fun getPlayers(idLid: List<Int>): Result<List<PlayerEntity>>
         //suspend fun getPlayer(movieId: Int): Result<PlayerEntity>
         //suspend fun search(query: String, page: Int, limit: Int):Result<List<PlayerEntity>>
 
@@ -21,7 +20,7 @@ interface PlayerDataSource {
     interface Local {
         fun players(): PagingSource<Int, PlayersDbData>
         suspend fun getPlayers(): Result<List<PlayerEntity>>
-        suspend fun getPlayer(movieId: Int): Result<PlayerEntity>
+        suspend fun getPlayer(playerId: Int): Result<PlayerEntity>
         suspend fun savePlayers(movieEntities: List<PlayerEntity>)
         suspend fun getLastRemoteKey(): PlayersRemoteKeysDbData?
         suspend fun saveRemoteKey(key: PlayersRemoteKeysDbData)

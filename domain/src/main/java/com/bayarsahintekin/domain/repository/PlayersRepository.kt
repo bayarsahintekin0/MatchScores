@@ -8,6 +8,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface PlayersRepository {
 
-    fun getPlayers(): Flow<List<PlayerEntity>>
+    fun players(): Flow<PagingData<PlayerEntity>>
     suspend fun getAllPlayers(page: Int): Result<PlayerListEntity>
 }

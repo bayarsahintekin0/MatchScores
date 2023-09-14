@@ -11,12 +11,9 @@ class PlayerRemoteDataSource (
     private val scoreService: ScoreServices
 ) : PlayerDataSource.Remote {
 
-
-
-
     override suspend fun getPlayers(page: Int): Result<PlayerListEntity>  =
         try {
-            val result = scoreService.getAllPlayers()
+            val result = scoreService.getAllPlayers(page)
             Result.Success(
                 PlayerListData(
                     data = result.data,
@@ -27,7 +24,4 @@ class PlayerRemoteDataSource (
             Result.Error(e)
         }
 
-    override suspend fun getPlayers(idList: List<Int>): Result<List<PlayerEntity>> {
-        TODO("Not yet implemented")
-    }
 }
