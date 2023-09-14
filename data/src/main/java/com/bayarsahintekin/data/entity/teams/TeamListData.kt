@@ -1,7 +1,7 @@
 package com.bayarsahintekin.data.entity.teams
 import com.bayarsahintekin.data.entity.MetaData
 import com.bayarsahintekin.data.entity.toDomain
-import com.bayarsahintekin.domain.entity.TeamListEntity
+import com.bayarsahintekin.domain.entity.teams.TeamListEntity
 
 data class TeamListData(
     val data: List<TeamData>,

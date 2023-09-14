@@ -6,7 +6,7 @@ import com.bayarsahintekin.data.entity.players.PlayersRemoteKeysDbData
 import com.bayarsahintekin.data.local.teams.TeamDao
 import com.bayarsahintekin.data.local.teams.TeamsKeyDao
 import com.bayarsahintekin.data.utils.DiskExecutor
-import com.bayarsahintekin.domain.entity.PlayerEntity
+import com.bayarsahintekin.domain.entity.players.PlayerEntity
 import com.bayarsahintekin.domain.utils.Result
 
 class TeamsLocalDataSource(

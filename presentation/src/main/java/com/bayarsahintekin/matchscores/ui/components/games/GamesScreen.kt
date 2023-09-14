@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -11,9 +12,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,7 +26,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.bayarsahintekin.domain.entity.GameEntity
+import androidx.paging.LoadState
+import androidx.paging.PagingState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemKey
+import com.bayarsahintekin.domain.entity.games.GameEntity
+import com.bayarsahintekin.domain.entity.players.PlayerEntity
+import com.bayarsahintekin.matchscores.ui.components.players.PlayerItem
 import com.bayarsahintekin.matchscores.ui.theme.BlueGradient
 import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
 import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
@@ -32,30 +43,43 @@ import java.text.SimpleDateFormat
 
 @Composable
 fun GamesScreen(gamesViewModel: GamesViewModel = hiltViewModel()) {
-    val state = gamesViewModel.state
-    GameListMainScreen(state = state, gamesViewModel, onGameClicked = {
+
+    val items = gamesViewModel.games.collectAsLazyPagingItems()
+    GameListMainScreen(items = items, gamesViewModel, onGameClicked = {
 
     })
 }
 
 @Composable
 fun GameListMainScreen(
-    state: GamesViewModel.GameScreenState,
+    items: LazyPagingItems<GameEntity>,
     gamesViewModel: GamesViewModel,
     onGameClicked: (id: Int) -> Unit
 ) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (items.loadState.refresh is LoadState.Loading) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        } else {
+            LazyColumn(
+                contentPadding = PaddingValues(8.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                items(count = items.itemCount,
+                    key = items.itemKey { it.id!! }
+                ) {
+                    val game = items[it]
+                    if (game != null) {
+                        GameItem(game = game, onGameClicked = onGameClicked)
+                    }
+                }
 
-    LazyColumn(
-        contentPadding = PaddingValues(8.dp),
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        items(state.items.size) { i ->
-            val item = state.items[i]
-            if (i >= state.items.size - 1 && !state.endReached && !state.isLoading) {
-                gamesViewModel.loadNextItems()
+                item {
+                    if (items.loadState.append is LoadState.Loading) {
+                        CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+                    }
+                }
             }
-            GameItem(game = item, onGameClicked = onGameClicked)
         }
     }
 }

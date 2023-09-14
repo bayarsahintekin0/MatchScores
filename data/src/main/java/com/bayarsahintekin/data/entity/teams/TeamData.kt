@@ -1,6 +1,6 @@
 package com.bayarsahintekin.data.entity.teams
 
-import com.bayarsahintekin.domain.entity.TeamEntity
+import com.bayarsahintekin.domain.entity.teams.TeamEntity
 import com.google.gson.annotations.SerializedName
 
 data class TeamData(

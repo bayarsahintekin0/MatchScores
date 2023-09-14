@@ -1,11 +1,9 @@
 package com.bayarsahintekin.domain.repository
 
-import com.bayarsahintekin.domain.entity.GameEntity
-import com.bayarsahintekin.domain.entity.GameListEntity
-import com.bayarsahintekin.domain.utils.Result
+import androidx.paging.PagingData
+import com.bayarsahintekin.domain.entity.games.GameEntity
 import kotlinx.coroutines.flow.Flow
 
 interface GameRepository {
-    fun getGames(): Flow<List<GameEntity>>
-    suspend fun getAllGames(page: Int): Result<GameListEntity>
+    fun getGames(): Flow<PagingData<GameEntity>>
 }

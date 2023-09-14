@@ -1,14 +1,10 @@
 package com.bayarsahintekin.data.entity.stats
 
-import com.bayarsahintekin.data.entity.games.GameData
-import com.bayarsahintekin.data.entity.games.toDomain
-import com.bayarsahintekin.data.entity.players.PlayerData
-import com.bayarsahintekin.data.entity.players.toDomain
 import com.bayarsahintekin.data.entity.teams.TeamData
 import com.bayarsahintekin.data.entity.teams.toDomain
-import com.bayarsahintekin.domain.entity.StatsEntity
-import com.bayarsahintekin.domain.entity.StatsGameEntity
-import com.bayarsahintekin.domain.entity.StatsPlayerEntity
+import com.bayarsahintekin.domain.entity.stats.StatsEntity
+import com.bayarsahintekin.domain.entity.stats.StatsGameEntity
+import com.bayarsahintekin.domain.entity.stats.StatsPlayerEntity
 import com.google.gson.annotations.SerializedName
 
 data class StatsData(

@@ -4,8 +4,8 @@ import com.bayarsahintekin.data.entity.teams.TeamData
 import com.bayarsahintekin.data.entity.teams.TeamListData
 import com.bayarsahintekin.data.entity.teams.toDomain
 import com.bayarsahintekin.data.remote.ScoreServices
-import com.bayarsahintekin.domain.entity.TeamEntity
-import com.bayarsahintekin.domain.entity.TeamListEntity
+import com.bayarsahintekin.domain.entity.teams.TeamEntity
+import com.bayarsahintekin.domain.entity.teams.TeamListEntity
 import com.bayarsahintekin.domain.utils.Result
 
 /**

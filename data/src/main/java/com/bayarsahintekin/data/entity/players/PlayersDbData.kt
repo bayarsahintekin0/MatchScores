@@ -3,10 +3,8 @@ package com.bayarsahintekin.data.entity.players
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.bayarsahintekin.data.entity.teams.toDomain
-import com.bayarsahintekin.domain.entity.PlayerEntity
-import com.bayarsahintekin.domain.entity.TeamEntity
-import com.google.gson.annotations.SerializedName
+import com.bayarsahintekin.domain.entity.players.PlayerEntity
+import com.bayarsahintekin.domain.entity.teams.TeamEntity
 
 @Entity(tableName = "players")
 data class PlayersDbData(

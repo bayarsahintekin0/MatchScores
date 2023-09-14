@@ -9,7 +9,7 @@ import com.bayarsahintekin.data.local.players.PlayerDao
 import com.bayarsahintekin.data.local.players.PlayersKeyDao
 import com.bayarsahintekin.data.mapper.toDbData
 import com.bayarsahintekin.data.utils.DiskExecutor
-import com.bayarsahintekin.domain.entity.PlayerEntity
+import com.bayarsahintekin.domain.entity.players.PlayerEntity
 import com.bayarsahintekin.domain.utils.Result
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.withContext

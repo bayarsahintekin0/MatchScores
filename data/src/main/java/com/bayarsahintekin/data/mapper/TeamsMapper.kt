@@ -4,8 +4,8 @@ import com.bayarsahintekin.data.entity.teams.ListResponseDbData
 import com.bayarsahintekin.data.entity.MetaDbData
 import com.bayarsahintekin.data.entity.teams.TeamsDbData
 import com.bayarsahintekin.domain.entity.MetaDataEntity
-import com.bayarsahintekin.domain.entity.TeamEntity
-import com.bayarsahintekin.domain.entity.TeamListEntity
+import com.bayarsahintekin.domain.entity.teams.TeamEntity
+import com.bayarsahintekin.domain.entity.teams.TeamListEntity
 
 fun TeamEntity.toDbData() = TeamsDbData(
     id = id,

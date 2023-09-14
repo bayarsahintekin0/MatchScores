@@ -1,6 +1,6 @@
 package com.bayarsahintekin.domain.usecase
 
-import com.bayarsahintekin.domain.entity.TeamListEntity
+import com.bayarsahintekin.domain.entity.teams.TeamListEntity
 import com.bayarsahintekin.domain.repository.TeamRepository
 import com.bayarsahintekin.domain.utils.Result
 

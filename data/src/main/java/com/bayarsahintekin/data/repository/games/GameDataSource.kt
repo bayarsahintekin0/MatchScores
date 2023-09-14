@@ -4,17 +4,14 @@ import androidx.paging.PagingSource
 import com.bayarsahintekin.data.entity.games.GameDbData
 
 import com.bayarsahintekin.data.entity.games.GamesRemoteKeysDbData
-import com.bayarsahintekin.domain.entity.GameEntity
-import com.bayarsahintekin.domain.entity.GameListEntity
+import com.bayarsahintekin.domain.entity.games.GameEntity
+import com.bayarsahintekin.domain.entity.games.GameListEntity
 import com.bayarsahintekin.domain.utils.Result
 
 interface GameDataSource {
 
     interface Remote {
         suspend fun getGames(page: Int): Result<GameListEntity>
-        suspend fun getGames(idLid: List<Int>): Result<List<GameEntity>>
-        //suspend fun getPlayer(movieId: Int): Result<PlayerEntity>
-        //suspend fun search(query: String, page: Int, limit: Int):Result<List<PlayerEntity>>
 
     }
 

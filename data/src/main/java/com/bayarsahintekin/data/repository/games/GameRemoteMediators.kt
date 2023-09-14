@@ -7,6 +7,8 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.bayarsahintekin.data.entity.games.GameDbData
 import com.bayarsahintekin.data.entity.games.GamesRemoteKeysDbData
+import com.bayarsahintekin.data.entity.players.PlayersRemoteKeysDbData
+import com.bayarsahintekin.data.repository.players.MOVIE_STARTING_PAGE_INDEX
 import com.bayarsahintekin.domain.utils.getResult
 
 @OptIn(ExperimentalPagingApi::class)
@@ -34,14 +36,19 @@ class GameRemoteMediators (
                 local.clearRemoteKeys()
             }
 
-            val players = successResult.data
+            val games = successResult.data.data
 
-            val key = GamesRemoteKeysDbData(prevPage = players.meta?.currentPage?.minus(1), nextPage = players.meta?.nextPage)
+            val endOfPaginationReached = games.isEmpty()
 
-            local.saveGames(players.data)
+            val prevPage = if (page == MOVIE_STARTING_PAGE_INDEX) null else page - 1
+            val nextPage = if (endOfPaginationReached) null else page + 1
+
+            val key = GamesRemoteKeysDbData(prevPage = prevPage, nextPage = nextPage)
+
+            local.saveGames(games)
             local.saveRemoteKey(key)
 
-            return MediatorResult.Success(endOfPaginationReached = players.meta?.totalPages == players.meta?.currentPage)
+            return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         }, { errorResult ->
             return MediatorResult.Error(errorResult.error)
         })

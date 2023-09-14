@@ -1,4 +1,6 @@
-package com.bayarsahintekin.domain.entity
+package com.bayarsahintekin.domain.entity.players
+
+import com.bayarsahintekin.domain.entity.teams.TeamEntity
 
 data class PlayerEntity(
     var id: Int?,

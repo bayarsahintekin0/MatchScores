@@ -2,7 +2,7 @@ package com.bayarsahintekin.data.entity.games
 
 import com.bayarsahintekin.data.entity.teams.TeamData
 import com.bayarsahintekin.data.entity.teams.toDomain
-import com.bayarsahintekin.domain.entity.GameEntity
+import com.bayarsahintekin.domain.entity.games.GameEntity
 import com.google.gson.annotations.SerializedName
 
 data class GameData(

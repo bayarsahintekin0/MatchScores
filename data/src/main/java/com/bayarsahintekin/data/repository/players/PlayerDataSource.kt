@@ -3,8 +3,8 @@ package com.bayarsahintekin.data.repository.players
 import androidx.paging.PagingSource
 import com.bayarsahintekin.data.entity.players.PlayersDbData
 import com.bayarsahintekin.data.entity.players.PlayersRemoteKeysDbData
-import com.bayarsahintekin.domain.entity.PlayerEntity
-import com.bayarsahintekin.domain.entity.PlayerListEntity
+import com.bayarsahintekin.domain.entity.players.PlayerEntity
+import com.bayarsahintekin.domain.entity.players.PlayerListEntity
 import com.bayarsahintekin.domain.utils.Result
 
 interface PlayerDataSource {

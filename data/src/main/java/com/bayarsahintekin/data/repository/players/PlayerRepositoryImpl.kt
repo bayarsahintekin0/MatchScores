@@ -6,12 +6,9 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.bayarsahintekin.data.entity.players.toDomain
-import com.bayarsahintekin.domain.entity.PlayerEntity
-import com.bayarsahintekin.domain.entity.PlayerListEntity
+import com.bayarsahintekin.domain.entity.players.PlayerEntity
 import com.bayarsahintekin.domain.repository.PlayersRepository
-import com.bayarsahintekin.domain.utils.Result
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class PlayerRepositoryImpl(
@@ -32,7 +29,4 @@ class PlayerRepositoryImpl(
             it.toDomain()
         }
     }
-
-
-    override suspend fun getAllPlayers(page: Int): Result<PlayerListEntity> = remote.getPlayers(page)
 }

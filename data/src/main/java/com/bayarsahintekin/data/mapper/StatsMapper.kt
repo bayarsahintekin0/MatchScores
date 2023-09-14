@@ -1,7 +1,7 @@
 package com.bayarsahintekin.data.mapper
 
 import com.bayarsahintekin.data.entity.stats.StatsDbData
-import com.bayarsahintekin.domain.entity.StatsEntity
+import com.bayarsahintekin.domain.entity.stats.StatsEntity
 
 fun StatsEntity.toDbData() = StatsDbData(
     id = id,

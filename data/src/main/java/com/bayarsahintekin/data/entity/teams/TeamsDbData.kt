@@ -3,7 +3,7 @@ package com.bayarsahintekin.data.entity.teams
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.bayarsahintekin.domain.entity.TeamEntity
+import com.bayarsahintekin.domain.entity.teams.TeamEntity
 
 @Entity(tableName = "teams")
 data class TeamsDbData(

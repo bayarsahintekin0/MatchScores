@@ -8,7 +8,7 @@ import com.bayarsahintekin.data.entity.MetaDbData
 import com.bayarsahintekin.data.entity.toData
 import com.bayarsahintekin.data.mapper.MetaTypeConverter
 import com.bayarsahintekin.data.mapper.TeamsConverters
-import com.bayarsahintekin.domain.entity.TeamListEntity
+import com.bayarsahintekin.domain.entity.teams.TeamListEntity
 
 @Entity(tableName = "list_response")
 data class ListResponseDbData(

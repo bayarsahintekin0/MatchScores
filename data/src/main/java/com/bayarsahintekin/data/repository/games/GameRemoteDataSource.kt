@@ -3,8 +3,7 @@ package com.bayarsahintekin.data.repository.games
 import com.bayarsahintekin.data.entity.games.GameListData
 import com.bayarsahintekin.data.entity.games.toDomain
 import com.bayarsahintekin.data.remote.ScoreServices
-import com.bayarsahintekin.domain.entity.GameEntity
-import com.bayarsahintekin.domain.entity.GameListEntity
+import com.bayarsahintekin.domain.entity.games.GameListEntity
 import com.bayarsahintekin.domain.utils.Result
 
 class GameRemoteDataSource ( private val scoreService: ScoreServices
@@ -22,8 +21,4 @@ class GameRemoteDataSource ( private val scoreService: ScoreServices
         } catch (e: Exception) {
             Result.Error(e)
         }
-
-    override suspend fun getGames(idLid: List<Int>): Result<List<GameEntity>> {
-        TODO("Not yet implemented")
-    }
 }

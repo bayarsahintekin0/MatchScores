@@ -2,7 +2,6 @@ package com.bayarsahintekin.matchscores.ui.components.players
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
@@ -30,7 +28,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
-import com.bayarsahintekin.domain.entity.PlayerEntity
+import com.bayarsahintekin.domain.entity.players.PlayerEntity
 import com.bayarsahintekin.matchscores.R
 import com.bayarsahintekin.matchscores.ui.theme.BlueGradient
 import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
@@ -40,12 +38,14 @@ import com.bayarsahintekin.matchscores.ui.viewmodel.PlayersViewModel
 @SuppressLint("SuspiciousIndentation")
 @Composable
 fun PlayersScreen(playersViewModel: PlayersViewModel = hiltViewModel()) {
+
     val items = playersViewModel.players.collectAsLazyPagingItems()
     PlayerLisMainScreen(items, playersViewModel,onPlayerClicked = {})
+
 }
 
 @Composable
-fun PlayerLisMainScreen(items: LazyPagingItems<PlayerEntity>,playersViewModel: PlayersViewModel, onPlayerClicked: (id: Int)-> Unit){
+fun PlayerLisMainScreen(items: LazyPagingItems<PlayerEntity>, playersViewModel: PlayersViewModel, onPlayerClicked: (id: Int)-> Unit){
 
     Box(modifier = Modifier.fillMaxSize()) {
         if (items.loadState.refresh is LoadState.Loading) {
@@ -75,18 +75,12 @@ fun PlayerLisMainScreen(items: LazyPagingItems<PlayerEntity>,playersViewModel: P
             }
         }
     }
-
-
-
-
-
-
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun PlayerItem(player: PlayerEntity,onPlayerClicked: (id: Int)-> Unit){
+fun PlayerItem(player: PlayerEntity, onPlayerClicked: (id: Int)-> Unit){
     Card(modifier = Modifier.padding(4.dp),
         onClick = {
             player.id?.let { onPlayerClicked.invoke(it) }

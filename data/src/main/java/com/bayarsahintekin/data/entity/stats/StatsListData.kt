@@ -2,7 +2,7 @@ package com.bayarsahintekin.data.entity.stats
 
 import com.bayarsahintekin.data.entity.MetaData
 import com.bayarsahintekin.data.entity.toDomain
-import com.bayarsahintekin.domain.entity.StatsListEntity
+import com.bayarsahintekin.domain.entity.stats.StatsListEntity
 
 data class StatsListData(
     val data: List<StatsData> = arrayListOf(),

@@ -1,4 +1,4 @@
-package com.bayarsahintekin.domain.entity
+package com.bayarsahintekin.domain.entity.stats
 
 class StatsPlayerEntity (
     var id: Int,

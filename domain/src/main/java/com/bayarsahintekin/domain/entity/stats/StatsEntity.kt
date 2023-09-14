@@ -1,4 +1,6 @@
-package com.bayarsahintekin.domain.entity
+package com.bayarsahintekin.domain.entity.stats
+
+import com.bayarsahintekin.domain.entity.teams.TeamEntity
 
 data class StatsEntity(
     val id: Int,

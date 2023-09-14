@@ -1,23 +1,11 @@
 package com.bayarsahintekin.data.entity.stats
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.bayarsahintekin.data.entity.games.GameData
-import com.bayarsahintekin.data.entity.games.GameDbData
-import com.bayarsahintekin.data.entity.games.toDomain
-import com.bayarsahintekin.data.entity.players.PlayerData
-import com.bayarsahintekin.data.entity.players.PlayersDbData
-import com.bayarsahintekin.data.entity.players.toDomain
-import com.bayarsahintekin.data.entity.teams.TeamData
-import com.bayarsahintekin.data.entity.teams.TeamsDbData
-import com.bayarsahintekin.data.entity.teams.toDomain
-import com.bayarsahintekin.domain.entity.GameEntity
-import com.bayarsahintekin.domain.entity.PlayerEntity
-import com.bayarsahintekin.domain.entity.StatsEntity
-import com.bayarsahintekin.domain.entity.StatsGameEntity
-import com.bayarsahintekin.domain.entity.StatsPlayerEntity
-import com.bayarsahintekin.domain.entity.TeamEntity
+import com.bayarsahintekin.domain.entity.stats.StatsEntity
+import com.bayarsahintekin.domain.entity.stats.StatsGameEntity
+import com.bayarsahintekin.domain.entity.stats.StatsPlayerEntity
+import com.bayarsahintekin.domain.entity.teams.TeamEntity
 
 @Entity(tableName = "stats")
 data class StatsDbData(

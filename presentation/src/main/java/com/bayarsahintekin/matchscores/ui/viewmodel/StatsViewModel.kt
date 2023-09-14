@@ -4,11 +4,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
-import com.bayarsahintekin.domain.entity.GameEntity
-import com.bayarsahintekin.domain.entity.GameListEntity
-import com.bayarsahintekin.domain.entity.StatsEntity
-import com.bayarsahintekin.domain.entity.StatsListEntity
-import com.bayarsahintekin.domain.repository.StatsRepository
+import com.bayarsahintekin.domain.entity.stats.StatsEntity
+import com.bayarsahintekin.domain.entity.stats.StatsListEntity
 import com.bayarsahintekin.domain.usecase.StatsUseCase
 import com.bayarsahintekin.domain.utils.Result
 import com.bayarsahintekin.domain.utils.onError

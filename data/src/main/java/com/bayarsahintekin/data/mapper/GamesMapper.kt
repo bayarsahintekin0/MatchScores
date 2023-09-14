@@ -1,7 +1,7 @@
 package com.bayarsahintekin.data.mapper
 
 import com.bayarsahintekin.data.entity.games.GameDbData
-import com.bayarsahintekin.domain.entity.GameEntity
+import com.bayarsahintekin.domain.entity.games.GameEntity
 
 fun GameEntity.toDbData() = GameDbData(
     id = id,

@@ -1,4 +1,6 @@
-package com.bayarsahintekin.domain.entity
+package com.bayarsahintekin.domain.entity.games
+
+import com.bayarsahintekin.domain.entity.teams.TeamEntity
 
 class GameEntity (
     val id: Int,

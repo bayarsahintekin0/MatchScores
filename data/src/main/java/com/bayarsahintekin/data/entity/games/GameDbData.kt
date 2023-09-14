@@ -3,10 +3,8 @@ package com.bayarsahintekin.data.entity.games
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.bayarsahintekin.data.entity.teams.TeamsDbData
-import com.bayarsahintekin.data.entity.teams.toDomain
-import com.bayarsahintekin.domain.entity.GameEntity
-import com.bayarsahintekin.domain.entity.TeamEntity
+import com.bayarsahintekin.domain.entity.games.GameEntity
+import com.bayarsahintekin.domain.entity.teams.TeamEntity
 
 @Entity(tableName = "games")
 data class GameDbData(
@@ -19,7 +17,7 @@ data class GameDbData(
     val season: Int = 2012,
     val status: String = "",
     val time: String = "",
-    @ColumnInfo("visitor_team") val visitorTeam:TeamEntity = TeamEntity(0,"","","","","",""),
+    @ColumnInfo("visitor_team") val visitorTeam: TeamEntity = TeamEntity(0,"","","","","",""),
     @ColumnInfo("visitor_team_score") val visitorTeamScore: Int = 0
 )
 

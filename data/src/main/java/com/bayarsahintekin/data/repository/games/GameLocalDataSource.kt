@@ -9,7 +9,7 @@ import com.bayarsahintekin.data.local.games.GameDao
 import com.bayarsahintekin.data.local.games.GameRemoteKeysDao
 import com.bayarsahintekin.data.mapper.toDbData
 import com.bayarsahintekin.data.utils.DiskExecutor
-import com.bayarsahintekin.domain.entity.GameEntity
+import com.bayarsahintekin.domain.entity.games.GameEntity
 import com.bayarsahintekin.domain.utils.Result
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.withContext

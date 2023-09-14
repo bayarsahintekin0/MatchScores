@@ -2,11 +2,8 @@ package com.bayarsahintekin.data.entity.players
 
 import com.bayarsahintekin.data.entity.teams.TeamData
 import com.bayarsahintekin.data.entity.teams.toDomain
-import com.bayarsahintekin.domain.entity.PlayerEntity
+import com.bayarsahintekin.domain.entity.players.PlayerEntity
 import com.google.gson.annotations.SerializedName
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
 
 
 data class PlayerData(

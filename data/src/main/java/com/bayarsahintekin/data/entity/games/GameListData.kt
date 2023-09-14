@@ -2,7 +2,7 @@ package com.bayarsahintekin.data.entity.games
 
 import com.bayarsahintekin.data.entity.MetaData
 import com.bayarsahintekin.data.entity.toDomain
-import com.bayarsahintekin.domain.entity.GameListEntity
+import com.bayarsahintekin.domain.entity.games.GameListEntity
 data class GameListData(
     val data: List<GameData>,
     val meta: MetaData

@@ -3,8 +3,8 @@ package com.bayarsahintekin.data.repository.stats
 import androidx.paging.PagingSource
 import com.bayarsahintekin.data.entity.stats.StatsDbData
 import com.bayarsahintekin.data.entity.stats.StatsRemoteKeysDbData
-import com.bayarsahintekin.domain.entity.StatsEntity
-import com.bayarsahintekin.domain.entity.StatsListEntity
+import com.bayarsahintekin.domain.entity.stats.StatsEntity
+import com.bayarsahintekin.domain.entity.stats.StatsListEntity
 import com.bayarsahintekin.domain.utils.Result
 
 interface StatsDataSource {

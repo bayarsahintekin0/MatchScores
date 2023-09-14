@@ -1,4 +1,4 @@
-package com.bayarsahintekin.domain.entity
+package com.bayarsahintekin.domain.entity.stats
 
 class StatsGameEntity(
     val id: Int,

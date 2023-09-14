@@ -1,4 +1,4 @@
-package com.bayarsahintekin.domain.entity
+package com.bayarsahintekin.domain.entity.teams
 
 data class TeamEntity(
     val id: Int,

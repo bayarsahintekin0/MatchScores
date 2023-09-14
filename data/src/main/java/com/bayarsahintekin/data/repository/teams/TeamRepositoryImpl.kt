@@ -1,7 +1,7 @@
 package com.bayarsahintekin.data.repository.teams
 
-import com.bayarsahintekin.domain.entity.TeamEntity
-import com.bayarsahintekin.domain.entity.TeamListEntity
+import com.bayarsahintekin.domain.entity.teams.TeamEntity
+import com.bayarsahintekin.domain.entity.teams.TeamListEntity
 import com.bayarsahintekin.domain.repository.TeamRepository
 import com.bayarsahintekin.domain.utils.Result
 

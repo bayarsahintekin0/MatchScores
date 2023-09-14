@@ -3,11 +3,9 @@ package com.bayarsahintekin.data.repository.teams
 import androidx.paging.PagingSource
 import com.bayarsahintekin.data.entity.players.PlayersDbData
 import com.bayarsahintekin.data.entity.players.PlayersRemoteKeysDbData
-import com.bayarsahintekin.data.entity.teams.TeamsKeyDbData
-import com.bayarsahintekin.domain.entity.PlayerEntity
-import com.bayarsahintekin.domain.entity.PlayerListEntity
-import com.bayarsahintekin.domain.entity.TeamEntity
-import com.bayarsahintekin.domain.entity.TeamListEntity
+import com.bayarsahintekin.domain.entity.players.PlayerEntity
+import com.bayarsahintekin.domain.entity.teams.TeamEntity
+import com.bayarsahintekin.domain.entity.teams.TeamListEntity
 import com.bayarsahintekin.domain.utils.Result
 
 interface TeamDataSource {

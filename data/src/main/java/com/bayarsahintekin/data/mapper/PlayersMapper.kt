@@ -1,7 +1,7 @@
 package com.bayarsahintekin.data.mapper
 
 import com.bayarsahintekin.data.entity.players.PlayersDbData
-import com.bayarsahintekin.domain.entity.PlayerEntity
+import com.bayarsahintekin.domain.entity.players.PlayerEntity
 
 fun PlayerEntity.toDbData() = PlayersDbData(
     id = id,

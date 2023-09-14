@@ -2,7 +2,7 @@ package com.bayarsahintekin.matchscores.ui.viewmodel
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.viewModelScope
-import com.bayarsahintekin.domain.entity.TeamEntity
+import com.bayarsahintekin.domain.entity.teams.TeamEntity
 import com.bayarsahintekin.domain.usecase.TeamUseCase
 import com.bayarsahintekin.domain.utils.Result
 import com.bayarsahintekin.domain.utils.onError

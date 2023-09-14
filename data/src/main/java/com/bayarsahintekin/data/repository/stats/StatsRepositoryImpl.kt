@@ -1,8 +1,6 @@
 package com.bayarsahintekin.data.repository.stats
 
-import com.bayarsahintekin.domain.entity.GameEntity
-import com.bayarsahintekin.domain.entity.StatsEntity
-import com.bayarsahintekin.domain.repository.GameRepository
+import com.bayarsahintekin.domain.entity.stats.StatsEntity
 import com.bayarsahintekin.domain.repository.StatsRepository
 import kotlinx.coroutines.flow.Flow
 

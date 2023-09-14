@@ -3,8 +3,7 @@ package com.bayarsahintekin.data.repository.players
 import com.bayarsahintekin.data.entity.players.PlayerListData
 import com.bayarsahintekin.data.entity.players.toDomain
 import com.bayarsahintekin.data.remote.ScoreServices
-import com.bayarsahintekin.domain.entity.PlayerEntity
-import com.bayarsahintekin.domain.entity.PlayerListEntity
+import com.bayarsahintekin.domain.entity.players.PlayerListEntity
 import com.bayarsahintekin.domain.utils.Result
 
 class PlayerRemoteDataSource (
