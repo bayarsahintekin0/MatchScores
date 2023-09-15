@@ -27,7 +27,8 @@ import com.bayarsahintekin.data.repository.stats.StatsRepositoryImpl
 import com.bayarsahintekin.data.repository.teams.TeamDataSource
 import com.bayarsahintekin.data.repository.teams.TeamRemoteDataSource
 import com.bayarsahintekin.data.repository.teams.TeamRepositoryImpl
-import com.bayarsahintekin.data.repository.teams.TeamsLocalDataSource
+import com.bayarsahintekin.data.repository.teams.TeamLocalDataSource
+import com.bayarsahintekin.data.repository.teams.TeamRemoteMediator
 import com.bayarsahintekin.data.utils.DiskExecutor
 import com.bayarsahintekin.domain.repository.GameRepository
 import com.bayarsahintekin.domain.repository.PlayersRepository
@@ -53,9 +54,9 @@ class DataModule {
     fun provideTeamRepository(
         teamRemote: TeamDataSource.Remote,
         teamLocal: TeamDataSource.Local,
-        //teamRemoteMediator: TeamRemoteMediator
+        teamRemoteMediator: TeamRemoteMediator
     ): TeamRepository {
-        return TeamRepositoryImpl(teamRemote, teamLocal)
+        return TeamRepositoryImpl(teamRemote, teamLocal,teamRemoteMediator)
     }
 
     @Provides
@@ -95,7 +96,7 @@ class DataModule {
         teamDao: TeamDao,
         teamKeyDao: TeamsKeyDao,
     ): TeamDataSource.Local {
-        return TeamsLocalDataSource(executor, teamDao, teamKeyDao)
+        return TeamLocalDataSource(executor, teamDao, teamKeyDao)
     }
 
     @Provides
@@ -124,14 +125,14 @@ class DataModule {
         return StatsLocalDataSource(executor,statDao,statRemoteKeyDao )
     }
 
-   /* @Provides
+    @Provides
     @Singleton
     fun provideTeamMediator(
         teamLocalDataSource: TeamDataSource.Local,
         teamRemoteDataSource: TeamDataSource.Remote
     ): TeamRemoteMediator {
         return TeamRemoteMediator(teamLocalDataSource, teamRemoteDataSource)
-    }*/
+    }
 
     @Provides
     @Singleton

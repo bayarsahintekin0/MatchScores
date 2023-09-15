@@ -16,7 +16,7 @@ import com.bayarsahintekin.data.mapper.TeamsConverters
 
 @Database(
     entities = [StatsDbData::class, StatsRemoteKeysDbData::class],
-    version = 2,
+    version = 4,
     exportSchema = false
 )
 @TypeConverters(

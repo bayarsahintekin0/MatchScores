@@ -7,10 +7,9 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.bayarsahintekin.data.entity.games.GameDbData
 import com.bayarsahintekin.data.entity.games.GamesRemoteKeysDbData
-import com.bayarsahintekin.data.entity.players.PlayersRemoteKeysDbData
-import com.bayarsahintekin.data.repository.players.MOVIE_STARTING_PAGE_INDEX
 import com.bayarsahintekin.domain.utils.getResult
 
+const val GAME_STARTING_PAGE_INDEX = 1
 @OptIn(ExperimentalPagingApi::class)
 class GameRemoteMediators (
     private val local: GameDataSource.Local,
@@ -40,7 +39,7 @@ class GameRemoteMediators (
 
             val endOfPaginationReached = games.isEmpty()
 
-            val prevPage = if (page == MOVIE_STARTING_PAGE_INDEX) null else page - 1
+            val prevPage = if (page == GAME_STARTING_PAGE_INDEX) null else page - 1
             val nextPage = if (endOfPaginationReached) null else page + 1
 
             val key = GamesRemoteKeysDbData(prevPage = prevPage, nextPage = nextPage)

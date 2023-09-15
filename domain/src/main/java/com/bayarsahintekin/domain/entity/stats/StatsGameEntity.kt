@@ -9,7 +9,7 @@ class StatsGameEntity(
     val postseason: Boolean,
     val season: Int,
     val status: String,
-    val time: String,
+    val time: String? = "0",
     val visitor_team_id: Int,
     val visitor_team_score: Int
 )

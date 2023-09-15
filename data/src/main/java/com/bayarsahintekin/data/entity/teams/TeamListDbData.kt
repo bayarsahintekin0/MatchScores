@@ -22,6 +22,6 @@ data class ListResponseDbData(
 )
 
 fun ListResponseDbData.toDomain() = TeamListEntity(
-    data = data.map { it.toData() },
+    data = data.map { it.toDomain() },
     meta = meta.toData()
 )

@@ -9,9 +9,9 @@ import com.bayarsahintekin.data.entity.teams.TeamsDbData
 import com.bayarsahintekin.data.entity.teams.TeamsKeyDbData
 import com.bayarsahintekin.domain.utils.getResult
 
-//const val MOVIE_STARTING_PAGE_INDEX = 1
+const val MOVIE_STARTING_PAGE_INDEX = 1
 
-/*@OptIn(ExperimentalPagingApi::class)
+@OptIn(ExperimentalPagingApi::class)
 class TeamRemoteMediator(
     private val local: TeamDataSource.Local,
     private val remote: TeamDataSource.Remote
@@ -29,16 +29,16 @@ class TeamRemoteMediator(
         // There was a lag in loading the first page; as a result, it jumps to the end of the pagination.
         if (state.isEmpty() && page == 2) return MediatorResult.Success(endOfPaginationReached = false)
 
-        remote.getTeams().getResult({ successResult ->
+        remote.getTeams(page).getResult({ successResult ->
 
             if (loadType == LoadType.REFRESH) {
                 local.clearTeams()
                 local.clearRemoteKeys()
             }
 
-            val teamData = successResult.data
+            val teamData = successResult.data.data
 
-            val endOfPaginationReached = teamData.data.isEmpty()
+            val endOfPaginationReached = teamData.isEmpty()
 
             val prevPage = if (page == MOVIE_STARTING_PAGE_INDEX) null else page - 1
             val nextPage = if (endOfPaginationReached) null else page + 1
@@ -54,4 +54,3 @@ class TeamRemoteMediator(
         })
     }
 }
-*/

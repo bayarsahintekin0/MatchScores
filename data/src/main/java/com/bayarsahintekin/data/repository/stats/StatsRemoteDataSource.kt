@@ -21,8 +21,4 @@ class StatsRemoteDataSource (private val scoreService: ScoreServices
         } catch (e: Exception) {
             Result.Error(e)
         }
-
-    override suspend fun getStats(idList: List<Int>): Result<List<StatsEntity>> {
-        TODO("Not yet implemented")
-    }
 }

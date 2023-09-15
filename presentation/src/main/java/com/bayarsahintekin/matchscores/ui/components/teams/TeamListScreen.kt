@@ -3,6 +3,7 @@ package com.bayarsahintekin.matchscores.ui.components.teams
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +15,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -27,8 +29,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemKey
+import com.bayarsahintekin.domain.entity.players.PlayerEntity
 import com.bayarsahintekin.domain.entity.teams.TeamListEntity
 import com.bayarsahintekin.domain.entity.teams.TeamEntity
+import com.bayarsahintekin.matchscores.ui.components.players.PlayerItem
 import com.bayarsahintekin.matchscores.ui.theme.BlueGradient
 import com.bayarsahintekin.matchscores.ui.theme.G1
 import com.bayarsahintekin.matchscores.ui.theme.G2
@@ -41,23 +49,39 @@ import com.bayarsahintekin.matchscores.util.TeamLogosObject
 @Composable
 fun TeamsScreen(teamsViewModel: TeamsViewModel = hiltViewModel(), onTeamClicked: (teamId: Int) -> Unit) {
 
-    val teamsUiState = teamsViewModel.uiState.collectAsState()
-    teamsUiState.value.data?.let {
-        TeamsHomeScreen(teams = it,onTeamClicked)
-    }
+    val items = teamsViewModel.teams.collectAsLazyPagingItems()
+    TeamsHomeScreen(items = items,onTeamClicked)
+
 }
 
 @ExperimentalFoundationApi
 @Composable
-fun TeamsHomeScreen(teams: TeamListEntity, onTeamClicked: (teamId: Int) -> Unit) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(8.dp),
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        items(teams.data) { team ->
-            TeamItem(item = team,onTeamClicked)
+fun TeamsHomeScreen(items: LazyPagingItems<TeamEntity>, onTeamClicked: (teamId: Int) -> Unit) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (items.loadState.refresh is LoadState.Loading) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        } else {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                contentPadding = PaddingValues(8.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                items(count = items.itemCount,
+                    key = items.itemKey { it.id }
+                ) {
+                    val team = items[it]
+                    if (team != null) {
+                        TeamItem(item = team,onTeamClicked)
+                    }
+                }
+
+                item {
+                    if (items.loadState.append is LoadState.Loading) {
+                        CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+                    }
+                }
+            }
         }
     }
 }

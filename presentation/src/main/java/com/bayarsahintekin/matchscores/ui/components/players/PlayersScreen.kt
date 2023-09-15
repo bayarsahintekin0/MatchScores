@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Card
@@ -40,12 +41,12 @@ import com.bayarsahintekin.matchscores.ui.viewmodel.PlayersViewModel
 fun PlayersScreen(playersViewModel: PlayersViewModel = hiltViewModel()) {
 
     val items = playersViewModel.players.collectAsLazyPagingItems()
-    PlayerLisMainScreen(items, playersViewModel,onPlayerClicked = {})
+    PlayerLisMainScreen(items, onPlayerClicked = {})
 
 }
 
 @Composable
-fun PlayerLisMainScreen(items: LazyPagingItems<PlayerEntity>, playersViewModel: PlayersViewModel, onPlayerClicked: (id: Int)-> Unit){
+fun PlayerLisMainScreen(items: LazyPagingItems<PlayerEntity>, onPlayerClicked: (id: Int) -> Unit) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         if (items.loadState.refresh is LoadState.Loading) {
@@ -69,7 +70,9 @@ fun PlayerLisMainScreen(items: LazyPagingItems<PlayerEntity>, playersViewModel: 
 
                 item {
                     if (items.loadState.append is LoadState.Loading) {
-                        CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+                        CircularProgressIndicator(modifier = Modifier
+                            .padding(16.dp)
+                            .size(32.dp))
                     }
                 }
             }
@@ -80,14 +83,17 @@ fun PlayerLisMainScreen(items: LazyPagingItems<PlayerEntity>, playersViewModel: 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun PlayerItem(player: PlayerEntity, onPlayerClicked: (id: Int)-> Unit){
-    Card(modifier = Modifier.padding(4.dp),
+fun PlayerItem(player: PlayerEntity, onPlayerClicked: (id: Int) -> Unit) {
+    Card(
+        modifier = Modifier.padding(4.dp),
         onClick = {
             player.id?.let { onPlayerClicked.invoke(it) }
         },
-        border = BorderStroke(1.dp, Brush.horizontalGradient(
-            arrayListOf(BlueGradient, YellowGradient, PinkGradient)
-        ))
+        border = BorderStroke(
+            1.dp, Brush.horizontalGradient(
+                arrayListOf(BlueGradient, YellowGradient, PinkGradient)
+            )
+        )
     ) {
         Column(Modifier.fillMaxSize()) {
             Image(
@@ -106,14 +112,14 @@ fun PlayerItem(player: PlayerEntity, onPlayerClicked: (id: Int)-> Unit){
                     .padding(top = 8.dp, bottom = 8.dp)
             )
             Text(
-                text = stringResource(id = R.string.position) + ": " + player.position ,
+                text = stringResource(id = R.string.position) + ": " + player.position,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .align(alignment = Alignment.CenterHorizontally)
                     .padding(top = 8.dp, bottom = 8.dp)
             )
             Text(
-                text = stringResource(id = R.string.team) + ": " +player.team?.name,
+                text = stringResource(id = R.string.team) + ": " + player.team?.name,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .align(alignment = Alignment.CenterHorizontally)

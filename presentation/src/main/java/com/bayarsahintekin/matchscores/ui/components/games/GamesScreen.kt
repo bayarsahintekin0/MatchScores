@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
@@ -27,13 +25,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
-import androidx.paging.PagingState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.bayarsahintekin.domain.entity.games.GameEntity
-import com.bayarsahintekin.domain.entity.players.PlayerEntity
-import com.bayarsahintekin.matchscores.ui.components.players.PlayerItem
 import com.bayarsahintekin.matchscores.ui.theme.BlueGradient
 import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
 import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
@@ -45,7 +40,7 @@ import java.text.SimpleDateFormat
 fun GamesScreen(gamesViewModel: GamesViewModel = hiltViewModel()) {
 
     val items = gamesViewModel.games.collectAsLazyPagingItems()
-    GameListMainScreen(items = items, gamesViewModel, onGameClicked = {
+    GameListMainScreen(items = items, onGameClicked = {
 
     })
 }
@@ -53,7 +48,6 @@ fun GamesScreen(gamesViewModel: GamesViewModel = hiltViewModel()) {
 @Composable
 fun GameListMainScreen(
     items: LazyPagingItems<GameEntity>,
-    gamesViewModel: GamesViewModel,
     onGameClicked: (id: Int) -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {

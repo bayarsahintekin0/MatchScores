@@ -10,10 +10,6 @@ import com.bayarsahintekin.domain.utils.Result
 interface StatsDataSource {
     interface Remote {
         suspend fun getStats(page: Int): Result<StatsListEntity>
-        suspend fun getStats(idList: List<Int>): Result<List<StatsEntity>>
-        //suspend fun getPlayer(movieId: Int): Result<PlayerEntity>
-        //suspend fun search(query: String, page: Int, limit: Int):Result<List<PlayerEntity>>
-
     }
 
     interface Local {

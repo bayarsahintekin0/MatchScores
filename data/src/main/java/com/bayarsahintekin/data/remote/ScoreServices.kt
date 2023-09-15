@@ -12,7 +12,7 @@ import retrofit2.http.Query
 interface ScoreServices {
 
     @GET("teams")
-    suspend fun getAllTeams(): TeamListData
+    suspend fun getAllTeams(@Query("page") page: Int = 1): TeamListData
 
     @GET("teams/{id}")
     suspend fun getTeam(@Path("id") id: String): TeamData

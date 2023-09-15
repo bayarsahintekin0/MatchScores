@@ -14,9 +14,9 @@ import com.bayarsahintekin.domain.utils.Result
 class TeamRemoteDataSource(
     private val scoreService: ScoreServices
 ) : TeamDataSource.Remote {
-    override suspend fun getTeams(): Result<TeamListEntity> =
+    override suspend fun getTeams(page: Int): Result<TeamListEntity> =
         try {
-            val result = scoreService.getAllTeams()
+            val result = scoreService.getAllTeams(page)
             Result.Success(
                 TeamListData(
                     data = result.data,

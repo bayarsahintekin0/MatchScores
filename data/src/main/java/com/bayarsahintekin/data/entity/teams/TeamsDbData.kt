@@ -23,7 +23,7 @@ data class TeamsDbData(
     var name: String = ""
 )
 
-fun TeamsDbData.toDomain() = TeamData(
+fun TeamsDbData.toDomain() = TeamEntity(
     id = id,
     abbreviation = abbreviation,
     city = city,
@@ -32,7 +32,7 @@ fun TeamsDbData.toDomain() = TeamData(
     fullName = fullName,
     name = name
 )
-fun TeamsDbData.toData() = TeamEntity(
+fun TeamsDbData.toData() = TeamData(
     id = id,
     abbreviation = abbreviation,
     city = city,

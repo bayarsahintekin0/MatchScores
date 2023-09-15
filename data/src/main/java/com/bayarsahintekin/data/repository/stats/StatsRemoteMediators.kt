@@ -5,12 +5,11 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import com.bayarsahintekin.data.entity.games.GameDbData
-import com.bayarsahintekin.data.entity.games.GamesRemoteKeysDbData
 import com.bayarsahintekin.data.entity.stats.StatsDbData
 import com.bayarsahintekin.data.entity.stats.StatsRemoteKeysDbData
 import com.bayarsahintekin.domain.utils.getResult
 
+const val STATS_STARTING_PAGE_INDEX = 1
 @OptIn(ExperimentalPagingApi::class)
 class StatsRemoteMediators (
     private val local: StatsDataSource.Local,
@@ -36,14 +35,21 @@ class StatsRemoteMediators (
                 local.clearRemoteKeys()
             }
 
-            val players = successResult.data
+            val stats = successResult.data.data
 
-            val key = StatsRemoteKeysDbData(prevPage = players.meta?.currentPage?.minus(1), nextPage = players.meta?.nextPage)
+            val endOfPaginationReached = stats.isEmpty()
 
-            local.saveStats(players.data)
+            val prevPage = if (page == STATS_STARTING_PAGE_INDEX) null else page - 1
+            val nextPage = if (endOfPaginationReached) null else page + 1
+
+            val key = StatsRemoteKeysDbData(prevPage = prevPage, nextPage = nextPage)
+
+            local.saveStats(stats)
             local.saveRemoteKey(key)
 
-            return MediatorResult.Success(endOfPaginationReached = players.meta?.totalPages == players.meta?.currentPage)
+            Log.i("***","prev:$prevPage next:$nextPage ,endOf:$endOfPaginationReached")
+
+            return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         }, { errorResult ->
             return MediatorResult.Error(errorResult.error)
         })
