@@ -5,6 +5,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.bayarsahintekin.data.data.PlayersMockData
 import com.bayarsahintekin.data.entity.players.PlayersDbData
 import com.bayarsahintekin.data.entity.players.toDomain
 import com.bayarsahintekin.data.entity.teams.TeamsDbData
@@ -12,6 +13,7 @@ import com.bayarsahintekin.data.local.players.PlayerDao
 import com.bayarsahintekin.data.local.players.PlayersDataBase
 import com.bayarsahintekin.data.repository.players.PlayerDataSource
 import com.bayarsahintekin.domain.utils.getResult
+import com.bayarsahintekin.domain.utils.onError
 import com.google.common.base.Predicates.contains
 import com.google.common.base.Predicates.equalTo
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -19,6 +21,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import dagger.hilt.android.testing.UninstallModules
 import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
@@ -34,6 +37,15 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import javax.inject.Inject
 
+/**
+ * getPlayer
+ * savePlayer
+ * getPlayers
+ * savePlayers
+ *
+ * tests applied
+ */
+
 @RunWith(AndroidJUnit4::class)
 @SmallTest
 @HiltAndroidTest
@@ -41,7 +53,6 @@ import javax.inject.Inject
 class PlayerDaoTest {
 
     private lateinit var database: PlayersDataBase
-   // private lateinit var playerDao: PlayerDao
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -68,29 +79,10 @@ class PlayerDaoTest {
 
     @Test
     fun savePlayer_returnsTrue() = runTest {
-        val player = PlayersDbData(
-            id = 14,
-            firstName = "Ike",
-            heightFeet = "0",
-            heightInches = "0",
-            lastName = "Anigbogu",
-            position = "C",
-            team = TeamsDbData(
-                id = 12,
-                abbreviation = "IND",
-                city = "Indiana",
-                conference = "East",
-                division = "Central",
-                fullName = "Indiana Pacers",
-                name = "Pacers"
-            ),
-            weightPounds = "0"
-        )
-
-        local.savePlayers(listOf(player.toDomain())).let {
+        local.savePlayers(listOf(PlayersMockData.getPlayer().toDomain())).let {
             local.getPlayers().let {
                 it.getResult({
-                    assertThat(it.data, Matchers.hasItem(player.toDomain()))
+                    assertThat(it.data, Matchers.hasItem(PlayersMockData.getPlayer().toDomain()))
                 },{
 
                 })
@@ -98,9 +90,54 @@ class PlayerDaoTest {
             }
         }
 
+    }
 
+    @Test
+    fun clearPlayer_returnsTrue() = runTest {
+        local.savePlayers(listOf(PlayersMockData.getPlayer().toDomain())).let {
+            local.getPlayers().let {
+                it.getResult({
+                    assertThat("Database is not empty check",it.data, Matchers.hasItem(PlayersMockData.getPlayer().toDomain()))
+                    local.clearPlayers().let {
+                       local.getPlayers().let { result ->
+                           result.getResult({
+                                  assertTrue(it.data.isEmpty())
+                           },{
 
+                           })
 
+                       }
+                    }
+                },{
 
+                })
+            }
+        }
+
+    }
+
+    @Test
+    fun getPlayer_returnsTrue() = runTest{
+        local.savePlayers(listOf(PlayersMockData.getPlayer().toDomain())).let {
+            local.getPlayer(14).getResult({
+                assertEquals(14,it.data.id)
+            },{
+
+            })
+        }
+    }
+
+    @Test
+    fun getPlayers_returnsTrue() = runTest{
+        val mockList = PlayersMockData.getPlayers()
+        local.clearPlayers().let {
+            local.savePlayers(mockList).let {
+                local.getPlayers().getResult({
+                    assertEquals(mockList,it.data)
+                },{
+
+                })
+            }
+        }
     }
 }
