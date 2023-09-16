@@ -6,14 +6,14 @@ import com.bayarsahintekin.domain.entity.games.GameEntity
 fun GameEntity.toDbData() = GameDbData(
     id = id,
     date = date,
-    homeTeam = homeTeam,
+    homeTeam = homeTeam.toDbData(),
     homeTeamScore= homeTeamScore,
     period = period,
     postseason = postseason,
     season = season,
     status = status,
     time = time,
-    visitorTeam = visitorTeam,
+    visitorTeam = visitorTeam.toDbData(),
     visitorTeamScore = visitorTeamScore
 )
 

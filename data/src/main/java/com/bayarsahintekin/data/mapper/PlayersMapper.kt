@@ -10,6 +10,6 @@ fun PlayerEntity.toDbData() = PlayersDbData(
     heightInches = heightInches,
     lastName = lastName,
     position = position,
-    team = team,
+    team = team?.toDbData(),
     weightPounds = weightPounds
 )

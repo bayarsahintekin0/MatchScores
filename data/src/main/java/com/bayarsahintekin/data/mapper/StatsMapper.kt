@@ -25,6 +25,6 @@ fun StatsEntity.toDbData() = StatsDbData(
     pts = pts,
     reb = reb,
     stl = stl,
-    team = team,
+    team = team.toDbData(),
     turnover = turnover
 )

@@ -3,6 +3,8 @@ package com.bayarsahintekin.data.entity.players
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.bayarsahintekin.data.entity.teams.TeamsDbData
+import com.bayarsahintekin.data.entity.teams.toDomain
 import com.bayarsahintekin.domain.entity.players.PlayerEntity
 import com.bayarsahintekin.domain.entity.teams.TeamEntity
 
@@ -18,7 +20,7 @@ data class PlayersDbData(
     @ColumnInfo(name = "last_name")
     var lastName: String? = "",
     var position: String? = "",
-    var team: TeamEntity? = TeamEntity(0,"","","","","",""),
+    var team: TeamsDbData? = TeamsDbData(0,"","","","","",""),
     @ColumnInfo(name = "weight_pounds")
     var weightPounds: String? = ""
 )
@@ -30,7 +32,7 @@ fun PlayersDbData.toDomain() = PlayerEntity(
     heightInches = heightInches,
     lastName = lastName,
     position = position,
-    team = team,
+    team = team?.toDomain(),
     weightPounds = weightPounds
 )
 

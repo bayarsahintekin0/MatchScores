@@ -21,7 +21,7 @@ interface PlayerDataSource {
         fun players(): PagingSource<Int, PlayersDbData>
         suspend fun getPlayers(): Result<List<PlayerEntity>>
         suspend fun getPlayer(playerId: Int): Result<PlayerEntity>
-        suspend fun savePlayers(movieEntities: List<PlayerEntity>)
+        suspend fun savePlayers(playerEntities: List<PlayerEntity>)
         suspend fun getLastRemoteKey(): PlayersRemoteKeysDbData?
         suspend fun saveRemoteKey(key: PlayersRemoteKeysDbData)
         suspend fun clearPlayers()

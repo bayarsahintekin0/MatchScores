@@ -85,10 +85,10 @@ class MetaTypeConverter {
 class TeamTypeConverter {
 
     @TypeConverter
-    fun appToString(app: TeamEntity): String = Gson().toJson(app)
+    fun appToString(app: TeamsDbData): String = Gson().toJson(app)
 
     @TypeConverter
-    fun stringToApp(string: String): TeamEntity = Gson().fromJson(string, TeamEntity::class.java)
+    fun stringToApp(string: String): TeamsDbData = Gson().fromJson(string, TeamsDbData::class.java)
 
 }
 

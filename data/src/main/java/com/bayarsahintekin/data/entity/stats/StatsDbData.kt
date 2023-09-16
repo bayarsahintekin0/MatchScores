@@ -2,6 +2,8 @@ package com.bayarsahintekin.data.entity.stats
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.bayarsahintekin.data.entity.teams.TeamsDbData
+import com.bayarsahintekin.data.entity.teams.toDomain
 import com.bayarsahintekin.domain.entity.stats.StatsEntity
 import com.bayarsahintekin.domain.entity.stats.StatsGameEntity
 import com.bayarsahintekin.domain.entity.stats.StatsPlayerEntity
@@ -33,7 +35,7 @@ data class StatsDbData(
     val pts: Int? = 0,
     val reb: Int? = 0,
     val stl: Int? = 0,
-    val team: TeamEntity = TeamEntity(0,"","","","","",""),
+    val team: TeamsDbData = TeamsDbData(0,"","","","","",""),
     val turnover: Int? = 0,
 
     )
@@ -60,6 +62,6 @@ fun StatsDbData.toDomain() = StatsEntity(
     pts = pts,
     reb = reb,
     stl = stl,
-    team = team,
+    team = team.toDomain(),
     turnover = turnover
 )
