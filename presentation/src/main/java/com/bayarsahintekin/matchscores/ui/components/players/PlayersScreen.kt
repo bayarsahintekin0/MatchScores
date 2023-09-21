@@ -38,11 +38,10 @@ import com.bayarsahintekin.matchscores.ui.viewmodel.PlayersViewModel
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun PlayersScreen(playersViewModel: PlayersViewModel = hiltViewModel()) {
+fun PlayersScreen(playersViewModel: PlayersViewModel = hiltViewModel(),onPlayerClicked: (id: Int) -> Unit) {
 
     val items = playersViewModel.players.collectAsLazyPagingItems()
-    PlayerLisMainScreen(items, onPlayerClicked = {})
-
+    PlayerLisMainScreen(items, onPlayerClicked = { onPlayerClicked.invoke(it) })
 }
 
 @Composable

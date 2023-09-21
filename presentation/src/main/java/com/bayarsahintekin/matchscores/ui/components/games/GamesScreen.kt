@@ -37,12 +37,10 @@ import com.bayarsahintekin.matchscores.util.TeamLogosObject
 import java.text.SimpleDateFormat
 
 @Composable
-fun GamesScreen(gamesViewModel: GamesViewModel = hiltViewModel()) {
+fun GamesScreen(gamesViewModel: GamesViewModel = hiltViewModel(),onGameClicked: (id: Int) -> Unit) {
 
     val items = gamesViewModel.games.collectAsLazyPagingItems()
-    GameListMainScreen(items = items, onGameClicked = {
-
-    })
+    GameListMainScreen(items = items, onGameClicked = { onGameClicked.invoke(it) })
 }
 
 @Composable

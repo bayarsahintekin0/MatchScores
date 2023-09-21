@@ -32,8 +32,11 @@ import com.bayarsahintekin.matchscores.R
 import com.bayarsahintekin.matchscores.ui.components.base.MSTopAppBar
 import com.bayarsahintekin.matchscores.ui.components.base.ProvideAppBarBackButton
 import com.bayarsahintekin.matchscores.ui.components.base.ProvideAppBarTitle
+import com.bayarsahintekin.matchscores.ui.components.games.GameDetailScreen
 import com.bayarsahintekin.matchscores.ui.components.games.GamesScreen
+import com.bayarsahintekin.matchscores.ui.components.players.PlayerDetailScreen
 import com.bayarsahintekin.matchscores.ui.components.players.PlayersScreen
+import com.bayarsahintekin.matchscores.ui.components.stats.StatDetailScreen
 import com.bayarsahintekin.matchscores.ui.components.stats.StatsScreen
 import com.bayarsahintekin.matchscores.ui.components.teams.TeamDetailScreen
 import com.bayarsahintekin.matchscores.ui.components.teams.TeamsScreen
@@ -59,7 +62,14 @@ fun NavigationGraph(navController: NavHostController) {
                     }
                 )
             }
-            StatsScreen()
+            StatsScreen(
+                onStatClicked = {
+                    navController.navigate(BottomNavItem.StatDetail.screen_route.replace(
+                        oldValue = "{statId}",
+                        newValue = it.toString()
+                    ))
+                }
+            )
         }
         composable(BottomNavItem.Teams.screen_route) {
             ProvideAppBarTitle { Text("Teams", fontSize = 18.sp) }
@@ -96,7 +106,14 @@ fun NavigationGraph(navController: NavHostController) {
                     }
                 )
             }
-            GamesScreen()
+            GamesScreen(
+                onGameClicked = {
+                    navController.navigate(BottomNavItem.GameDetail.screen_route.replace(
+                        oldValue = "{gameId}",
+                        newValue = it.toString()
+                    ))
+                }
+            )
         }
         composable(BottomNavItem.Players.screen_route) {
             ProvideAppBarTitle { Text("Players",fontSize = 18.sp) }
@@ -111,7 +128,14 @@ fun NavigationGraph(navController: NavHostController) {
                     }
                 )
             }
-            PlayersScreen()
+            PlayersScreen(
+                onPlayerClicked = {
+                    navController.navigate(BottomNavItem.PlayerDetail.screen_route.replace(
+                        oldValue = "{playerId}",
+                        newValue = it.toString()
+                    ))
+                }
+            )
         }
         composable(BottomNavItem.TeamDetail.screen_route,
             arguments = listOf(navArgument("teamId") { type = NavType.IntType })) {
@@ -129,15 +153,69 @@ fun NavigationGraph(navController: NavHostController) {
             }
             it.arguments?.getInt("teamId")?.let { it1 -> TeamDetailScreen(teamId = it1) }
         }
+
+        composable(BottomNavItem.GameDetail.screen_route,
+            arguments = listOf(navArgument("gameId") { type = NavType.IntType })) {
+            ProvideAppBarTitle { Text("Game Detail",fontSize = 18.sp) }
+            ProvideAppBarBackButton {
+                IconButton(
+                    onClick = { backPressDispatcher?.onBackPressedDispatcher?.onBackPressed() },
+                    content = {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "arrowBackIos"
+                        )
+                    }
+                )
+            }
+            it.arguments?.getInt("gameId")?.let { it1 -> GameDetailScreen(gameId = it1) }
+        }
+
+        composable(BottomNavItem.PlayerDetail.screen_route,
+            arguments = listOf(navArgument("playerId") { type = NavType.IntType })) {
+            ProvideAppBarTitle { Text("Player Detail",fontSize = 18.sp) }
+            ProvideAppBarBackButton {
+                IconButton(
+                    onClick = { backPressDispatcher?.onBackPressedDispatcher?.onBackPressed() },
+                    content = {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "arrowBackIos"
+                        )
+                    }
+                )
+            }
+            it.arguments?.getInt("playerId")?.let { it1 -> PlayerDetailScreen(playerId = it1) }
+        }
+
+        composable(BottomNavItem.StatDetail.screen_route,
+            arguments = listOf(navArgument("statId") { type = NavType.IntType })) {
+            ProvideAppBarTitle { Text("Stat Detail",fontSize = 18.sp) }
+            ProvideAppBarBackButton {
+                IconButton(
+                    onClick = { backPressDispatcher?.onBackPressedDispatcher?.onBackPressed() },
+                    content = {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "arrowBackIos"
+                        )
+                    }
+                )
+            }
+            it.arguments?.getInt("statId")?.let { it1 -> StatDetailScreen(statId = it1) }
+        }
     }
 }
 
 sealed class BottomNavItem(var title:String, var icon:Int, var screen_route:String){
     object Stats : BottomNavItem("Stats", R.drawable.stats,"stats")
+    object StatDetail: BottomNavItem("StatDetail", R.drawable.ic_stats,"stats/{statId}")
     object Teams: BottomNavItem("Teams", R.drawable.teams,"teams")
     object TeamDetail: BottomNavItem("TeamDetail", R.drawable.ic_team,"teams/{teamId}")
     object Games: BottomNavItem("Games", R.drawable.ic_games,"games")
+    object GameDetail: BottomNavItem("GameDetail", R.drawable.ic_games,"games/{gameId}")
     object Players: BottomNavItem("Players", R.drawable.ic_player,"players")
+    object PlayerDetail: BottomNavItem("PlayerDetail", R.drawable.ic_player,"players/{playerId}")
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")

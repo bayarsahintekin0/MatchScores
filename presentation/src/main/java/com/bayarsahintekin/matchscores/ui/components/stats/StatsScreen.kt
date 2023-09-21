@@ -38,12 +38,10 @@ import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
 import com.bayarsahintekin.matchscores.ui.viewmodel.StatsViewModel
 
 @Composable
-fun StatsScreen(statsViewModel: StatsViewModel = hiltViewModel()) {
+fun StatsScreen(statsViewModel: StatsViewModel = hiltViewModel(), onStatClicked: (id: Int) -> Unit) {
 
     val items = statsViewModel.stats.collectAsLazyPagingItems()
-    StatListMainScreen(items = items, onStatClicked = {
-
-    })
+    StatListMainScreen(items = items, onStatClicked = { onStatClicked.invoke(it) })
 }
 
 @Composable
