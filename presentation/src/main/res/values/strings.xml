@@ -15,4 +15,5 @@
     <string name="asists">Asists</string>
     <string name="rebounds">Rebounds</string>
     <string name="trnover">Turnovers</string>
+    <string name="apply_filter">Apply Filter</string>
 </resources>

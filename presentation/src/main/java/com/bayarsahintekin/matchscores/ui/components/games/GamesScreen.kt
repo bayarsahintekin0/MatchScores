@@ -1,22 +1,37 @@
 package com.bayarsahintekin.matchscores.ui.components.games
 
 import android.annotation.SuppressLint
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
+import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -29,18 +44,27 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.bayarsahintekin.domain.entity.games.GameEntity
+import com.bayarsahintekin.domain.entity.teams.TeamEntity
+import com.bayarsahintekin.matchscores.R
 import com.bayarsahintekin.matchscores.ui.theme.BlueGradient
 import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
 import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
+import com.bayarsahintekin.matchscores.ui.theme.msLightSecondaryContainer
 import com.bayarsahintekin.matchscores.ui.viewmodel.GamesViewModel
 import com.bayarsahintekin.matchscores.util.TeamLogosObject
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 
 @Composable
-fun GamesScreen(gamesViewModel: GamesViewModel = hiltViewModel(),onGameClicked: (id: Int) -> Unit) {
+fun GamesScreen(
+    gamesViewModel: GamesViewModel = hiltViewModel(),
+    onGameClicked: (id: Int) -> Unit
+) {
 
     val items = gamesViewModel.games.collectAsLazyPagingItems()
-    GameListMainScreen(items = items, onGameClicked = { onGameClicked.invoke(it) })
+    val teamItems = gamesViewModel.teams.collectAsLazyPagingItems()
+
+    TeamsBottomSheet(teamItems, items, onGameClicked)
 }
 
 @Composable
@@ -93,9 +117,13 @@ fun GameItem(game: GameEntity, onGameClicked: (id: Int) -> Unit) {
         )
     ) {
         Column() {
-            formattedDate?.let { Text(text = it, modifier = Modifier.align(Alignment.CenterHorizontally)
-                .padding(top = 8.dp)
-            ) }
+            formattedDate?.let {
+                Text(
+                    text = it, modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 8.dp)
+                )
+            }
             Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.Center) {
                 /**
                  * Visitor Team
@@ -156,9 +184,68 @@ fun GameItem(game: GameEntity, onGameClicked: (id: Int) -> Unit) {
                 )
             }
         }
-        
+
     }
 }
+
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun TeamsBottomSheet(
+    teamItems: LazyPagingItems<TeamEntity>,
+    items: LazyPagingItems<GameEntity>,
+    onGameClicked: (id: Int) -> Unit
+) {
+    val sheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded }
+    )
+    val coroutineScope = rememberCoroutineScope()
+
+    BackHandler(sheetState.isVisible) {
+        coroutineScope.launch { sheetState.hide() }
+    }
+
+    ModalBottomSheetLayout(
+        sheetState = sheetState,
+        sheetContent = {
+            //TeamFilterList(items = teamItems)
+            TabScreen(teamItems,
+                onTeamClicked = {
+
+                    coroutineScope.launch { sheetState.hide() }
+                },
+                onSeasonSelected = {
+                    coroutineScope.launch { sheetState.hide() }
+                })
+        },
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Image(painter = painterResource(id = R.drawable.ic_filter), contentDescription = "",
+                modifier = Modifier
+                    .size(32.dp)
+                    .padding(top = 8.dp, end = 8.dp)
+                    .clickable {
+                        coroutineScope.launch {
+                            if (sheetState.isVisible) sheetState.hide()
+                            else sheetState.show()
+                        }
+                    }
+                    .align(Alignment.End))
+
+            Spacer(modifier = Modifier.height(4.dp))
+            GameListMainScreen(items = items, onGameClicked = { onGameClicked.invoke(it) })
+        }
+    }
+}
+
 
 @SuppressLint("SimpleDateFormat")
 fun formatDate(dateString: String): String? {
