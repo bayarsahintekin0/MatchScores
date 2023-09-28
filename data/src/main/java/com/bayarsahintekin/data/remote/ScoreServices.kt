@@ -5,6 +5,8 @@ import com.bayarsahintekin.data.entity.players.PlayerListData
 import com.bayarsahintekin.data.entity.stats.StatsListData
 import com.bayarsahintekin.data.entity.teams.TeamData
 import com.bayarsahintekin.data.entity.teams.TeamListData
+import com.bayarsahintekin.domain.entity.games.GameListEntity
+import com.bayarsahintekin.domain.utils.Result
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -24,6 +26,11 @@ interface ScoreServices {
 
     @GET("games")
     suspend fun getAllGames(@Query("page") page: Int = 1):GameListData
+
+    @GET("games")
+    suspend fun getFilterGames(@Query("page") page: Int = 1,
+                               @Query("team_ids") teamIdList: List<Int>,
+                               @Query("seasons") seasons: List<Int>): GameListData
 
     @GET("stats")
     suspend fun getAllStats(@Query("page") page: Int = 1):StatsListData

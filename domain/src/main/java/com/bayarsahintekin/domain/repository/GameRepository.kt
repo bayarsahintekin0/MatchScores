@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface GameRepository {
     fun getGames(): Flow<PagingData<GameEntity>>
+    fun getFilterGames(teamIdList: List<Int>, seasons:List<Int>): Flow<PagingData<GameEntity>>
 }

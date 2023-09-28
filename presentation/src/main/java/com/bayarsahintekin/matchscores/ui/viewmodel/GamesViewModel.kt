@@ -5,6 +5,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.bayarsahintekin.domain.entity.games.GameEntity
 import com.bayarsahintekin.domain.entity.teams.TeamEntity
+import com.bayarsahintekin.domain.usecase.GamesFilterUseCase
 import com.bayarsahintekin.domain.usecase.GamesUseCase
 import com.bayarsahintekin.domain.usecase.TeamsUseCase
 import com.bayarsahintekin.matchscores.ui.base.BaseViewModel
@@ -16,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GamesViewModel @Inject constructor(
     private val gamesUseCase: GamesUseCase,
+    private val gamesFilterUseCase: GamesFilterUseCase,
     teamsUseCase: TeamsUseCase,
     dispatchers: DispatchersProvider
 ): BaseViewModel(dispatchers) {
@@ -23,4 +25,6 @@ class GamesViewModel @Inject constructor(
     val games: Flow<PagingData<GameEntity>> = gamesUseCase.getGames().cachedIn(viewModelScope)
 
     val teams:Flow<PagingData<TeamEntity>> = teamsUseCase.getTeams().cachedIn(viewModelScope)
+
+    //val gamesFilter(teams:List<Int>,seasons:List<Int>) :Flow<PagingData<GameEntity>> = gamesFilterUseCase.invoke(teams,seasons).cachedIn(viewModelScope)
 }
