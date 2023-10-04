@@ -1,6 +1,7 @@
 package com.bayarsahintekin.matchscores.ui.components.games
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,9 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonColors
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Tab
@@ -44,6 +46,12 @@ import com.bayarsahintekin.matchscores.util.TeamLogosObject
 @Composable
 fun GameListFilterTeamsScreen(items: LazyPagingItems<TeamEntity>,
                               onTeamClicked:(id: Int)-> Unit) {
+    var selectedTeams by remember { mutableStateOf(listOf<Int>()) }
+    val teams = arrayListOf<Int>()
+    for (i in items.itemSnapshotList.items){
+        teams.add(i.id)
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         if (items.loadState.refresh is LoadState.Loading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
@@ -56,8 +64,9 @@ fun GameListFilterTeamsScreen(items: LazyPagingItems<TeamEntity>,
             ) {
                 items(count = items.itemCount,
                     key = items.itemKey { it.id }
-                ) {
-                    val team = items[it]
+                ) {index ->
+                    val team = items[index]
+                    val isChecked = selectedTeams.contains(teams[index])
                     if (team != null) {
                         Card(
                             shape = RoundedCornerShape(8.dp),
@@ -68,15 +77,24 @@ fun GameListFilterTeamsScreen(items: LazyPagingItems<TeamEntity>,
                                     onTeamClicked.invoke(team.id)
                                 }
                         ) {
-                            Row(modifier = Modifier.padding(vertical = 4.dp)) {
+                            Row(modifier = Modifier.padding(vertical = 2.dp)) {
+                                Checkbox(checked = isChecked, onCheckedChange = {
+                                    selectedTeams = if (it)
+                                        selectedTeams + teams[index]
+                                    else
+                                        selectedTeams - teams[index]
+
+                                })
+
                                 Image(
                                     painter = painterResource(id = TeamLogosObject.getTeamLogo(team.abbreviation)),
                                     contentDescription = team.name,
                                     modifier = Modifier
                                         .padding(start = 8.dp, end = 4.dp)
+                                        .align(Alignment.CenterVertically)
                                         .size(24.dp)
                                 )
-                                Text(text = team.fullName)
+                                Text(text = team.fullName, modifier = Modifier.align(Alignment.CenterVertically))
                             }
                         }
                     }
@@ -96,13 +114,17 @@ fun GameListFilterTeamsScreen(items: LazyPagingItems<TeamEntity>,
 
 @Composable
 fun GameListFilterSeasonsScreen(onSeasonSelected:(seasons:ArrayList<Int>) -> Unit) {
-    val selectedSeasons = arrayListOf<Int>()
     var selectedItems by remember { mutableStateOf(listOf<Int>()) }
-    //var isChecked by remember { mutableStateOf(false) }
     val years = arrayListOf<Int>()
     for (i in 2000..2023)
         years.add(i)
     Column {
+        /*Button(onClick = {
+            onSeasonSelected.invoke(selectedItems as ArrayList<Int>)
+        }, modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 8.dp)) {
+            Text(text = stringResource(id = R.string.apply_filter))
+        }*/
+
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 120.dp),
             contentPadding = PaddingValues(8.dp),
@@ -119,12 +141,10 @@ fun GameListFilterSeasonsScreen(onSeasonSelected:(seasons:ArrayList<Int>) -> Uni
                 ) {
                     Row {
                         Checkbox(checked = isChecked, onCheckedChange = {
-                            if (it)
-                                selectedItems = selectedItems + years[index]
-                                //selectedSeasons.add(years[index])
+                            selectedItems = if (it)
+                                selectedItems + years[index]
                             else
-                                selectedItems = selectedItems - years[index]
-                                //selectedSeasons.remove(years[index])
+                                selectedItems - years[index]
 
                         })
                         Text(
@@ -136,13 +156,6 @@ fun GameListFilterSeasonsScreen(onSeasonSelected:(seasons:ArrayList<Int>) -> Uni
                 }
             }
         }
-
-        Button(onClick = {
-            onSeasonSelected.invoke(selectedItems as ArrayList<Int>)
-        }, modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 16.dp)) {
-            Text(text = stringResource(id = R.string.apply_filter))
-        }
-
     }
 
 }
@@ -155,6 +168,13 @@ fun TabScreen(items: LazyPagingItems<TeamEntity>,
     var tabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf("Teams", "Seasons")
     Column(modifier = Modifier.fillMaxWidth()) {
+        Button(onClick = {
+            //onSeasonSelected.invoke(selectedItems as ArrayList<Int>)
+        },colors =ButtonDefaults.elevation(), modifier = Modifier
+            .align(Alignment.End)
+            .padding(bottom = 8.dp)) {
+            Text(text = stringResource(id = R.string.apply_filter))
+        }
         TabRow(selectedTabIndex = tabIndex, backgroundColor = Color.White) {
             tabs.forEachIndexed { index, title ->
                 Tab(text = { Text(title) },

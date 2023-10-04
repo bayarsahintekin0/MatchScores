@@ -1,6 +1,7 @@
 package com.bayarsahintekin.matchscores.ui.components.games
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -62,6 +63,7 @@ fun GamesScreen(
 ) {
 
     val items = gamesViewModel.games.collectAsLazyPagingItems()
+    Log.i("bayart",items.toString())
     val teamItems = gamesViewModel.teams.collectAsLazyPagingItems()
 
     TeamsBottomSheet(teamItems, items, onGameClicked)

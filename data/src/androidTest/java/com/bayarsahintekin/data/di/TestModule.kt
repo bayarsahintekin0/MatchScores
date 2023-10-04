@@ -1,10 +1,15 @@
-package com.bayarsahintekin.data
+package com.bayarsahintekin.data.di
 
 import android.content.Context
 import androidx.room.Room
+import com.bayarsahintekin.data.local.games.GameDao
+import com.bayarsahintekin.data.local.games.GameDataBase
+import com.bayarsahintekin.data.local.games.GameRemoteKeysDao
 import com.bayarsahintekin.data.local.players.PlayerDao
 import com.bayarsahintekin.data.local.players.PlayersDataBase
 import com.bayarsahintekin.data.local.players.PlayersKeyDao
+import com.bayarsahintekin.data.repository.games.GameDataSource
+import com.bayarsahintekin.data.repository.games.GameLocalDataSource
 import com.bayarsahintekin.data.repository.players.PlayerDataSource
 import com.bayarsahintekin.data.repository.players.PlayerLocalDataSource
 import com.bayarsahintekin.data.utils.DiskExecutor
@@ -17,7 +22,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object PlayerModule {
+object TestModule {
 
     @Provides
     @Singleton
@@ -46,5 +51,34 @@ object PlayerModule {
     @Singleton
     fun providePlayerDatabase(@ApplicationContext context: Context): PlayersDataBase {
         return Room.databaseBuilder(context, PlayersDataBase::class.java, "players.db").fallbackToDestructiveMigration().build()
+    }
+
+    /**
+     * Game
+     */
+
+    @Provides
+    @Singleton
+    fun provideGameLocalDataSource(executor: DiskExecutor,
+                                     gameDao: GameDao,
+                                     gameRemoteKeysDao: GameRemoteKeysDao,): GameDataSource.Local {
+        return GameLocalDataSource(executor,gameDao,gameRemoteKeysDao )
+    }
+
+
+    @Provides
+    fun provideGameDao(gameDataBase: GameDataBase): GameDao {
+        return gameDataBase.gamesDao()
+    }
+
+    @Provides
+    fun provideGameRemoteKeyDao(gameDataBase: GameDataBase): GameRemoteKeysDao {
+        return gameDataBase.gameKeysDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideGameDatabase(@ApplicationContext context: Context): GameDataBase {
+        return Room.databaseBuilder(context, GameDataBase::class.java, "games.db").fallbackToDestructiveMigration().build()
     }
 }

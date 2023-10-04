@@ -1,4 +1,4 @@
-package com.bayarsahintekin.data
+package com.bayarsahintekin.data.local
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
@@ -6,31 +6,19 @@ import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.bayarsahintekin.data.data.PlayersMockData
-import com.bayarsahintekin.data.entity.players.PlayersDbData
 import com.bayarsahintekin.data.entity.players.toDomain
-import com.bayarsahintekin.data.entity.teams.TeamsDbData
-import com.bayarsahintekin.data.local.players.PlayerDao
 import com.bayarsahintekin.data.local.players.PlayersDataBase
 import com.bayarsahintekin.data.repository.players.PlayerDataSource
 import com.bayarsahintekin.domain.utils.getResult
-import com.bayarsahintekin.domain.utils.onError
-import com.google.common.base.Predicates.contains
-import com.google.common.base.Predicates.equalTo
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.HiltTestApplication
-import dagger.hilt.android.testing.UninstallModules
 import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertNotSame
 import junit.framework.TestCase.assertTrue
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.async
-import kotlinx.coroutines.cancelAndJoin
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.Matchers
 import org.junit.After
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -121,6 +109,17 @@ class PlayerDaoTest {
         local.savePlayers(listOf(PlayersMockData.getPlayer().toDomain())).let {
             local.getPlayer(14).getResult({
                 assertEquals(14,it.data.id)
+            },{
+
+            })
+        }
+    }
+
+    @Test
+    fun getPlayerError_returnsTrue() = runTest{
+        local.savePlayers(listOf(PlayersMockData.getPlayer().toDomain())).let {
+            local.getPlayer(14).getResult({
+                assertNotSame(1400,it.data.id)
             },{
 
             })

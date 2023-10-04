@@ -18,7 +18,7 @@ import javax.inject.Inject
 class GamesViewModel @Inject constructor(
     private val gamesUseCase: GamesUseCase,
     private val gamesFilterUseCase: GamesFilterUseCase,
-    teamsUseCase: TeamsUseCase,
+    private val teamsUseCase: TeamsUseCase,
     dispatchers: DispatchersProvider
 ): BaseViewModel(dispatchers) {
 
