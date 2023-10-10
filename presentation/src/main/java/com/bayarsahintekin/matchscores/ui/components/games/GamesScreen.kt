@@ -63,10 +63,11 @@ fun GamesScreen(
 ) {
 
     val items = gamesViewModel.games.collectAsLazyPagingItems()
-    Log.i("bayart",items.toString())
     val teamItems = gamesViewModel.teams.collectAsLazyPagingItems()
 
-    TeamsBottomSheet(teamItems, items, onGameClicked)
+
+
+    TeamsBottomSheet(gamesViewModel,teamItems, items, onGameClicked)
 }
 
 @Composable
@@ -191,10 +192,11 @@ fun GameItem(game: GameEntity, onGameClicked: (id: Int) -> Unit) {
 }
 
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TeamsBottomSheet(
+    viewModel: GamesViewModel,
     teamItems: LazyPagingItems<TeamEntity>,
     items: LazyPagingItems<GameEntity>,
     onGameClicked: (id: Int) -> Unit
@@ -214,13 +216,11 @@ fun TeamsBottomSheet(
         sheetContent = {
             //TeamFilterList(items = teamItems)
             TabScreen(teamItems,
-                onTeamClicked = {
+                onFilterApplied = {
+                    viewModel.onFilter(it)
 
-                    coroutineScope.launch { sheetState.hide() }
-                },
-                onSeasonSelected = {
-                    coroutineScope.launch { sheetState.hide() }
                 })
+            coroutineScope.launch { sheetState.hide() }
         },
         modifier = Modifier.fillMaxSize()
     ) {

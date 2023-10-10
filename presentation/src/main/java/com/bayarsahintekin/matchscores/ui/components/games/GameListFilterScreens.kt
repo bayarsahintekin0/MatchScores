@@ -1,21 +1,21 @@
 package com.bayarsahintekin.matchscores.ui.components.games
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.Checkbox
@@ -41,138 +41,41 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import com.bayarsahintekin.domain.entity.teams.TeamEntity
 import com.bayarsahintekin.matchscores.R
+import com.bayarsahintekin.matchscores.ui.theme.msLightBackground
+import com.bayarsahintekin.matchscores.ui.theme.msLightOnBackground
 import com.bayarsahintekin.matchscores.util.TeamLogosObject
 
 @Composable
-fun GameListFilterTeamsScreen(items: LazyPagingItems<TeamEntity>,
-                              onTeamClicked:(id: Int)-> Unit) {
-    var selectedTeams by remember { mutableStateOf(listOf<Int>()) }
-    val teams = arrayListOf<Int>()
-    for (i in items.itemSnapshotList.items){
-        teams.add(i.id)
-    }
-
-    Box(modifier = Modifier.fillMaxSize()) {
-        if (items.loadState.refresh is LoadState.Loading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-        } else {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(1),
-                contentPadding = PaddingValues(8.dp),
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                items(count = items.itemCount,
-                    key = items.itemKey { it.id }
-                ) {index ->
-                    val team = items[index]
-                    val isChecked = selectedTeams.contains(teams[index])
-                    if (team != null) {
-                        Card(
-                            shape = RoundedCornerShape(8.dp),
-                            elevation = 4.dp,
-                            modifier = Modifier
-                                .padding(2.dp)
-                                .clickable {
-                                    onTeamClicked.invoke(team.id)
-                                }
-                        ) {
-                            Row(modifier = Modifier.padding(vertical = 2.dp)) {
-                                Checkbox(checked = isChecked, onCheckedChange = {
-                                    selectedTeams = if (it)
-                                        selectedTeams + teams[index]
-                                    else
-                                        selectedTeams - teams[index]
-
-                                })
-
-                                Image(
-                                    painter = painterResource(id = TeamLogosObject.getTeamLogo(team.abbreviation)),
-                                    contentDescription = team.name,
-                                    modifier = Modifier
-                                        .padding(start = 8.dp, end = 4.dp)
-                                        .align(Alignment.CenterVertically)
-                                        .size(24.dp)
-                                )
-                                Text(text = team.fullName, modifier = Modifier.align(Alignment.CenterVertically))
-                            }
-                        }
-                    }
-                }
-
-                item {
-                    if (items.loadState.append is LoadState.Loading) {
-                        CircularProgressIndicator(modifier = Modifier.padding(16.dp))
-                    }
-                }
-
-
-            }
-        }
-    }
-}
-
-@Composable
-fun GameListFilterSeasonsScreen(onSeasonSelected:(seasons:ArrayList<Int>) -> Unit) {
-    var selectedItems by remember { mutableStateOf(listOf<Int>()) }
-    val years = arrayListOf<Int>()
-    for (i in 2000..2023)
-        years.add(i)
-    Column {
-        /*Button(onClick = {
-            onSeasonSelected.invoke(selectedItems as ArrayList<Int>)
-        }, modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 8.dp)) {
-            Text(text = stringResource(id = R.string.apply_filter))
-        }*/
-
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 120.dp),
-            contentPadding = PaddingValues(8.dp),
-
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            items(years.size) { index ->
-                val isChecked = selectedItems.contains(years[index])
-                Card(
-                    elevation = 4.dp,
-                    shape = RoundedCornerShape(8.dp),
-                    modifier = Modifier.padding(4.dp)
-                ) {
-                    Row {
-                        Checkbox(checked = isChecked, onCheckedChange = {
-                            selectedItems = if (it)
-                                selectedItems + years[index]
-                            else
-                                selectedItems - years[index]
-
-                        })
-                        Text(
-                            text = years[index].toString(), modifier = Modifier
-                                .padding(start = 8.dp)
-                                .align(Alignment.CenterVertically)
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-}
-
-
-@Composable
-fun TabScreen(items: LazyPagingItems<TeamEntity>,
-              onTeamClicked:(id: Int)-> Unit,
-              onSeasonSelected:(seasons:ArrayList<Int>) -> Unit) {
+fun TabScreen(
+    items: LazyPagingItems<TeamEntity>,
+    onFilterApplied: (GameFilerData) -> Unit,
+) {
     var tabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf("Teams", "Seasons")
+    var selectedSeasons by remember { mutableStateOf(listOf<Int>()) }
+    var selectedTeams by remember { mutableStateOf(listOf<Int>()) }
+
     Column(modifier = Modifier.fillMaxWidth()) {
-        Button(onClick = {
-            //onSeasonSelected.invoke(selectedItems as ArrayList<Int>)
-        },colors =ButtonDefaults.elevation(), modifier = Modifier
-            .align(Alignment.End)
-            .padding(bottom = 8.dp)) {
+        Button(
+            onClick = {
+                onFilterApplied.invoke(GameFilerData(
+                    teamIdList = selectedTeams,
+                    seasons = selectedSeasons
+                ))
+
+            }, colors = ButtonDefaults.buttonColors(
+                backgroundColor = msLightBackground,
+                contentColor = msLightOnBackground
+            ), modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(bottom = 4.dp, top = 8.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_filter),
+                contentDescription = "",
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.size(8.dp))
             Text(text = stringResource(id = R.string.apply_filter))
         }
         TabRow(selectedTabIndex = tabIndex, backgroundColor = Color.White) {
@@ -199,10 +102,112 @@ fun TabScreen(items: LazyPagingItems<TeamEntity>,
             }
         }
         when (tabIndex) {
-            0 -> GameListFilterTeamsScreen(items,onTeamClicked)
-            1 -> GameListFilterSeasonsScreen(onSeasonSelected)
+            0 -> {
+                val teams = arrayListOf<Int>()
+                for (i in items.itemSnapshotList.items) {
+                    teams.add(i.id)
+                }
+
+                Box(modifier = Modifier.fillMaxSize()) {
+                    if (items.loadState.refresh is LoadState.Loading) {
+                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    } else {
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(1),
+                            contentPadding = PaddingValues(8.dp),
+                            modifier = Modifier
+                                .fillMaxSize()
+                        ) {
+                            items(count = items.itemCount,
+                                key = items.itemKey { it.id }
+                            ) { index ->
+                                val team = items[index]
+                                val isChecked = selectedTeams.contains(teams[index])
+                                if (team != null) {
+                                    Card(
+                                        shape = RoundedCornerShape(8.dp),
+                                        elevation = 4.dp,
+                                        modifier = Modifier
+                                            .padding(2.dp)
+                                    ) {
+                                        Row(modifier = Modifier.padding(vertical = 2.dp)) {
+                                            Checkbox(checked = isChecked, onCheckedChange = {
+                                                selectedTeams = if (it)
+                                                    selectedTeams + teams[index]
+                                                else
+                                                    selectedTeams - teams[index]
+
+                                            })
+
+                                            Image(
+                                                painter = painterResource(id = TeamLogosObject.getTeamLogo(team.abbreviation)),
+                                                contentDescription = team.name,
+                                                modifier = Modifier
+                                                    .padding(start = 8.dp, end = 4.dp)
+                                                    .align(Alignment.CenterVertically)
+                                                    .size(24.dp)
+                                            )
+                                            Text(
+                                                text = team.fullName,
+                                                modifier = Modifier.align(Alignment.CenterVertically)
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+
+                            item {
+                                if (items.loadState.append is LoadState.Loading) {
+                                    CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+                                }
+                            }
+
+
+                        }
+                    }
+                }
+            }
+            1 -> {
+                val years = arrayListOf<Int>()
+                for (i in 2000..2023)
+                    years.add(i)
+                Column {
+                    LazyVerticalGrid(
+                        columns = GridCells.Adaptive(minSize = 120.dp),
+                        contentPadding = PaddingValues(8.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        items(years.size) { index ->
+                            val isChecked = selectedSeasons.contains(years[index])
+                            Card(
+                                elevation = 4.dp,
+                                shape = RoundedCornerShape(8.dp),
+                                modifier = Modifier.padding(4.dp)
+                            ) {
+                                Row {
+                                    Checkbox(checked = isChecked, onCheckedChange = {
+                                        selectedSeasons = if (it)
+                                            selectedSeasons + years[index]
+                                        else
+                                            selectedSeasons - years[index]
+
+                                    })
+                                    Text(
+                                        text = years[index].toString(), modifier = Modifier
+                                            .padding(start = 8.dp)
+                                            .align(Alignment.CenterVertically)
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
+
+data class GameFilerData(val teamIdList:List<Int>,val seasons:List<Int>)
 
 
