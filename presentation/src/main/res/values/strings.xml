@@ -20,4 +20,20 @@
     <string name="weight">Weight</string>
     <string name="unknown">Unknown</string>
     <string name="player_all_stats">Player All Stats</string>
+    <string name="block">Block</string>
+    <string name="defensive_rebound">Defensive Rebound</string>
+    <string name="three_point_percentage">3 Point %</string>
+    <string name="three_point_attempt">3 Point Attempt</string>
+    <string name="three_point_made">3 Point Made</string>
+    <string name="field_goal_percentage">FG %</string>
+    <string name="field_goal_attempt">FG Attempt</string>
+    <string name="field_goal_made">FG Made</string>
+    <string name="free_throw_percentage">FT %</string>
+    <string name="free_throw_attempt">FT Attempt</string>
+    <string name="free_throw_made">FT Made</string>
+    <string name="minutes">Minutes</string>
+    <string name="offensive_rebound">Offensive Rebound</string>
+    <string name="personal_foul">Personal Foul</string>
+    <string name="steal">Steal</string>
+    <string name="turn_over">Turn Over</string>
 </resources>

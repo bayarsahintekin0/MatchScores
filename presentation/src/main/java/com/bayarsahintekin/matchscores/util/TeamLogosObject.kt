@@ -35,7 +35,7 @@ object TeamLogosObject {
             "TOR" -> R.drawable.toronto_raptors
             "UTA" -> R.drawable.utah_jazz
             "WAS" -> R.drawable.washington_wizards
-            else -> R.drawable.ic_logo_boston_celtics
+            else -> R.drawable.ic_team_default
         }
     }
 
