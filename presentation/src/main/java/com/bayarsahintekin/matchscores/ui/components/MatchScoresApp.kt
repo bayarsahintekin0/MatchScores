@@ -65,7 +65,7 @@ fun NavigationGraph(navController: NavHostController) {
             StatsScreen(
                 onStatClicked = {
                     navController.navigate(BottomNavItem.StatDetail.screen_route.replace(
-                        oldValue = "{statId}",
+                        oldValue = "{${NavigationKeys.Arg.STAT_ID}}",
                         newValue = it.toString()
                     ))
                 }
@@ -87,7 +87,7 @@ fun NavigationGraph(navController: NavHostController) {
             TeamsScreen(
                 onTeamClicked = {
                     navController.navigate(BottomNavItem.TeamDetail.screen_route.replace(
-                        oldValue = "{teamId}",
+                        oldValue = "{${NavigationKeys.Arg.TEAM_ID}}",
                         newValue = it.toString()
                     ))
                 }
@@ -109,7 +109,7 @@ fun NavigationGraph(navController: NavHostController) {
             GamesScreen(
                 onGameClicked = {
                     navController.navigate(BottomNavItem.GameDetail.screen_route.replace(
-                        oldValue = "{gameId}",
+                        oldValue = "{${NavigationKeys.Arg.GAME_ID}}",
                         newValue = it.toString()
                     ))
                 }
@@ -131,14 +131,14 @@ fun NavigationGraph(navController: NavHostController) {
             PlayersScreen(
                 onPlayerClicked = {
                     navController.navigate(BottomNavItem.PlayerDetail.screen_route.replace(
-                        oldValue = "{playerId}",
+                        oldValue = "{${NavigationKeys.Arg.PLAYER_ID}}",
                         newValue = it.toString()
                     ))
                 }
             )
         }
         composable(BottomNavItem.TeamDetail.screen_route,
-            arguments = listOf(navArgument("teamId") { type = NavType.IntType })) {
+            arguments = listOf(navArgument(NavigationKeys.Arg.TEAM_ID) { type = NavType.IntType })) {
             ProvideAppBarTitle { Text("Team Detail",fontSize = 18.sp) }
             ProvideAppBarBackButton {
                 IconButton(
@@ -151,11 +151,11 @@ fun NavigationGraph(navController: NavHostController) {
                     }
                 )
             }
-            it.arguments?.getInt("teamId")?.let { it1 -> TeamDetailScreen(teamId = it1) }
+            it.arguments?.getInt(NavigationKeys.Arg.TEAM_ID)?.let { it1 -> TeamDetailScreen(teamId = it1) }
         }
 
         composable(BottomNavItem.GameDetail.screen_route,
-            arguments = listOf(navArgument("gameId") { type = NavType.IntType })) {
+            arguments = listOf(navArgument(NavigationKeys.Arg.GAME_ID) { type = NavType.IntType })) {
             ProvideAppBarTitle { Text("Game Detail",fontSize = 18.sp) }
             ProvideAppBarBackButton {
                 IconButton(
@@ -168,11 +168,11 @@ fun NavigationGraph(navController: NavHostController) {
                     }
                 )
             }
-            it.arguments?.getInt("gameId")?.let { it1 -> GameDetailScreen(gameId = it1) }
+            it.arguments?.getInt(NavigationKeys.Arg.GAME_ID)?.let { it1 -> GameDetailScreen(gameId = it1) }
         }
 
         composable(BottomNavItem.PlayerDetail.screen_route,
-            arguments = listOf(navArgument("playerId") { type = NavType.IntType })) {
+            arguments = listOf(navArgument(NavigationKeys.Arg.PLAYER_ID) { type = NavType.IntType })) {
             ProvideAppBarTitle { Text("Player Detail",fontSize = 18.sp) }
             ProvideAppBarBackButton {
                 IconButton(
@@ -185,11 +185,11 @@ fun NavigationGraph(navController: NavHostController) {
                     }
                 )
             }
-            it.arguments?.getInt("playerId")?.let { it1 -> PlayerDetailScreen(playerId = it1) }
+            PlayerDetailScreen()
         }
 
         composable(BottomNavItem.StatDetail.screen_route,
-            arguments = listOf(navArgument("statId") { type = NavType.IntType })) {
+            arguments = listOf(navArgument(NavigationKeys.Arg.STAT_ID) { type = NavType.IntType })) {
             ProvideAppBarTitle { Text("Stat Detail",fontSize = 18.sp) }
             ProvideAppBarBackButton {
                 IconButton(
@@ -202,20 +202,20 @@ fun NavigationGraph(navController: NavHostController) {
                     }
                 )
             }
-            it.arguments?.getInt("statId")?.let { it1 -> StatDetailScreen(statId = it1) }
+            it.arguments?.getInt(NavigationKeys.Arg.STAT_ID)?.let { it1 -> StatDetailScreen(statId = it1) }
         }
     }
 }
 
 sealed class BottomNavItem(var title:String, var icon:Int, var screen_route:String){
     object Stats : BottomNavItem("Stats", R.drawable.stats,"stats")
-    object StatDetail: BottomNavItem("StatDetail", R.drawable.ic_stats,"stats/{statId}")
+    object StatDetail: BottomNavItem("StatDetail", R.drawable.ic_stats,"stats/{${NavigationKeys.Arg.STAT_ID}}")
     object Teams: BottomNavItem("Teams", R.drawable.teams,"teams")
-    object TeamDetail: BottomNavItem("TeamDetail", R.drawable.ic_team,"teams/{teamId}")
+    object TeamDetail: BottomNavItem("TeamDetail", R.drawable.ic_team,"teams/{${NavigationKeys.Arg.TEAM_ID}}")
     object Games: BottomNavItem("Games", R.drawable.ic_games,"games")
-    object GameDetail: BottomNavItem("GameDetail", R.drawable.ic_games,"games/{gameId}")
+    object GameDetail: BottomNavItem("GameDetail", R.drawable.ic_games,"games/{${NavigationKeys.Arg.GAME_ID}}")
     object Players: BottomNavItem("Players", R.drawable.ic_player,"players")
-    object PlayerDetail: BottomNavItem("PlayerDetail", R.drawable.ic_player,"players/{playerId}")
+    object PlayerDetail: BottomNavItem("PlayerDetail", R.drawable.ic_player,"players/{${NavigationKeys.Arg.PLAYER_ID}}")
 }
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -272,6 +272,20 @@ fun AppBottomNavigation(
                 }
             )
         }
+    }
+
+}
+object NavigationKeys {
+
+    object Arg {
+        const val PLAYER_ID = "playerId"
+        const val GAME_ID = "gameId"
+        const val STAT_ID = "statId"
+        const val TEAM_ID = "teamId"
+    }
+
+    object Route {
+
     }
 
 }

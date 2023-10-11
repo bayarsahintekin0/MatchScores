@@ -9,7 +9,7 @@ import com.bayarsahintekin.domain.utils.Result
 
 interface StatsDataSource {
     interface Remote {
-        suspend fun getStats(page: Int): Result<StatsListEntity>
+        suspend fun getStats(page: Int,seasons:Int?,playerId:Int?): Result<StatsListEntity>
     }
 
     interface Local {

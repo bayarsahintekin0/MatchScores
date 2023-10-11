@@ -19,7 +19,7 @@ interface PlayerDao {
     fun savePlayers(players: List<PlayersDbData>)
 
     @Query("SELECT * FROM players WHERE id = :playerId")
-    fun getPlayer(playerId: Int): PlayersDbData
+    fun getPlayer(playerId: String): PlayersDbData
 
     @Query("DELETE FROM players")
     fun clearPlayers()

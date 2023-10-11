@@ -9,9 +9,9 @@ import com.bayarsahintekin.domain.utils.Result
 
 class StatsRemoteDataSource (private val scoreService: ScoreServices
 ) : StatsDataSource.Remote {
-    override suspend fun getStats(page: Int): Result<StatsListEntity> =
+    override suspend fun getStats(page: Int,seasons:Int?,playerId:Int?): Result<StatsListEntity> =
         try {
-            val result = scoreService.getAllStats(page)
+            val result = scoreService.getAllStats(page,seasons,playerId)
             Result.Success(
                 StatsListData(
                     data = result.data,

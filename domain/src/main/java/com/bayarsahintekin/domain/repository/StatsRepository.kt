@@ -8,5 +8,5 @@ import com.bayarsahintekin.domain.utils.Result
 import kotlinx.coroutines.flow.Flow
 
 interface StatsRepository {
-    fun getStats(): Flow<PagingData<StatsEntity>>
+    fun getStatsByFilter(season: Int?, playerId: Int?): Flow<PagingData<StatsEntity>>
 }

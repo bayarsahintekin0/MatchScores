@@ -40,7 +40,7 @@ import com.bayarsahintekin.matchscores.ui.viewmodel.StatsViewModel
 @Composable
 fun StatsScreen(statsViewModel: StatsViewModel = hiltViewModel(), onStatClicked: (id: Int) -> Unit) {
 
-    val items = statsViewModel.stats.collectAsLazyPagingItems()
+    val items = statsViewModel.getStats().collectAsLazyPagingItems()
     StatListMainScreen(items = items, onStatClicked = { onStatClicked.invoke(it) })
 }
 

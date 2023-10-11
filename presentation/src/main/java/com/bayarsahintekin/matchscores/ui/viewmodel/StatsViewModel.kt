@@ -16,5 +16,7 @@ class StatsViewModel @Inject constructor(
     dispatchers: DispatchersProvider,
     private val statsUseCase: StatsUseCase
 ): BaseViewModel(dispatchers) {
-    val stats: Flow<PagingData<StatsEntity>> = statsUseCase.getStats().cachedIn(viewModelScope)
+
+    fun getStats(season:Int? = null, playerId: Int? = null): Flow<PagingData<StatsEntity>> =
+        statsUseCase.invoke(null,1).cachedIn(viewModelScope)
 }

@@ -28,7 +28,7 @@ class StatsRemoteMediators (
         // There was a lag in loading the first page; as a result, it jumps to the end of the pagination.
         if (state.isEmpty() && page == 2) return MediatorResult.Success(endOfPaginationReached = false)
 
-        remote.getStats(page).getResult({ successResult ->
+        remote.getStats(page,null,null).getResult({ successResult ->
 
             if (loadType == LoadType.REFRESH) {
                 local.clearStats()

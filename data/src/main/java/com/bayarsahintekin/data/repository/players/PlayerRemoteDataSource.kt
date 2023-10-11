@@ -3,6 +3,7 @@ package com.bayarsahintekin.data.repository.players
 import com.bayarsahintekin.data.entity.players.PlayerListData
 import com.bayarsahintekin.data.entity.players.toDomain
 import com.bayarsahintekin.data.remote.ScoreServices
+import com.bayarsahintekin.domain.entity.players.PlayerEntity
 import com.bayarsahintekin.domain.entity.players.PlayerListEntity
 import com.bayarsahintekin.domain.utils.Result
 
@@ -23,4 +24,11 @@ class PlayerRemoteDataSource (
             Result.Error(e)
         }
 
+    override suspend fun getPlayer(playerId: String): Result<PlayerEntity> =
+        try {
+            val result = scoreService.getPlayerById(playerId)
+            Result.Success(result.toDomain())
+        } catch (e: Exception){
+            Result.Error(e)
+        }
 }

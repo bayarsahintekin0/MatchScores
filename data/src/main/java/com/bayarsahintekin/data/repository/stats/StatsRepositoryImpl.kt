@@ -4,6 +4,8 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import androidx.paging.map
 import com.bayarsahintekin.data.entity.players.toDomain
 import com.bayarsahintekin.data.entity.stats.toDomain
@@ -19,7 +21,15 @@ class StatsRepositoryImpl(
     private val remoteMediators: StatsRemoteMediators
 ): StatsRepository {
 
-    @OptIn(ExperimentalPagingApi::class)
+    override fun getStatsByFilter(season: Int?, playerId: Int?): Flow<PagingData<StatsEntity>> = Pager(
+        config = PagingConfig(
+            pageSize = 25,
+            enablePlaceholders = false
+        ),
+        pagingSourceFactory = { FilterStatsPagingSource(season,playerId,remote) }
+    ).flow
+
+    /*@OptIn(ExperimentalPagingApi::class)
     override fun getStats(): Flow<PagingData<StatsEntity>>  = Pager(
         config = PagingConfig(
             pageSize = 25,
@@ -31,5 +41,5 @@ class StatsRepositoryImpl(
         pagingData.map {
             it.toDomain()
         }
-    }
+    }*/
 }

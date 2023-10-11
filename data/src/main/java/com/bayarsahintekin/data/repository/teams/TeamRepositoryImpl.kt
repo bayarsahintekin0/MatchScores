@@ -13,6 +13,8 @@ import com.bayarsahintekin.domain.entity.teams.TeamEntity
 import com.bayarsahintekin.domain.entity.teams.TeamListEntity
 import com.bayarsahintekin.domain.repository.TeamRepository
 import com.bayarsahintekin.domain.utils.Result
+import com.bayarsahintekin.domain.utils.onError
+import com.bayarsahintekin.domain.utils.onSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -36,6 +38,10 @@ class TeamRepositoryImpl(
         }
     }
 
-    override suspend fun getTeam(id: String): Result<TeamEntity> = remote.getTeam(id)
+    override suspend fun getTeam(id: String): Result<TeamEntity> = local.getTeam(id.toInt()).onSuccess {
+        it
+    }.onError {
+        remote.getTeam(id)
+    }
 
 }

@@ -4,7 +4,8 @@ import com.bayarsahintekin.domain.repository.PlayersRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 
-class PlayersUseCase(
+class GetPlayerListUseCase(
     private val playersRepository: PlayersRepository
-) { fun players() = playersRepository.players().flowOn(Dispatchers.IO)
+) {
+    fun players() = playersRepository.players().flowOn(Dispatchers.IO)
 }

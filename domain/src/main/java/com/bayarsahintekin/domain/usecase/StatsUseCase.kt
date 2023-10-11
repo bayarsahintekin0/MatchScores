@@ -9,5 +9,5 @@ import kotlinx.coroutines.flow.flowOn
 class StatsUseCase (
     private val statsRepository: StatsRepository
 ) {
-    fun getStats() = statsRepository.getStats().flowOn(Dispatchers.IO)
+    operator fun invoke(season: Int?, playerId: Int?) = statsRepository.getStatsByFilter(season, playerId)
 }

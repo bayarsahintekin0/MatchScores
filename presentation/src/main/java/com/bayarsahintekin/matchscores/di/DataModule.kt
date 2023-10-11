@@ -36,7 +36,9 @@ import com.bayarsahintekin.domain.repository.StatsRepository
 import com.bayarsahintekin.domain.repository.TeamRepository
 import com.bayarsahintekin.domain.usecase.GamesFilterUseCase
 import com.bayarsahintekin.domain.usecase.GamesUseCase
-import com.bayarsahintekin.domain.usecase.PlayersUseCase
+import com.bayarsahintekin.domain.usecase.GetPlayerByIdUseCase
+import com.bayarsahintekin.domain.usecase.GetPlayerListUseCase
+import com.bayarsahintekin.domain.usecase.GetTeamByIdUseCase
 import com.bayarsahintekin.domain.usecase.StatsUseCase
 import com.bayarsahintekin.domain.usecase.TeamUseCase
 import com.bayarsahintekin.domain.usecase.TeamsUseCase
@@ -196,10 +198,20 @@ class DataModule {
         return TeamUseCase(teamRepository)
     }
 
+    @Provides
+    fun provideGetTeamByIdUseCase(teamRepository: TeamRepository): GetTeamByIdUseCase {
+        return GetTeamByIdUseCase(teamRepository)
+    }
+
 
     @Provides
-    fun providePlayersUseCase(playersRepository: PlayersRepository): PlayersUseCase {
-        return PlayersUseCase(playersRepository)
+    fun providePlayersUseCase(playersRepository: PlayersRepository): GetPlayerListUseCase {
+        return GetPlayerListUseCase(playersRepository)
+    }
+
+    @Provides
+    fun provideGetPlayerByIdUseCase(playersRepository: PlayersRepository): GetPlayerByIdUseCase {
+        return GetPlayerByIdUseCase(playersRepository)
     }
 
     @Provides

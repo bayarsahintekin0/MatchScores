@@ -16,4 +16,8 @@
     <string name="rebounds">Rebounds</string>
     <string name="trnover">Turnovers</string>
     <string name="apply_filter">Apply Filter</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="unknown">Unknown</string>
+    <string name="player_all_stats">Player All Stats</string>
 </resources>

@@ -8,6 +8,9 @@ import androidx.paging.map
 import com.bayarsahintekin.data.entity.players.toDomain
 import com.bayarsahintekin.domain.entity.players.PlayerEntity
 import com.bayarsahintekin.domain.repository.PlayersRepository
+import com.bayarsahintekin.domain.utils.Result
+import com.bayarsahintekin.domain.utils.onError
+import com.bayarsahintekin.domain.utils.onSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -29,4 +32,11 @@ class PlayerRepositoryImpl(
             it.toDomain()
         }
     }
+
+    override suspend fun getPlayerById(id: String): Result<PlayerEntity> = local.getPlayer(id).onSuccess {
+        it
+    }.onError {
+        remote.getPlayer(id)
+    }
+
 }
