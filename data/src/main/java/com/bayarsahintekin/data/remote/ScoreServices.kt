@@ -25,7 +25,7 @@ interface ScoreServices {
     suspend fun getAllPlayers(@Query("page") page: Int = 1):PlayerListData
 
     @GET("players")
-    suspend fun searchPlayers(@Query("search") page: String = ""):PlayerListData
+    suspend fun searchPlayers(@Query("page") page: Int= 1,@Query("search") query: String? = null ):PlayerListData
 
     @GET("players")
     suspend fun getPlayerById(@Path("id") id: String): PlayerData

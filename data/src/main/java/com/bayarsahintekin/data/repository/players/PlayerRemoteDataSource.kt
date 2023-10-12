@@ -7,11 +7,11 @@ import com.bayarsahintekin.domain.entity.players.PlayerEntity
 import com.bayarsahintekin.domain.entity.players.PlayerListEntity
 import com.bayarsahintekin.domain.utils.Result
 
-class PlayerRemoteDataSource (
+class PlayerRemoteDataSource(
     private val scoreService: ScoreServices
 ) : PlayerDataSource.Remote {
 
-    override suspend fun getPlayers(page: Int): Result<PlayerListEntity>  =
+    override suspend fun getPlayers(page: Int): Result<PlayerListEntity> =
         try {
             val result = scoreService.getAllPlayers(page)
             Result.Success(
@@ -28,7 +28,20 @@ class PlayerRemoteDataSource (
         try {
             val result = scoreService.getPlayerById(playerId)
             Result.Success(result.toDomain())
-        } catch (e: Exception){
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+
+    override suspend fun search(query: String, page: Int): Result<PlayerListEntity> =
+        try {
+            val result = scoreService.searchPlayers(page,query)
+            Result.Success(
+                PlayerListData(
+                    data = result.data,
+                    meta = result.meta
+                ).toDomain()
+            )
+        } catch (e: Exception) {
             Result.Error(e)
         }
 }

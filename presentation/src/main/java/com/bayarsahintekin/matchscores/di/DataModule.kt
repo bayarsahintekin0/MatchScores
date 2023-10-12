@@ -39,6 +39,7 @@ import com.bayarsahintekin.domain.usecase.GamesUseCase
 import com.bayarsahintekin.domain.usecase.GetPlayerByIdUseCase
 import com.bayarsahintekin.domain.usecase.GetPlayerListUseCase
 import com.bayarsahintekin.domain.usecase.GetTeamByIdUseCase
+import com.bayarsahintekin.domain.usecase.SearchPlayerUseCase
 import com.bayarsahintekin.domain.usecase.StatsUseCase
 import com.bayarsahintekin.domain.usecase.TeamUseCase
 import com.bayarsahintekin.domain.usecase.TeamsUseCase
@@ -227,5 +228,10 @@ class DataModule {
     @Provides
     fun provideStatsUseCase(statsRepository: StatsRepository): StatsUseCase {
         return StatsUseCase(statsRepository)
+    }
+
+    @Provides
+    fun provideSearchPlayersUseCase(playersRepository: PlayersRepository): SearchPlayerUseCase {
+        return SearchPlayerUseCase(playersRepository)
     }
 }

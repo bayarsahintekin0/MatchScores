@@ -13,7 +13,7 @@ interface PlayerDataSource {
 
         suspend fun getPlayers(page: Int):Result<PlayerListEntity>
         suspend fun getPlayer(playerId: String): Result<PlayerEntity>
-        //suspend fun search(query: String, page: Int, limit: Int):Result<List<PlayerEntity>>
+        suspend fun search(query: String, page: Int):Result<PlayerListEntity>
 
     }
 

@@ -8,4 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface PlayersRepository {
     fun players(): Flow<PagingData<PlayerEntity>>
     suspend fun getPlayerById(id: String): Result<PlayerEntity>
+    fun searchPlayer(query: String):Flow<PagingData<PlayerEntity>>
 }

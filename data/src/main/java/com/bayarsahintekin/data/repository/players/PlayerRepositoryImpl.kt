@@ -39,4 +39,11 @@ class PlayerRepositoryImpl(
         remote.getPlayer(id)
     }
 
+    override fun searchPlayer(query: String): Flow<PagingData<PlayerEntity>> = Pager(
+        config = PagingConfig(
+            pageSize = 25,
+            enablePlaceholders = false
+        ),
+        pagingSourceFactory = { PlayerSearchPagingSource(query, remote) }
+    ).flow
 }
