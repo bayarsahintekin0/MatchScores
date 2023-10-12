@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bayarsahintekin.domain.entity.teams.TeamEntity
 import com.bayarsahintekin.matchscores.R
+import com.bayarsahintekin.matchscores.ui.components.base.MSText
 import com.bayarsahintekin.matchscores.ui.theme.msTypography
 import com.bayarsahintekin.matchscores.ui.viewmodel.TeamDetailViewModel
 import com.bayarsahintekin.matchscores.util.TeamLogosObject
@@ -24,11 +25,8 @@ import com.bayarsahintekin.matchscores.util.TeamLogosObject
 @SuppressLint("VisibleForTests")
 @Composable
 fun TeamDetailScreen(
-    teamDetailViewModel: TeamDetailViewModel = hiltViewModel(),
-    teamId: Int
-) {
+    teamDetailViewModel: TeamDetailViewModel = hiltViewModel()) {
     val teamUiState = teamDetailViewModel.uiState.collectAsState()
-    teamDetailViewModel.onInitialState(teamId.toString())
     teamUiState.value.data?.let {
         TeamDetailScreen(team = it)
     }
@@ -48,28 +46,11 @@ fun TeamDetailScreen(team: TeamEntity) {
             Modifier.size(240.dp)
         )
         Column (Modifier.padding(top = 32.dp)){
-            Text(
-                text = stringResource(
-                    id = R.string.short_name
-                ) + ": " + team.name,
-                style = msTypography.titleLarge
-            )
-            Text(
-                text = stringResource(id = R.string.full_name) + ": " + team.fullName,
-                style = msTypography.titleLarge
-            )
-            Text(
-                text = stringResource(id = R.string.conference) + ": " + team.conference,
-                style = msTypography.titleLarge
-            )
-            Text(
-                text = stringResource(id = R.string.division) + ": " + team.division,
-                style = msTypography.titleLarge
-            )
-            Text(
-                text = stringResource(id = R.string.city) + ": " + team.city,
-                style = msTypography.titleLarge
-            )
+            MSText(title = stringResource(id = R.string.short_name), value = team.name)
+            MSText(title = stringResource(id = R.string.full_name), value = team.fullName)
+            MSText(title = stringResource(id = R.string.conference), value = team.conference)
+            MSText(title = stringResource(id = R.string.division), value = team.division)
+            MSText(title = stringResource(id = R.string.city), value = team.city)
         }
     }
 }

@@ -151,7 +151,7 @@ fun NavigationGraph(navController: NavHostController) {
                     }
                 )
             }
-            it.arguments?.getInt(NavigationKeys.Arg.TEAM_ID)?.let { it1 -> TeamDetailScreen(teamId = it1) }
+            it.arguments?.getInt(NavigationKeys.Arg.TEAM_ID)?.let { it1 -> TeamDetailScreen() }
         }
 
         composable(BottomNavItem.GameDetail.screen_route,

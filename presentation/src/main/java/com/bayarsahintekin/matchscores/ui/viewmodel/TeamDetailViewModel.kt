@@ -1,6 +1,7 @@
 package com.bayarsahintekin.matchscores.ui.viewmodel
 
 import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.bayarsahintekin.domain.entity.teams.TeamEntity
 import com.bayarsahintekin.domain.usecase.TeamUseCase
@@ -8,6 +9,7 @@ import com.bayarsahintekin.domain.utils.Result
 import com.bayarsahintekin.domain.utils.onError
 import com.bayarsahintekin.domain.utils.onSuccess
 import com.bayarsahintekin.matchscores.ui.base.BaseViewModel
+import com.bayarsahintekin.matchscores.ui.components.NavigationKeys
 import com.bayarsahintekin.matchscores.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TeamDetailViewModel @Inject constructor(
+    private val stateHandle: SavedStateHandle,
     private val teamUseCase: TeamUseCase,
     dispatchers: DispatchersProvider
 ) : BaseViewModel(dispatchers) {
@@ -30,15 +33,18 @@ class TeamDetailViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(TeamDetailUiState())
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.Eagerly,_uiState.value)
 
+    init {
+        onInitialState()
+    }
+
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    fun onInitialState(teamId: String) = launchOnMainImmediate {
-
-        getTeamDetail(teamId).onSuccess {
+    private fun onInitialState() = launchOnMainImmediate {
+        getTeamDetail(stateHandle.get<Int>(NavigationKeys.Arg.TEAM_ID).toString()).onSuccess {
 
             val teamsData = arrayListOf<TeamEntity>()
 
-            val stateData: TeamEntity = TeamEntity(
+            val stateData = TeamEntity(
                 id = it.id,
                 abbreviation = it.abbreviation,
                 city = it.city,

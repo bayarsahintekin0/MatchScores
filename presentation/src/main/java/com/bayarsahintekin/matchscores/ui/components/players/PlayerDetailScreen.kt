@@ -29,12 +29,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -53,7 +50,6 @@ import com.bayarsahintekin.domain.entity.teams.TeamEntity
 import com.bayarsahintekin.domain.utils.onSuccess
 import com.bayarsahintekin.matchscores.R
 import com.bayarsahintekin.matchscores.ui.components.base.MSText
-import com.bayarsahintekin.matchscores.ui.components.games.TabScreen
 import com.bayarsahintekin.matchscores.ui.theme.BlueGradient
 import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
 import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
@@ -432,6 +428,7 @@ fun StatDetailModalView(stat: StatsEntity, viewModel: PlayerDetailViewModel) {
                             Modifier
                                 .size(24.dp)
                                 .padding(end = 4.dp)
+                                .align(Alignment.CenterVertically)
                         )
                     }
 
@@ -446,7 +443,10 @@ fun StatDetailModalView(stat: StatsEntity, viewModel: PlayerDetailViewModel) {
                         it
                     )
                 }?.let { painterResource(id = it) }
-                    ?.let { Image(painter = it, contentDescription = "", Modifier.size(18.dp)) }
+                    ?.let { Image(painter = it, contentDescription = "", Modifier
+                        .size(18.dp)
+                        .align(Alignment.CenterVertically)
+                    ) }
             }
 
             MSText(title = stringResource(id = R.string.asists), value = stat.ast.toString())
