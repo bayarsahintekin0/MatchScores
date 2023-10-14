@@ -36,8 +36,6 @@ import com.bayarsahintekin.matchscores.ui.components.games.GameDetailScreen
 import com.bayarsahintekin.matchscores.ui.components.games.GamesScreen
 import com.bayarsahintekin.matchscores.ui.components.players.PlayerDetailScreen
 import com.bayarsahintekin.matchscores.ui.components.players.PlayersScreen
-import com.bayarsahintekin.matchscores.ui.components.stats.StatDetailScreen
-import com.bayarsahintekin.matchscores.ui.components.stats.StatsScreen
 import com.bayarsahintekin.matchscores.ui.components.teams.TeamDetailScreen
 import com.bayarsahintekin.matchscores.ui.components.teams.TeamsScreen
 

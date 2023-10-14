@@ -27,8 +27,6 @@ class PlayersViewModel @Inject constructor(
     private val _playersState: MutableStateFlow<PagingData<PlayerEntity>> = MutableStateFlow(PagingData.empty())
     val playersState = _playersState.asStateFlow()
 
-    val players: Flow<PagingData<PlayerEntity>> = playersUseCase.players().cachedIn(viewModelScope)
-
     fun searchPlayer(query: String)  = launchOnMainImmediate{
         val result = searchPlayerUseCase.invoke(query).cachedIn(viewModelScope)
         result.collect{

@@ -1,11 +1,9 @@
 package com.bayarsahintekin.matchscores.ui.components.games
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,24 +12,21 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +45,6 @@ import com.bayarsahintekin.matchscores.R
 import com.bayarsahintekin.matchscores.ui.theme.BlueGradient
 import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
 import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
-import com.bayarsahintekin.matchscores.ui.theme.msLightSecondaryContainer
 import com.bayarsahintekin.matchscores.ui.viewmodel.GamesViewModel
 import com.bayarsahintekin.matchscores.util.TeamLogosObject
 import kotlinx.coroutines.launch
@@ -62,10 +56,8 @@ fun GamesScreen(
     onGameClicked: (id: Int) -> Unit
 ) {
 
-    val items = gamesViewModel.games.collectAsLazyPagingItems()
+    val items = gamesViewModel.gamesState.collectAsLazyPagingItems()
     val teamItems = gamesViewModel.teams.collectAsLazyPagingItems()
-
-
 
     TeamsBottomSheet(gamesViewModel,teamItems, items, onGameClicked)
 }
@@ -206,6 +198,8 @@ fun TeamsBottomSheet(
         confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded }
     )
     val coroutineScope = rememberCoroutineScope()
+    val selectedFilterTeam = remember { mutableStateOf("") }
+    val selectedFilterSeason = remember { mutableStateOf("") }
 
     BackHandler(sheetState.isVisible) {
         coroutineScope.launch { sheetState.hide() }
@@ -214,11 +208,22 @@ fun TeamsBottomSheet(
     ModalBottomSheetLayout(
         sheetState = sheetState,
         sheetContent = {
-            //TeamFilterList(items = teamItems)
             TabScreen(teamItems,
                 onFilterApplied = {
-                    viewModel.onFilter(it)
+                    coroutineScope.launch { sheetState.hide() }
+                    viewModel.filterGames(it.selectedTeamId,it.selectedSeason)
+                    if (it.selectedTeamId == null)
+                        selectedFilterTeam.value = ""
+                    else{
+                        viewModel.getTeamNameById(it.selectedTeamId){
+                            selectedFilterTeam.value = "Team: ${it}"
+                        }
+                    }
 
+                    if (it.selectedSeason == null)
+                        selectedFilterSeason.value = ""
+                    else
+                        selectedFilterSeason.value = "Season: ${it.selectedSeason}"
                 })
             coroutineScope.launch { sheetState.hide() }
         },
@@ -226,22 +231,30 @@ fun TeamsBottomSheet(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .padding(top = 4.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Image(painter = painterResource(id = R.drawable.ic_filter), contentDescription = "",
-                modifier = Modifier
-                    .size(32.dp)
-                    .padding(top = 8.dp, end = 8.dp)
-                    .clickable {
-                        coroutineScope.launch {
-                            if (sheetState.isVisible) sheetState.hide()
-                            else sheetState.show()
-                        }
-                    }
-                    .align(Alignment.End))
+            Row (modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween){
+                Column (modifier = Modifier.align(Alignment.CenterVertically)){
+                    Text(text = selectedFilterTeam.value)
+                    Text(text = selectedFilterSeason.value)
+                }
+                Image(painter = painterResource(id = R.drawable.ic_filter), contentDescription = "",
+                    modifier = Modifier
+                        .size(32.dp)
+                        .padding(top = 8.dp, end = 8.dp)
+                        .clickable {
+                            coroutineScope.launch {
+                                if (sheetState.isVisible) sheetState.hide()
+                                else sheetState.show()
+                            }
+                        })
 
+
+            }
             Spacer(modifier = Modifier.height(4.dp))
             GameListMainScreen(items = items, onGameClicked = { onGameClicked.invoke(it) })
         }

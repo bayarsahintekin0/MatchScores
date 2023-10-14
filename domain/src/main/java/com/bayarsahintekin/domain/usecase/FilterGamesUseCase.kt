@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.Flow
 class FilterGamesUseCase(
     private val gameRepository: GameRepository
 ) {
-    operator fun invoke(teamIdList: List<Int>,seasons: List<Int>): Flow<PagingData<GameEntity>> = gameRepository.getFilterGames(teamIdList, seasons)
+    operator fun invoke(teamId: Int?,season: Int?): Flow<PagingData<GameEntity>> = gameRepository.getFilterGames(teamId, season)
 }

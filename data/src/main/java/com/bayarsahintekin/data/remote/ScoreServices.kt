@@ -25,7 +25,8 @@ interface ScoreServices {
     suspend fun getAllPlayers(@Query("page") page: Int = 1):PlayerListData
 
     @GET("players")
-    suspend fun searchPlayers(@Query("page") page: Int= 1,@Query("search") query: String? = null ):PlayerListData
+    suspend fun searchPlayers(@Query("page") page: Int= 1,
+                              @Query("search") query: String? = null ):PlayerListData
 
     @GET("players")
     suspend fun getPlayerById(@Path("id") id: String): PlayerData
@@ -35,8 +36,8 @@ interface ScoreServices {
 
     @GET("games")
     suspend fun getFilterGames(@Query("page") page: Int = 1,
-                               @Query("team_ids") teamIdList: List<Int>,
-                               @Query("seasons") seasons: List<Int>): GameListData
+                               @Query("team_ids[]") teamIdList: Int? = null,
+                               @Query("seasons[]") seasons: Int? = null): GameListData
 
     @GET("stats")
     suspend fun getAllStats(@Query("page") page: Int = 1,

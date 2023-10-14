@@ -1,7 +1,6 @@
 package com.bayarsahintekin.matchscores.ui.components.games
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,6 +23,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -52,15 +51,15 @@ fun TabScreen(
 ) {
     var tabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf("Teams", "Seasons")
-    var selectedSeasons by remember { mutableStateOf(listOf<Int>()) }
-    var selectedTeams by remember { mutableStateOf(listOf<Int>()) }
+    val selectedSeason = remember { mutableStateOf<Int?>(null) }
+    val selectedTeam = remember { mutableStateOf<Int?>(null) }
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Button(
             onClick = {
                 onFilterApplied.invoke(GameFilerData(
-                    teamIdList = selectedTeams,
-                    seasons = selectedSeasons
+                    selectedTeamId = selectedTeam.value,
+                    selectedSeason = selectedSeason.value
                 ))
 
             }, colors = ButtonDefaults.buttonColors(
@@ -122,7 +121,7 @@ fun TabScreen(
                                 key = items.itemKey { it.id }
                             ) { index ->
                                 val team = items[index]
-                                val isChecked = selectedTeams.contains(teams[index])
+                                val isChecked = teams[index] == selectedTeam.value
                                 if (team != null) {
                                     Card(
                                         shape = RoundedCornerShape(8.dp),
@@ -132,11 +131,12 @@ fun TabScreen(
                                     ) {
                                         Row(modifier = Modifier.padding(vertical = 2.dp)) {
                                             Checkbox(checked = isChecked, onCheckedChange = {
-                                                selectedTeams = if (it)
-                                                    selectedTeams + teams[index]
+                                                if (items[index]?.id == selectedTeam.value)
+                                                    selectedTeam.value = null
                                                 else
-                                                    selectedTeams - teams[index]
-
+                                                    items[index]?.id?.let {id ->
+                                                        selectedTeam.value = id
+                                                    }
                                             })
 
                                             Image(
@@ -179,18 +179,17 @@ fun TabScreen(
                             .fillMaxWidth()
                     ) {
                         items(years.size) { index ->
-                            val isChecked = selectedSeasons.contains(years[index])
                             Card(
                                 elevation = 4.dp,
                                 shape = RoundedCornerShape(8.dp),
                                 modifier = Modifier.padding(4.dp)
                             ) {
                                 Row {
-                                    Checkbox(checked = isChecked, onCheckedChange = {
-                                        selectedSeasons = if (it)
-                                            selectedSeasons + years[index]
+                                    Checkbox(checked = years[index] == selectedSeason.value, onCheckedChange = {
+                                        if (years[index] == selectedSeason.value)
+                                            selectedSeason.value = null
                                         else
-                                            selectedSeasons - years[index]
+                                            selectedSeason.value = years[index]
 
                                     })
                                     Text(
@@ -208,6 +207,6 @@ fun TabScreen(
     }
 }
 
-data class GameFilerData(val teamIdList:List<Int>,val seasons:List<Int>)
+data class GameFilerData(val selectedTeamId:Int? = null, val selectedSeason: Int? = null)
 
 

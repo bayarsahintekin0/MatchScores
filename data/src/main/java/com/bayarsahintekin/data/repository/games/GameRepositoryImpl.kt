@@ -30,11 +30,11 @@ class GameRepositoryImpl(
         }
     }
 
-    override fun getFilterGames(teamIdList: List<Int>, seasons: List<Int>) :Flow<PagingData<GameEntity>>  = Pager(
+    override fun getFilterGames(teamId: Int?, season: Int?) :Flow<PagingData<GameEntity>>  = Pager(
         config = PagingConfig(
             pageSize = 25,
             enablePlaceholders = false
         ),
-        pagingSourceFactory = { GamesFilterPagingSource(teamIdList, seasons, remote) }
+        pagingSourceFactory = { GamesFilterPagingSource(teamId, season, remote) }
     ).flow
 }

@@ -8,15 +8,15 @@ import com.bayarsahintekin.domain.utils.getResult
 private const val STARTING_GAME_FILTER_PAGE_INDEX = 1
 
 class GamesFilterPagingSource(
-    private val teamIdList:List<Int>,
-    private val seasons:List<Int>,
+    private val teamId: Int?,
+    private val season: Int?,
     private val remote: GameDataSource.Remote
 ) : PagingSource<Int, GameEntity>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GameEntity> {
         val page = params.key ?: STARTING_GAME_FILTER_PAGE_INDEX
 
-        return remote.getFilterGames(page, teamIdList, seasons).getResult({
+        return remote.getFilterGames(page, teamId, season).getResult({
             LoadResult.Page(
                 data = it.data.data,
                 prevKey = if (page == STARTING_GAME_FILTER_PAGE_INDEX) null else page - 1,

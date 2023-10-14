@@ -22,9 +22,9 @@ class GameRemoteDataSource ( private val scoreService: ScoreServices
             Result.Error(e)
         }
 
-    override suspend fun getFilterGames(page:Int, teamIdList: List<Int>, seasons: List<Int>): Result<GameListEntity> =
+    override suspend fun getFilterGames(page:Int, teamId: Int?, season: Int?): Result<GameListEntity> =
         try {
-            val result = scoreService.getFilterGames(page,teamIdList, seasons)
+            val result = scoreService.getFilterGames(page,teamId, season)
             Result.Success(
                 GameListData(
                     data = result.data,
