@@ -47,30 +47,6 @@ fun NavigationGraph(navController: NavHostController) {
     NavHost(navController,
         startDestination = BottomNavItem.Games.screen_route,
         modifier = Modifier.padding(bottom = 44.dp)) {
-        composable(BottomNavItem.Stats.screen_route) {
-            ProvideAppBarTitle {
-                Text("Stats" ,modifier = Modifier, fontSize = 18.sp)
-            }
-            ProvideAppBarBackButton {
-                IconButton(
-                    onClick = {},
-                    content = {
-                        Icon(
-                            imageVector = Icons.Default.Home,
-                            contentDescription = "home"
-                        )
-                    }
-                )
-            }
-            StatsScreen(
-                onStatClicked = {
-                    navController.navigate(BottomNavItem.StatDetail.screen_route.replace(
-                        oldValue = "{${NavigationKeys.Arg.STAT_ID}}",
-                        newValue = it.toString()
-                    ))
-                }
-            )
-        }
         composable(BottomNavItem.Teams.screen_route) {
             ProvideAppBarTitle { Text("Teams", fontSize = 18.sp) }
             ProvideAppBarBackButton {
@@ -188,28 +164,10 @@ fun NavigationGraph(navController: NavHostController) {
             PlayerDetailScreen()
         }
 
-        composable(BottomNavItem.StatDetail.screen_route,
-            arguments = listOf(navArgument(NavigationKeys.Arg.STAT_ID) { type = NavType.IntType })) {
-            ProvideAppBarTitle { Text("Stat Detail",fontSize = 18.sp) }
-            ProvideAppBarBackButton {
-                IconButton(
-                    onClick = { backPressDispatcher?.onBackPressedDispatcher?.onBackPressed() },
-                    content = {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "arrowBackIos"
-                        )
-                    }
-                )
-            }
-            it.arguments?.getInt(NavigationKeys.Arg.STAT_ID)?.let { it1 -> StatDetailScreen(statId = it1) }
-        }
     }
 }
 
 sealed class BottomNavItem(var title:String, var icon:Int, var screen_route:String){
-    object Stats : BottomNavItem("Stats", R.drawable.stats,"stats")
-    object StatDetail: BottomNavItem("StatDetail", R.drawable.ic_stats,"stats/{${NavigationKeys.Arg.STAT_ID}}")
     object Teams: BottomNavItem("Teams", R.drawable.teams,"teams")
     object TeamDetail: BottomNavItem("TeamDetail", R.drawable.ic_team,"teams/{${NavigationKeys.Arg.TEAM_ID}}")
     object Games: BottomNavItem("Games", R.drawable.ic_games,"games")
@@ -241,7 +199,6 @@ fun AppBottomNavigation(
     navController: NavHostController
 ) {
     val items = listOf(
-        BottomNavItem.Stats,
         BottomNavItem.Teams,
         BottomNavItem.Games,
         BottomNavItem.Players,

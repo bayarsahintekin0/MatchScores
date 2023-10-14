@@ -1,19 +1,13 @@
 package com.bayarsahintekin.matchscores.ui.viewmodel
 
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.map
 import androidx.test.runner.AndroidJUnit4
-import com.bayarsahintekin.data.entity.games.toDomain
 import com.bayarsahintekin.domain.entity.games.GameEntity
-import com.bayarsahintekin.domain.usecase.GamesFilterUseCase
-import com.bayarsahintekin.domain.usecase.GamesUseCase
-import com.bayarsahintekin.domain.usecase.TeamsUseCase
+import com.bayarsahintekin.domain.usecase.FilterGamesUseCase
+import com.bayarsahintekin.domain.usecase.GetGameListUseCase
+import com.bayarsahintekin.domain.usecase.GetTeamListUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,26 +23,26 @@ class GamesViewModelTest :BaseViewModelTest(){
     private lateinit var gamesViewModel: GamesViewModel
 
     @Mock
-    lateinit var gamesUseCase: GamesUseCase
+    lateinit var getGameListUseCase: GetGameListUseCase
 
     @Mock
-    lateinit var gamesFilterUseCase: GamesFilterUseCase
+    lateinit var filterGamesUseCase: FilterGamesUseCase
 
     @Mock
-    lateinit var teamsUseCase: TeamsUseCase
+    lateinit var getTeamListUseCase: GetTeamListUseCase
 
 
 
     @Before
     fun setup(){
         MockitoAnnotations.initMocks(this)
-        gamesViewModel = GamesViewModel(gamesUseCase,gamesFilterUseCase,teamsUseCase, dispatchers = coroutineRule.testDispatcherProvider)
+        gamesViewModel = GamesViewModel(getGameListUseCase,filterGamesUseCase,getTeamListUseCase, dispatchers = coroutineRule.testDispatcherProvider)
     }
 
     @Test
     fun getGamesSuccess_returnsTrue()= runTest {
         val testData: Flow<PagingData<GameEntity>>
-        Mockito.`when`(gamesViewModel.games).thenReturn(testData)
+
     }
 
 

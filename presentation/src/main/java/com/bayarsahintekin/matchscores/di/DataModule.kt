@@ -34,15 +34,15 @@ import com.bayarsahintekin.domain.repository.GameRepository
 import com.bayarsahintekin.domain.repository.PlayersRepository
 import com.bayarsahintekin.domain.repository.StatsRepository
 import com.bayarsahintekin.domain.repository.TeamRepository
-import com.bayarsahintekin.domain.usecase.GamesFilterUseCase
-import com.bayarsahintekin.domain.usecase.GamesUseCase
+import com.bayarsahintekin.domain.usecase.FilterGamesUseCase
+import com.bayarsahintekin.domain.usecase.GetGameListUseCase
 import com.bayarsahintekin.domain.usecase.GetPlayerByIdUseCase
 import com.bayarsahintekin.domain.usecase.GetPlayerListUseCase
 import com.bayarsahintekin.domain.usecase.GetTeamByIdUseCase
 import com.bayarsahintekin.domain.usecase.SearchPlayerUseCase
 import com.bayarsahintekin.domain.usecase.StatsUseCase
-import com.bayarsahintekin.domain.usecase.TeamUseCase
-import com.bayarsahintekin.domain.usecase.TeamsUseCase
+import com.bayarsahintekin.domain.usecase.GetTeamUseCase
+import com.bayarsahintekin.domain.usecase.GetTeamListUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -190,13 +190,13 @@ class DataModule {
     }
 
     @Provides
-    fun provideTeamsUseCase(teamRepository: TeamRepository): TeamsUseCase {
-        return TeamsUseCase(teamRepository)
+    fun provideTeamsUseCase(teamRepository: TeamRepository): GetTeamListUseCase {
+        return GetTeamListUseCase(teamRepository)
     }
 
     @Provides
-    fun provideTeamUseCase(teamRepository: TeamRepository): TeamUseCase {
-        return TeamUseCase(teamRepository)
+    fun provideTeamUseCase(teamRepository: TeamRepository): GetTeamUseCase {
+        return GetTeamUseCase(teamRepository)
     }
 
     @Provides
@@ -216,13 +216,13 @@ class DataModule {
     }
 
     @Provides
-    fun provideGamesUseCase(gamesRepository: GameRepository): GamesUseCase {
-        return GamesUseCase(gamesRepository)
+    fun provideGamesUseCase(gamesRepository: GameRepository): GetGameListUseCase {
+        return GetGameListUseCase(gamesRepository)
     }
 
     @Provides
-    fun provideGameFiltersUseCase(gamesRepository: GameRepository): GamesFilterUseCase {
-        return GamesFilterUseCase(gamesRepository)
+    fun provideGameFiltersUseCase(gamesRepository: GameRepository): FilterGamesUseCase {
+        return FilterGamesUseCase(gamesRepository)
     }
 
     @Provides

@@ -11,7 +11,6 @@ import com.bayarsahintekin.domain.entity.teams.TeamEntity
 import com.bayarsahintekin.domain.usecase.GetPlayerByIdUseCase
 import com.bayarsahintekin.domain.usecase.GetTeamByIdUseCase
 import com.bayarsahintekin.domain.usecase.StatsUseCase
-import com.bayarsahintekin.domain.usecase.TeamsUseCase
 import com.bayarsahintekin.domain.utils.Result
 import com.bayarsahintekin.domain.utils.onSuccess
 import com.bayarsahintekin.matchscores.ui.base.BaseViewModel

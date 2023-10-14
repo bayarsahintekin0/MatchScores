@@ -4,7 +4,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.bayarsahintekin.domain.entity.teams.TeamEntity
-import com.bayarsahintekin.domain.usecase.TeamUseCase
+import com.bayarsahintekin.domain.usecase.GetTeamUseCase
 import com.bayarsahintekin.domain.utils.Result
 import com.bayarsahintekin.domain.utils.onError
 import com.bayarsahintekin.domain.utils.onSuccess
@@ -21,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TeamDetailViewModel @Inject constructor(
     private val stateHandle: SavedStateHandle,
-    private val teamUseCase: TeamUseCase,
+    private val getTeamUseCase: GetTeamUseCase,
     dispatchers: DispatchersProvider
 ) : BaseViewModel(dispatchers) {
 
@@ -64,6 +64,6 @@ class TeamDetailViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getTeamDetail(teamId: String): Result<TeamEntity> = teamUseCase.invoke(teamId = teamId)
+    private suspend fun getTeamDetail(teamId: String): Result<TeamEntity> = getTeamUseCase.invoke(teamId = teamId)
 
 }
