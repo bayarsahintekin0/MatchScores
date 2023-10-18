@@ -194,11 +194,6 @@ class DataModule {
     }
 
     @Provides
-    fun provideTeamUseCase(teamRepository: TeamRepository): GetTeamUseCase {
-        return GetTeamUseCase(teamRepository)
-    }
-
-    @Provides
     fun provideGetTeamByIdUseCase(teamRepository: TeamRepository): GetTeamByIdUseCase {
         return GetTeamByIdUseCase(teamRepository)
     }

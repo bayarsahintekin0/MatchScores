@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MatchScores"
         tools:targetApi="31">
+
+        <meta-data tools:replace="android:value" android:name="com.google.ar.core.min_apk_version" android:value="24" />
+        <meta-data
+            android:name="com.google.ar.core"
+            android:value="required" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
