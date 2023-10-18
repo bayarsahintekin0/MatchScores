@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.flowOn
 class GetPlayerListUseCase(
     private val playersRepository: PlayersRepository
 ) {
-    fun players() = playersRepository.players().flowOn(Dispatchers.IO)
+    operator fun invoke() = playersRepository.players().flowOn(Dispatchers.IO)
 }

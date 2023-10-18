@@ -40,8 +40,7 @@ import com.bayarsahintekin.domain.usecase.GetPlayerByIdUseCase
 import com.bayarsahintekin.domain.usecase.GetPlayerListUseCase
 import com.bayarsahintekin.domain.usecase.GetTeamByIdUseCase
 import com.bayarsahintekin.domain.usecase.SearchPlayerUseCase
-import com.bayarsahintekin.domain.usecase.StatsUseCase
-import com.bayarsahintekin.domain.usecase.GetTeamUseCase
+import com.bayarsahintekin.domain.usecase.GetStatsByFilterUseCase
 import com.bayarsahintekin.domain.usecase.GetTeamListUseCase
 import dagger.Module
 import dagger.Provides
@@ -226,8 +225,8 @@ class DataModule {
     }
 
     @Provides
-    fun provideStatsUseCase(statsRepository: StatsRepository): StatsUseCase {
-        return StatsUseCase(statsRepository)
+    fun provideStatsUseCase(statsRepository: StatsRepository): GetStatsByFilterUseCase {
+        return GetStatsByFilterUseCase(statsRepository)
     }
 
     @Provides

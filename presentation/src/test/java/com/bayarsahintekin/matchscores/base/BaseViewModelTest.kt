@@ -1,4 +1,4 @@
-package com.bayarsahintekin.matchscores.ui.viewmodel
+package com.bayarsahintekin.matchscores.base
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.bayarsahintekin.matchscores.util.CoroutineTestRule
@@ -7,7 +7,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestScope
 import org.junit.Rule
 
-open class BaseViewModelTest() {
+open class BaseViewModelTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()

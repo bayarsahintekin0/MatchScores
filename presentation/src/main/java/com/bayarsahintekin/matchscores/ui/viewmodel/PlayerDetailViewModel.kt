@@ -10,7 +10,7 @@ import com.bayarsahintekin.domain.entity.stats.StatsEntity
 import com.bayarsahintekin.domain.entity.teams.TeamEntity
 import com.bayarsahintekin.domain.usecase.GetPlayerByIdUseCase
 import com.bayarsahintekin.domain.usecase.GetTeamByIdUseCase
-import com.bayarsahintekin.domain.usecase.StatsUseCase
+import com.bayarsahintekin.domain.usecase.GetStatsByFilterUseCase
 import com.bayarsahintekin.domain.utils.Result
 import com.bayarsahintekin.domain.utils.onSuccess
 import com.bayarsahintekin.matchscores.ui.base.BaseViewModel
@@ -27,7 +27,7 @@ class PlayerDetailViewModel @Inject constructor(
     private val stateHandle: SavedStateHandle,
     private val getPlayerByIdUseCase: GetPlayerByIdUseCase,
     private val getTeamByIdUseCase: GetTeamByIdUseCase,
-    private val statsUseCase: StatsUseCase,
+    private val getStatsByFilterUseCase: GetStatsByFilterUseCase,
     dispatchers: DispatchersProvider
 ): BaseViewModel(dispatchers) {
 
@@ -46,7 +46,7 @@ class PlayerDetailViewModel @Inject constructor(
     )
 
     fun getStats(season:Int? = null, playerId: Int? = stateHandle.get<Int>(NavigationKeys.Arg.PLAYER_ID)): Flow<PagingData<StatsEntity>> =
-        statsUseCase.invoke(season,playerId).cachedIn(viewModelScope)
+        getStatsByFilterUseCase.invoke(season,playerId).cachedIn(viewModelScope)
 
     suspend fun getTeamById(teamId: String): Result<TeamEntity> = getTeamByIdUseCase.invoke(teamId)
 

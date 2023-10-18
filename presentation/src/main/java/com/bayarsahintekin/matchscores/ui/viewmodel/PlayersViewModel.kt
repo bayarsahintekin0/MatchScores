@@ -5,16 +5,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.bayarsahintekin.domain.entity.players.PlayerEntity
-import com.bayarsahintekin.domain.entity.stats.StatsEntity
 import com.bayarsahintekin.domain.usecase.GetPlayerListUseCase
 import com.bayarsahintekin.domain.usecase.SearchPlayerUseCase
 import com.bayarsahintekin.matchscores.ui.base.BaseViewModel
 import com.bayarsahintekin.matchscores.util.DispatchersProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,7 +38,7 @@ class PlayersViewModel @Inject constructor(
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun onInitialState() = launchOnMainImmediate {
-        val result = playersUseCase.players().cachedIn(viewModelScope)
+        val result = playersUseCase.invoke().cachedIn(viewModelScope)
         result.collect{
             _playersState.value = it
         }

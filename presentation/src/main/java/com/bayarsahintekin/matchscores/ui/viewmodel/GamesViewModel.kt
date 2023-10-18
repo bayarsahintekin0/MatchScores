@@ -48,7 +48,7 @@ class GamesViewModel @Inject constructor(
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun onInitialState() = launchOnMainImmediate {
-        val result = getGameListUseCase.getGames().cachedIn(viewModelScope)
+        val result = getGameListUseCase.invoke().cachedIn(viewModelScope)
         result.collect{
             _gamesState.value = it
         }

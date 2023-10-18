@@ -4,7 +4,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.bayarsahintekin.domain.entity.teams.TeamEntity
-import com.bayarsahintekin.domain.usecase.GetTeamUseCase
+import com.bayarsahintekin.domain.usecase.GetTeamByIdUseCase
 import com.bayarsahintekin.domain.utils.Result
 import com.bayarsahintekin.domain.utils.onError
 import com.bayarsahintekin.domain.utils.onSuccess
@@ -21,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TeamDetailViewModel @Inject constructor(
     private val stateHandle: SavedStateHandle,
-    private val getTeamUseCase: GetTeamUseCase,
+    private val getTeamByIdUseCase: GetTeamByIdUseCase,
     dispatchers: DispatchersProvider
 ) : BaseViewModel(dispatchers) {
 
@@ -41,9 +41,6 @@ class TeamDetailViewModel @Inject constructor(
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private fun onInitialState() = launchOnMainImmediate {
         getTeamDetail(stateHandle.get<Int>(NavigationKeys.Arg.TEAM_ID).toString()).onSuccess {
-
-            val teamsData = arrayListOf<TeamEntity>()
-
             val stateData = TeamEntity(
                 id = it.id,
                 abbreviation = it.abbreviation,
@@ -64,6 +61,6 @@ class TeamDetailViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getTeamDetail(teamId: String): Result<TeamEntity> = getTeamUseCase.invoke(teamId = teamId)
+    private suspend fun getTeamDetail(teamId: String): Result<TeamEntity> = getTeamByIdUseCase.invoke(teamId = teamId)
 
 }
