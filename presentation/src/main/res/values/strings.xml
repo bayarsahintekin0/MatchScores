@@ -36,4 +36,7 @@
     <string name="personal_foul">Personal Foul</string>
     <string name="steal">Steal</string>
     <string name="turn_over">Turn Over</string>
+    <string name="post_season">Post Season</string>
+    <string name="period">Period</string>
+    <string name="season">Season</string>
 </resources>

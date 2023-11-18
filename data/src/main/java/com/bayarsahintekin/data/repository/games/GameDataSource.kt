@@ -13,6 +13,7 @@ interface GameDataSource {
     interface Remote {
         suspend fun getGames(page: Int): Result<GameListEntity>
         suspend fun getFilterGames(page: Int,teamId: Int?,season: Int?): Result<GameListEntity>
+        suspend fun getGameById(gameId: Int): Result<GameEntity>
 
     }
 

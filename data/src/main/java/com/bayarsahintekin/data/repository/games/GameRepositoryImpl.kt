@@ -8,6 +8,9 @@ import androidx.paging.map
 import com.bayarsahintekin.data.entity.games.toDomain
 import com.bayarsahintekin.domain.entity.games.GameEntity
 import com.bayarsahintekin.domain.repository.GameRepository
+import com.bayarsahintekin.domain.utils.Result
+import com.bayarsahintekin.domain.utils.onError
+import com.bayarsahintekin.domain.utils.onSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -37,4 +40,10 @@ class GameRepositoryImpl(
         ),
         pagingSourceFactory = { GamesFilterPagingSource(teamId, season, remote) }
     ).flow
+
+    override suspend fun getGameById(gameId: Int): Result<GameEntity> = local.getGame(gameId).onSuccess {
+            it
+        }.onError {
+            remote.getGameById(gameId)
+        }
 }

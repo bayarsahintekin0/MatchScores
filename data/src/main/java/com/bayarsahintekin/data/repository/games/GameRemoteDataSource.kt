@@ -1,8 +1,10 @@
 package com.bayarsahintekin.data.repository.games
 
+import com.bayarsahintekin.data.entity.games.GameData
 import com.bayarsahintekin.data.entity.games.GameListData
 import com.bayarsahintekin.data.entity.games.toDomain
 import com.bayarsahintekin.data.remote.ScoreServices
+import com.bayarsahintekin.domain.entity.games.GameEntity
 import com.bayarsahintekin.domain.entity.games.GameListEntity
 import com.bayarsahintekin.domain.utils.Result
 
@@ -32,6 +34,14 @@ class GameRemoteDataSource ( private val scoreService: ScoreServices
                 ).toDomain()
             )
         } catch (e: Exception){
+            Result.Error(e)
+        }
+
+    override suspend fun getGameById(gameId: Int): Result<GameEntity> =
+        try {
+            val result = scoreService.getGameById(gameId)
+            Result.Success(result.toDomain())
+        } catch (e :Exception){
             Result.Error(e)
         }
 

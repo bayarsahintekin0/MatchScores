@@ -107,7 +107,7 @@ class PlayerDaoTest {
     @Test
     fun getPlayer_returnsTrue() = runTest{
         local.savePlayers(listOf(PlayersMockData.getPlayer().toDomain())).let {
-            local.getPlayer(14).getResult({
+            local.getPlayer(14.toString()).getResult({
                 assertEquals(14,it.data.id)
             },{
 
@@ -118,7 +118,7 @@ class PlayerDaoTest {
     @Test
     fun getPlayerError_returnsTrue() = runTest{
         local.savePlayers(listOf(PlayersMockData.getPlayer().toDomain())).let {
-            local.getPlayer(14).getResult({
+            local.getPlayer(14.toString()).getResult({
                 assertNotSame(1400,it.data.id)
             },{
 

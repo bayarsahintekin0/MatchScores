@@ -36,3 +36,24 @@ platform :android do
     upload_to_play_store
   end
 end
+
+default_platform(:android)
+
+platform(:android) do
+ lane :build_debug_apk do
+   gradle(
+     task: 'assembleDebug'
+   )
+ end
+ lane :deploy_to_firebase do
+    value = firebase_app_distribution(
+     app: "1:173895711456:android:ab6ef0ede01fcfef14ee85",
+     firebase_cli_token: "1//09M6ksX9WARImCgYIARAAGAkSNwF-L9Irpp5Q9ik-b2wtBHOAoBNeGVAox-qQRiXY49_w7MtFJtHGOjth1Lq3cyrsnts_8IRq7SQ",
+     android_artifact_type: "APK",
+     android_artifact_path: "presentation/build/outputs/apk/debug/presentation-debug.apk",
+     release_notes: "UI developments finalized",
+     groups: "dev-group",
+     debug: true
+    )
+  end
+end
