@@ -1,0 +1,25 @@
+name: MSWorkflow
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name : Checkout
+      - uses: actions/checkout@v3
+
+      - name: Setup Java SDK
+      - uses: actions/setup-java@v3
+
+      - name: Build Gradle
+      - run:  ./gradlew build
+
+      - name: Upload Build Artifact
+      - uses: actions/upload-artifact@v3
+        with:
+          name: MatchScores.apk
+          path: app/build/outputs/apk/app-debug.apk
