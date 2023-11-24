@@ -6,6 +6,18 @@ on:
     branches: [ main ]
 
 jobs:
+  gradle-validation:
+    name: Gradle Wrapper
+    runs-on: [ self-hosted ]
+    steps:
+
+      # Checkout current repository
+
+      - uses: actions/checkout@v2
+
+      # Validate Wrapper
+
+      - uses: gradle/wrapper-validation-action@v1
   build:
     runs-on: ubuntu-latest
     steps:
