@@ -14,6 +14,7 @@ jobs:
         with:
           java-version: "17"
           distribution: "adopt"
+      - name: Gradle Validator
       - uses: gradle/wrapper-validation-action@v1
       - run:  ./gradlew build
       - uses: actions/upload-artifact@v3
