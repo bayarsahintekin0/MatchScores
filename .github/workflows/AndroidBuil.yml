@@ -10,16 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-ruby@v1
+      - uses: actions/setup-java@v3
         with:
-            ruby-version: '2.7'
-      - run: |
-              yarn global add firebase-tools
-              echo "::add-path::$(yarn global bin)"
-
-      - run: bundle install
-
-      - run: bundle exec fastlane android firebase_distribution
-        env:
-            FIREBASE_CLI_TOKEN: "1//09M6ksX9WARImCgYIARAAGAkSNwF-L9Irpp5Q9ik-b2wtBHOAoBNeGVAox-qQRiXY49_w7MtFJtHGOjth1Lq3cyrsnts_8IRq7SQ"
-            FIREBASE_APP_ID: "1:173895711456:android:ab6ef0ede01fcfef14ee85"
+          java-version: "17"
+          distribution: "adopt"
+      - uses: gradle/wrapper-validation-action@v1
+      - run:  ./gradlew build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: MatchScores.apk
+          path: presentation/build/outputs/apk/debug/presentation-debug.apk
+      - uses: hasretsariyer/firebase-app-distribution-github-action@v1.0.0
+        with:
+            app_id: "1:173895711456:android:ab6ef0ede01fcfef14ee85"
+            firebase_token: "1//09M6ksX9WARImCgYIARAAGAkSNwF-L9Irpp5Q9ik-b2wtBHOAoBNeGVAox-qQRiXY49_w7MtFJtHGOjth1Lq3cyrsnts_8IRq7SQ"
+            app_file: app-release.apk
+            tester_groups: maintainers
