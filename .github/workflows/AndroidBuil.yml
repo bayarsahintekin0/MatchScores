@@ -20,7 +20,7 @@ jobs:
         with:
           name: MatchScores.apk
           path: presentation/build/outputs/apk/debug/presentation-debug.apk
-      - uses: hasretsariyer/firebase-app-distribution-github-action@v1
+      - uses: hasretsariyer/firebase-app-distribution-github-action@v1.0.0
         with:
             app_id: "1:173895711456:android:ab6ef0ede01fcfef14ee85"
             firebase_token: "1//09M6ksX9WARImCgYIARAAGAkSNwF-L9Irpp5Q9ik-b2wtBHOAoBNeGVAox-qQRiXY49_w7MtFJtHGOjth1Lq3cyrsnts_8IRq7SQ"
