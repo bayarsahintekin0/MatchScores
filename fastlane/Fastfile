@@ -51,9 +51,9 @@ platform(:android) do
      firebase_cli_token: "1//09M6ksX9WARImCgYIARAAGAkSNwF-L9Irpp5Q9ik-b2wtBHOAoBNeGVAox-qQRiXY49_w7MtFJtHGOjth1Lq3cyrsnts_8IRq7SQ",
      android_artifact_type: "APK",
      android_artifact_path: "presentation/build/outputs/apk/debug/presentation-debug.apk",
-     release_notes: "UI developments finalized",
+     release_notes: "UI developments finalizedddd",
      groups: "dev-group",
-     debug: true
+     debug: false
     )
   end
 end
