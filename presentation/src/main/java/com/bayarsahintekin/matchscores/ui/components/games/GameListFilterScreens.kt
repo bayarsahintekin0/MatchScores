@@ -1,6 +1,7 @@
 package com.bayarsahintekin.matchscores.ui.components.games
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -128,6 +129,13 @@ fun TabScreen(
                                         elevation = 4.dp,
                                         modifier = Modifier
                                             .padding(2.dp)
+                                            .clickable{
+                                                if (items[index]?.id == selectedTeam.value)
+                                                    selectedTeam.value = null
+                                                else
+                                                    items[index]?.id?.let {id ->
+                                                        selectedTeam.value = id }
+                                            },
                                     ) {
                                         Row(modifier = Modifier.padding(vertical = 2.dp)) {
                                             Checkbox(checked = isChecked, onCheckedChange = {
@@ -183,6 +191,12 @@ fun TabScreen(
                                 elevation = 4.dp,
                                 shape = RoundedCornerShape(8.dp),
                                 modifier = Modifier.padding(4.dp)
+                                    .clickable{
+                                        if (years[index] == selectedSeason.value)
+                                            selectedSeason.value = null
+                                        else
+                                            selectedSeason.value = years[index]
+                                }
                             ) {
                                 Row {
                                     Checkbox(checked = years[index] == selectedSeason.value, onCheckedChange = {
