@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -200,6 +202,7 @@ fun TeamsBottomSheet(
     val coroutineScope = rememberCoroutineScope()
     val selectedFilterTeam = remember { mutableStateOf("") }
     val selectedFilterSeason = remember { mutableStateOf("") }
+    val isRemoveFilterButtonVisible = remember { mutableStateOf(false) }
 
     BackHandler(sheetState.isVisible) {
         coroutineScope.launch { sheetState.hide() }
@@ -210,7 +213,12 @@ fun TeamsBottomSheet(
         sheetContent = {
             TabScreen(teamItems,
                 onFilterApplied = {
-                    coroutineScope.launch { sheetState.hide() }
+                    isRemoveFilterButtonVisible.value =
+                        !(it.selectedTeamId == null && it.selectedSeason == null)
+
+                    coroutineScope.launch {
+                        sheetState.hide()
+                    }
                     viewModel.filterGames(it.selectedTeamId,it.selectedSeason)
                     if (it.selectedTeamId == null)
                         selectedFilterTeam.value = ""
@@ -225,7 +233,6 @@ fun TeamsBottomSheet(
                     else
                         selectedFilterSeason.value = "Season: ${it.selectedSeason}"
                 })
-            coroutineScope.launch { sheetState.hide() }
         },
         modifier = Modifier.fillMaxSize()
     ) {
@@ -236,24 +243,44 @@ fun TeamsBottomSheet(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Row (modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            Row (modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween){
                 Column (modifier = Modifier.align(Alignment.CenterVertically)){
                     Text(text = selectedFilterTeam.value)
                     Text(text = selectedFilterSeason.value)
                 }
-                Image(painter = painterResource(id = R.drawable.ic_filter), contentDescription = "",
-                    modifier = Modifier
-                        .size(32.dp)
-                        .padding(top = 8.dp, end = 8.dp)
-                        .clickable {
-                            coroutineScope.launch {
-                                if (sheetState.isVisible) sheetState.hide()
-                                else sheetState.show()
-                            }
-                        })
+
+                Row {
+                    if (isRemoveFilterButtonVisible.value) {
+                        Image(painter = painterResource(id = R.drawable.ic_close),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .size(32.dp)
+                                .padding(top = 8.dp, end = 8.dp)
+                                .clickable {
+                                    coroutineScope.launch {
+                                        viewModel.filterGames()
+                                        selectedFilterTeam.value = ""
+                                        selectedFilterSeason.value = ""
+                                        isRemoveFilterButtonVisible.value = false
+                                    }
+                                })
+                    }
+                    Image(painter = painterResource(id = R.drawable.ic_filter), contentDescription = "",
+                        modifier = Modifier
+                            .size(32.dp)
+                            .padding(top = 8.dp, end = 8.dp)
+                            .clickable {
+                                coroutineScope.launch {
+                                    if (sheetState.isVisible) sheetState.hide()
+                                    else sheetState.show()
+                                }
+                            })
 
 
+                }
             }
             Spacer(modifier = Modifier.height(4.dp))
             GameListMainScreen(items = items, onGameClicked = { onGameClicked.invoke(it) })
@@ -261,6 +288,10 @@ fun TeamsBottomSheet(
     }
 }
 
+@Composable
+fun RemoveFilterImage(isVisible: Boolean){
+
+}
 
 @SuppressLint("SimpleDateFormat")
 fun formatDate(dateString: String): String? {
