@@ -54,6 +54,7 @@ import com.bayarsahintekin.matchscores.R
 import com.bayarsahintekin.matchscores.ui.theme.BlueGradient
 import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
 import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
+import com.bayarsahintekin.matchscores.ui.theme.zillaSlabFontFamily
 import com.bayarsahintekin.matchscores.ui.viewmodel.PlayersViewModel
 import com.bayarsahintekin.matchscores.util.TeamLogosObject
 
@@ -83,6 +84,7 @@ fun PlayerLisMainScreen(
 ) {
 
     Column {
+        Spacer(modifier = Modifier.height(16.dp))
         SearchBarView(onSearchApplied)
         Spacer(modifier = Modifier.height(4.dp))
         Box(modifier = Modifier.fillMaxSize()) {
@@ -149,6 +151,7 @@ fun PlayerItem(player: PlayerEntity, onPlayerClicked: (id: Int) -> Unit) {
             Text(
                 text = player.firstName + " " + player.lastName,
                 textAlign = TextAlign.Center,
+                fontFamily = zillaSlabFontFamily,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .align(alignment = Alignment.CenterHorizontally)
@@ -158,6 +161,7 @@ fun PlayerItem(player: PlayerEntity, onPlayerClicked: (id: Int) -> Unit) {
                 text = player.position.toString(),
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
+                fontFamily = zillaSlabFontFamily,
                 modifier = Modifier
                     .align(alignment = Alignment.CenterHorizontally)
                     .padding(top = 4.dp, bottom = 4.dp)
@@ -178,6 +182,7 @@ fun PlayerItem(player: PlayerEntity, onPlayerClicked: (id: Int) -> Unit) {
                 Text(
                     text = player.team?.name.toString(),
                     textAlign = TextAlign.Center,
+                    fontFamily = zillaSlabFontFamily,
                     modifier = Modifier
                         .padding(top = 4.dp, bottom = 4.dp)
                         .align(Alignment.CenterVertically)

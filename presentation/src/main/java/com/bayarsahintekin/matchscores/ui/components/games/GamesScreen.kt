@@ -47,6 +47,9 @@ import com.bayarsahintekin.matchscores.R
 import com.bayarsahintekin.matchscores.ui.theme.BlueGradient
 import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
 import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
+import com.bayarsahintekin.matchscores.ui.theme.msOrange
+import com.bayarsahintekin.matchscores.ui.theme.msPurple
+import com.bayarsahintekin.matchscores.ui.theme.zillaSlabFontFamily
 import com.bayarsahintekin.matchscores.ui.viewmodel.GamesViewModel
 import com.bayarsahintekin.matchscores.util.TeamLogosObject
 import kotlinx.coroutines.launch
@@ -109,14 +112,16 @@ fun GameItem(game: GameEntity, onGameClicked: (id: Int) -> Unit) {
         },
         border = BorderStroke(
             1.dp, Brush.horizontalGradient(
-                arrayListOf(BlueGradient, YellowGradient, PinkGradient)
+                arrayListOf(msOrange, msPurple, msOrange)
             )
         )
     ) {
         Column() {
             formattedDate?.let {
                 Text(
-                    text = it, modifier = Modifier
+                    text = it,
+                    fontFamily = zillaSlabFontFamily,
+                    modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 8.dp)
                 )
@@ -137,6 +142,7 @@ fun GameItem(game: GameEntity, onGameClicked: (id: Int) -> Unit) {
                 Text(
                     text = game.visitorTeam.name,
                     fontSize = 14.sp,
+                    fontFamily = zillaSlabFontFamily,
                     modifier = Modifier
                         .padding(8.dp)
                         .align(Alignment.CenterVertically)
@@ -154,6 +160,7 @@ fun GameItem(game: GameEntity, onGameClicked: (id: Int) -> Unit) {
                     Text(
                         text = game.visitorTeamScore.toString() + " - " + game.homeTeamScore,
                         fontSize = 18.sp,
+                        fontFamily = zillaSlabFontFamily,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(4.dp)
@@ -166,6 +173,7 @@ fun GameItem(game: GameEntity, onGameClicked: (id: Int) -> Unit) {
                 Text(
                     text = game.homeTeam.name,
                     fontSize = 14.sp,
+                    fontFamily = zillaSlabFontFamily,
                     modifier = Modifier
                         .padding(8.dp)
                         .align(Alignment.CenterVertically)
@@ -288,10 +296,6 @@ fun TeamsBottomSheet(
     }
 }
 
-@Composable
-fun RemoveFilterImage(isVisible: Boolean){
-
-}
 
 @SuppressLint("SimpleDateFormat")
 fun formatDate(dateString: String): String? {

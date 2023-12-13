@@ -32,12 +32,12 @@ import com.bayarsahintekin.domain.entity.games.GameEntity
 import com.bayarsahintekin.domain.entity.teams.TeamEntity
 import com.bayarsahintekin.matchscores.R
 import com.bayarsahintekin.matchscores.ui.components.base.MSText
+import com.bayarsahintekin.matchscores.ui.theme.zillaSlabFontFamily
 import com.bayarsahintekin.matchscores.ui.viewmodel.GameDetailViewModel
 import com.bayarsahintekin.matchscores.util.TeamLogosObject
 import java.text.SimpleDateFormat
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 fun GameDetailScreen(
     gameDetailViewModel: GameDetailViewModel = hiltViewModel()
 ) {
@@ -69,12 +69,14 @@ fun GameDetail(game: GameEntity) {
                         .align(Alignment.CenterVertically)
                         .padding(start = 8.dp),
                     fontSize = 18.sp,
+                    fontFamily = zillaSlabFontFamily,
                     fontWeight = FontWeight.W400)
             }
 
             Column(modifier = Modifier.align(Alignment.CenterVertically)) {
                 Text(
                     text = game.status,
+                    fontFamily = zillaSlabFontFamily,
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
                 Card(
@@ -87,6 +89,7 @@ fun GameDetail(game: GameEntity) {
                     Text(
                         text = game.visitorTeamScore.toString() + " - " + game.homeTeamScore,
                         fontWeight = FontWeight.Bold,
+                        fontFamily = zillaSlabFontFamily,
                         fontSize = 18.sp,
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
@@ -94,11 +97,14 @@ fun GameDetail(game: GameEntity) {
 
                     )
                 }
-                Text(text = game.date)
+                Text(text = game.date,
+                    fontFamily = zillaSlabFontFamily,
+                    )
             }
 
             Row(modifier = Modifier.align(Alignment.CenterVertically).padding(end = 8.dp)) {
                 Text(text = game.homeTeam.name,
+                    fontFamily = zillaSlabFontFamily,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(end = 8.dp),

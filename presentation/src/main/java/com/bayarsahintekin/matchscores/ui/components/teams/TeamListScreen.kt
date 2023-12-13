@@ -42,6 +42,7 @@ import com.bayarsahintekin.matchscores.ui.theme.G1
 import com.bayarsahintekin.matchscores.ui.theme.G2
 import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
 import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
+import com.bayarsahintekin.matchscores.ui.theme.zillaSlabFontFamily
 import com.bayarsahintekin.matchscores.ui.viewmodel.TeamsViewModel
 import com.bayarsahintekin.matchscores.util.TeamLogosObject
 
@@ -109,6 +110,7 @@ fun TeamItem(item: TeamEntity, onTeamClicked: (teamId: Int) -> Unit) {
                 text = item.name,
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
+                fontFamily = zillaSlabFontFamily,
                 style = TextStyle(
                     brush = Brush.linearGradient(
                         colors = arrayListOf(G1, PinkGradient, G2),
