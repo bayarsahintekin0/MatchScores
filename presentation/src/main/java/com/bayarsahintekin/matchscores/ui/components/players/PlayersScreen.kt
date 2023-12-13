@@ -54,6 +54,8 @@ import com.bayarsahintekin.matchscores.R
 import com.bayarsahintekin.matchscores.ui.theme.BlueGradient
 import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
 import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
+import com.bayarsahintekin.matchscores.ui.theme.msOrange
+import com.bayarsahintekin.matchscores.ui.theme.msPurple
 import com.bayarsahintekin.matchscores.ui.theme.zillaSlabFontFamily
 import com.bayarsahintekin.matchscores.ui.viewmodel.PlayersViewModel
 import com.bayarsahintekin.matchscores.util.TeamLogosObject
@@ -135,7 +137,7 @@ fun PlayerItem(player: PlayerEntity, onPlayerClicked: (id: Int) -> Unit) {
         },
         border = BorderStroke(
             1.dp, Brush.horizontalGradient(
-                arrayListOf(BlueGradient, YellowGradient, PinkGradient)
+                arrayListOf(msOrange, msPurple, msOrange)
             )
         )
     ) {
@@ -204,7 +206,7 @@ fun SearchBarView(onSearchApplied: (query: String) -> Unit) {
             .border(
                 BorderStroke(
                     1.dp, Brush.horizontalGradient(
-                        arrayListOf(BlueGradient, YellowGradient, PinkGradient)
+                        arrayListOf(msOrange, msPurple, msOrange)
                     )
                 )
             )

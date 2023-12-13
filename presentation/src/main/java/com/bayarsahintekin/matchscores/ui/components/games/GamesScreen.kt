@@ -116,7 +116,7 @@ fun GameItem(game: GameEntity, onGameClicked: (id: Int) -> Unit) {
             )
         )
     ) {
-        Column() {
+        Column {
             formattedDate?.let {
                 Text(
                     text = it,

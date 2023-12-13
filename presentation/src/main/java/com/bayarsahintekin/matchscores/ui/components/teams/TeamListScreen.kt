@@ -42,6 +42,8 @@ import com.bayarsahintekin.matchscores.ui.theme.G1
 import com.bayarsahintekin.matchscores.ui.theme.G2
 import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
 import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
+import com.bayarsahintekin.matchscores.ui.theme.msOrange
+import com.bayarsahintekin.matchscores.ui.theme.msPurple
 import com.bayarsahintekin.matchscores.ui.theme.zillaSlabFontFamily
 import com.bayarsahintekin.matchscores.ui.viewmodel.TeamsViewModel
 import com.bayarsahintekin.matchscores.util.TeamLogosObject
@@ -95,7 +97,7 @@ fun TeamItem(item: TeamEntity, onTeamClicked: (teamId: Int) -> Unit) {
            onTeamClicked.invoke(item.id)
         },
         border = BorderStroke(1.dp,Brush.horizontalGradient(
-        arrayListOf(BlueGradient, YellowGradient, PinkGradient)
+        arrayListOf(msOrange, msPurple, msOrange)
     ))) {
         Column(Modifier.fillMaxSize()) {
             Image(

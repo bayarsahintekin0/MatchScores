@@ -16,6 +16,8 @@ import com.bayarsahintekin.matchscores.R
 import com.bayarsahintekin.matchscores.ui.theme.BlueGradient
 import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
 import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
+import com.bayarsahintekin.matchscores.ui.theme.msOrange
+import com.bayarsahintekin.matchscores.ui.theme.msPurple
 import com.bayarsahintekin.matchscores.ui.theme.zillaSlabFontFamily
 
 @Composable
@@ -28,9 +30,9 @@ fun MSText(title: String, value: String){
                     1.dp,
                     Brush.horizontalGradient(
                         arrayListOf(
-                            BlueGradient,
-                            YellowGradient,
-                            PinkGradient
+                            msOrange,
+                            msPurple,
+                            msOrange
                         )
                     )
                 )
