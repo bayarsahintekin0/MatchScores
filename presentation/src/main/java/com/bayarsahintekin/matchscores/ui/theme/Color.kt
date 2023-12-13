@@ -65,3 +65,6 @@ val TeamsBG = "#f5e5d7".toColor()
 
 val G1 = "#5A585A".toColor()
 val G2 = "#090947".toColor()
+
+val msOrange = "#FFA726".toColor()
+val msPurple = "#B388FF".toColor()

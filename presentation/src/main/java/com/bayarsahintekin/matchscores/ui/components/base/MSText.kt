@@ -16,6 +16,7 @@ import com.bayarsahintekin.matchscores.R
 import com.bayarsahintekin.matchscores.ui.theme.BlueGradient
 import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
 import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
+import com.bayarsahintekin.matchscores.ui.theme.zillaSlabFontFamily
 
 @Composable
 fun MSText(title: String, value: String){
@@ -36,6 +37,7 @@ fun MSText(title: String, value: String){
             )) {
         Text(text = "$title : $value",
             fontSize = 18.sp,
+            fontFamily = zillaSlabFontFamily,
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth())
