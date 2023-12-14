@@ -139,9 +139,9 @@ fun PlayerDetailView(
                         1.dp,
                         Brush.horizontalGradient(
                             arrayListOf(
-                                BlueGradient,
-                                YellowGradient,
-                                PinkGradient
+                                msOrange,
+                                msPurple,
+                                msOrange
                             )
                         )
                     )
@@ -196,9 +196,9 @@ fun PlayerDetailView(
                         1.dp,
                         Brush.horizontalGradient(
                             arrayListOf(
-                                BlueGradient,
-                                YellowGradient,
-                                PinkGradient
+                                msOrange,
+                                msPurple,
+                                msOrange
                             )
                         )
                     )
@@ -276,7 +276,9 @@ fun PlayerStatView(
         onClick = { onStatSelected.invoke(stat) },
         border = BorderStroke(
             1.dp, Brush.horizontalGradient(
-                arrayListOf(BlueGradient, YellowGradient, PinkGradient)
+                arrayListOf(msOrange,
+                    msPurple,
+                    msOrange)
             )
         )
     ) {

@@ -115,7 +115,10 @@ fun TeamItem(item: TeamEntity, onTeamClicked: (teamId: Int) -> Unit) {
                 fontFamily = zillaSlabFontFamily,
                 style = TextStyle(
                     brush = Brush.linearGradient(
-                        colors = arrayListOf(G1, PinkGradient, G2),
+                        colors = arrayListOf(
+                            msOrange,
+                            msPurple,
+                            msOrange),
                         tileMode = TileMode.Mirror
                     ),
                     fontSize = 30.sp
