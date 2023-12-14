@@ -53,6 +53,8 @@ import com.bayarsahintekin.matchscores.ui.components.base.MSText
 import com.bayarsahintekin.matchscores.ui.theme.BlueGradient
 import com.bayarsahintekin.matchscores.ui.theme.PinkGradient
 import com.bayarsahintekin.matchscores.ui.theme.YellowGradient
+import com.bayarsahintekin.matchscores.ui.theme.msOrange
+import com.bayarsahintekin.matchscores.ui.theme.msPurple
 import com.bayarsahintekin.matchscores.ui.viewmodel.PlayerDetailViewModel
 import com.bayarsahintekin.matchscores.util.TeamLogosObject
 import kotlinx.coroutines.launch
@@ -112,9 +114,9 @@ fun PlayerDetailView(
                         1.dp,
                         Brush.horizontalGradient(
                             arrayListOf(
-                                BlueGradient,
-                                YellowGradient,
-                                PinkGradient
+                                msOrange,
+                                msPurple,
+                                msOrange
                             )
                         )
                     )
