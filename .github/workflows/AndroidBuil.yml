@@ -31,11 +31,14 @@ jobs:
           distribution: "adopt"
       - uses: gradle/wrapper-validation-action@v1
       - run:  ./gradlew build
-      - uses: actions/upload-artifact@v3
+      - name: upload artifact to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          name: MatchScores.apk
-          path: presentation/build/outputs/apk/debug/presentation-debug.apk
-
+            appId: ${{secrets.FIREBASE_APP_ID}}
+            serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+            groups: dev-group
+            name: MatchScores.apk
+            path: presentation/build/outputs/apk/debug/presentation-debug.apk
       - run: |
          git config --global user.email "bayarsahintekin0@github.com"
          git config --global user.name "bayarsahintekin0"
