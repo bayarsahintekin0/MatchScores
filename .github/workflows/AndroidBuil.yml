@@ -21,6 +21,15 @@ jobs:
         uses: JetBrains/qodana-action@v2023.2
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
+
+      - name: Run Qodana analysis
+        run: |
+            curl -LJO https://qodana.jetbrains.com/latest/linux/qodana-cli.zip
+            unzip qodana-cli.zip -d qodana-cli
+            export PATH=$PATH:$PWD/qodana-cli
+            qodana analyze -c .qodana.yaml -s
+            qodana publish -s    
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -31,21 +40,6 @@ jobs:
           distribution: "adopt"
       - uses: gradle/wrapper-validation-action@v1
       - run:  ./gradlew build
-
-
-      - uses: actions/setup-ruby@v1
-        with:
-            ruby-version: '3.3.0-rc1'
-      - name: Install bundle
-        run: |
-            bundle config path vendor/bundle
-            bundle install --jobs 4 --retry 3
-      - name: Create Firebase Service Credentials file
-        run: |
-          echo "CREDENTIAL_FILE_CONTENT" > firebase_credentials.json.b64
-          base64 -d -i firebase_credentials.json.b64 > firebase_credentials.json
-        env:
-          FIREBASE_CREDENTIALS: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
 
       - run: |
          git config --global user.email "bayarsahintekin0@github.com"
