@@ -47,13 +47,6 @@ jobs:
         env:
           FIREBASE_CREDENTIALS: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
 
-      - name: Distribute app with 🔥 App Distribution 🚀
-        run: bundle exec fastlane distribute
-        env:
-            FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
-          
-          
-
       - run: |
          git config --global user.email "bayarsahintekin0@github.com"
          git config --global user.name "bayarsahintekin0"
