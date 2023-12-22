@@ -13,22 +13,40 @@ jobs:
       pull-requests: write
       checks: write
     steps:
-      - uses: actions/checkout@v3
+      - name: 'Checkout Code'
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}  # to check out the actual pull request commit, not the merge commit
           fetch-depth: 0  # a full history is required for pull request  analysis
+
+      - name: 'Use Node.js 18.x'
+        uses: actions/setup-node@v2
+        with:
+            node-version: 18.x
+
+      - name: 'Install dependencies'
+        run: npm ci
+        working-directory: JS/jest
+
+      - name: 'Run tests'
+        run: npm test
+        working-directory: JS/jest
+
+      - name: 'Archive coverage data # Archive data for using by Qodana'
+        uses: actions/upload-artifact@v2
+        with:
+          name: jest-coverage-data
+          path: JS/jest/.qodana/code-coverage
+
       - name: 'Qodana Scan'
         uses: JetBrains/qodana-action@v2023.2
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
+        with:
+          args: "-i,JS/jest,--linter,jetbrains/qodana-js:2023.3-eap"
+          pr-mode: false
 
-      - name: Run Qodana analysis
-        run: |
-            curl -LJO https://qodana.jetbrains.com/latest/linux/qodana-cli.zip
-            unzip qodana-cli.zip -d qodana-cli
-            export PATH=$PATH:$PWD/qodana-cli
-            qodana analyze -c .qodana.yaml -s
-            qodana publish -s    
+
 
   build:
     runs-on: ubuntu-latest
