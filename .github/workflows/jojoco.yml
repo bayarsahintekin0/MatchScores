@@ -43,6 +43,3 @@ jobs:
         uses: JetBrains/qodana-action@main
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
-        with:
-          args: "-i,MatchScores/presentation/gradle,--linter,jetbrains/qodana-jvm:2023.3-eap"
-          pr-mode: false
