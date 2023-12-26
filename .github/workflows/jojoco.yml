@@ -27,7 +27,6 @@ jobs:
           distribution: 'adopt'
           cache: 'gradle'
 
-      - name: Validate Gradle Wrapper
       - uses: gradle/wrapper-validation-action@v1
       - run: ./gradlew build
 
