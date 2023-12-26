@@ -28,8 +28,8 @@ jobs:
           cache: 'gradle'
 
       - name: Validate Gradle Wrapper
-        run: ./gradlew --version
-        working-directory: presentation/gradle
+      - uses: gradle/wrapper-validation-action@v1
+      - run: ./gradlew build
 
       - name: Run Tests
         run: ./gradlew test
