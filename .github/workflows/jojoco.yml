@@ -29,7 +29,7 @@ jobs:
 
       - name: Validate Gradle Wrapper
         run: ./gradlew --version
-        working-directory: MatchScores/presentation/gradle
+        working-directory: gradle
 
       - name: Run Tests
         run: ./gradlew test
