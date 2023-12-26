@@ -32,18 +32,17 @@ jobs:
 
       - name: Run Tests
         run: ./gradlew test
-        working-directory: JVM/jacoco/gradle
 
       - name: Archive coverage data
         uses: actions/upload-artifact@v2
         with:
           name: gradle-coverage-data-jacoco
-          path: JVM/jacoco/gradle/.qodana/code-coverage
+          path: .qodana/code-coverage
 
       - name: Qodana Scan
         uses: JetBrains/qodana-action@main
         env:
-          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_GRADLE_JACOCO }}
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
         with:
           args: "-i,JVM/jacoco/gradle,--linter,jetbrains/qodana-jvm:2023.3-eap"
           pr-mode: false
