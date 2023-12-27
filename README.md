@@ -67,8 +67,12 @@ This project is an Android Application which include NBA Basketball match scores
 <!-- Screenshots -->
 ### :camera: Screenshots
 
-Coming soon..
-
+<img width="238" alt="image" src="https://github.com/bayarsahintekin0/MatchScores/assets/11059877/21458ad9-8f01-4a98-82aa-e120b2d4df77">
+<img width="236" alt="image" src="https://github.com/bayarsahintekin0/MatchScores/assets/11059877/580110f1-fa8b-4135-b487-1965807018f0">
+<img width="238" alt="Screenshot 2023-12-27 at 15 28 36" src="https://github.com/bayarsahintekin0/MatchScores/assets/11059877/c80f39b0-51e6-49fc-af45-c0b82125cec7">
+<img width="237" alt="Screenshot 2023-12-27 at 15 29 08" src="https://github.com/bayarsahintekin0/MatchScores/assets/11059877/e6beaf45-2ac2-44bf-bd84-c06dc2437e18">
+<img width="239" alt="Screenshot 2023-12-27 at 16 15 02" src="https://github.com/bayarsahintekin0/MatchScores/assets/11059877/b5e29397-f49d-4ad8-9536-8ad7ab84d836">
+<img width="236" alt="Screenshot 2023-12-27 at 16 15 33" src="https://github.com/bayarsahintekin0/MatchScores/assets/11059877/bcc6c974-71c8-4dbe-b748-03f88f447fe9">
 
 <!-- TechStack -->
 ### :space_invader: Tech Stack
@@ -77,6 +81,8 @@ Coming soon..
   <summary>Design Pattern</summary>
   <ul>
     <li><a href="https://medium.com/android-dev-hacks/detailed-guide-on-android-clean-architecture-9eab262a9011/">Clean Architecture</a></li>
+    <li><a href="https://medium.com/android-dev-hacks/detailed-guide-on-android-clean-architecture-9eab262a9011/">MVVM</a></li>
+    <li><a href="https://medium.com/android-dev-hacks/detailed-guide-on-android-clean-architecture-9eab262a9011/">Repository Pattern</a></li>
   </ul>
 </details>
 
@@ -84,11 +90,16 @@ Coming soon..
   <summary>Used Technologies</summary>
   <ul>
     <li><a href="https://developer.android.com/training/dependency-injection/hilt-android">Dagger Hilt</a></li>
-    <li><a href="https://developer.android.com/training/dependency-injection/hilt-android">Korlin Coroutines</a></li>
+    <li><a href="https://developer.android.com/training/dependency-injection/hilt-android">Kotlin Coroutines</a></li>
     <li><a href="https://developer.android.com/training/dependency-injection/hilt-android">Kotlin Flows</a></li>
     <li><a href="https://developer.android.com/training/dependency-injection/hilt-android">Room Db</a></li>
     <li><a href="https://developer.android.com/training/dependency-injection/hilt-android">Jetpack Compose</a></li>
     <li><a href="https://developer.android.com/training/dependency-injection/hilt-android">Retrofit</a></li>
+    <li><a href="https://developer.android.com/training/dependency-injection/hilt-android">Remote Mediator</a></li>
+    <li><a href="https://medium.com/android-dev-hacks/detailed-guide-on-android-clean-architecture-9eab262a9011/">Kotlin DSL</a></li>
+    <li><a href="https://medium.com/android-dev-hacks/detailed-guide-on-android-clean-architecture-9eab262a9011/">Github Actions</a></li>
+    <li><a href="https://medium.com/android-dev-hacks/detailed-guide-on-android-clean-architecture-9eab262a9011/">Fastlane</a></li>
+    <li><a href="https://medium.com/android-dev-hacks/detailed-guide-on-android-clean-architecture-9eab262a9011/">Firebase App Distribution</a></li>
     ...
   </ul>
 </details>
@@ -97,8 +108,14 @@ Coming soon..
 ### :dart: Features
 
 - Clean Architecture
+- Kotlin
+- Coroutines
+- Flows
 - Jetpack Compose
-- Tests
+- Unit Tests
+- Cache with Room
+- CI/CD
+- Firebase
 ...
 
 <!-- Color Reference -->
@@ -106,10 +123,10 @@ Coming soon..
 
 | Color             | Hex                                                                |
 | ----------------- | ------------------------------------------------------------------ |
-| Primary Color | ![#222831](https://via.placeholder.com/10/222831?text=+) #222831 |
-| Secondary Color | ![#393E46](https://via.placeholder.com/10/393E46?text=+) #393E46 |
-| Accent Color | ![#00ADB5](https://via.placeholder.com/10/00ADB5?text=+) #00ADB5 |
-| Text Color | ![#EEEEEE](https://via.placeholder.com/10/EEEEEE?text=+) #EEEEEE |
+| Primary Color | ![#FFA726](https://via.placeholder.com/10/222831?text=+) #FFA726 |
+| Secondary Color | ![#393E46](https://via.placeholder.com/10/393E46?text=+) #B388FF |
+| Accent Color | ![#00ADB5](https://via.placeholder.com/10/00ADB5?text=+) #ffffff |
+| Text Color | ![#EEEEEE](https://via.placeholder.com/10/EEEEEE?text=+) #000000 |
 
 Will be updated
 
@@ -126,7 +143,7 @@ Will be updated
 <!-- Running Tests -->
 ### :test_tube: Running Tests
 
-coming soon ...
+with Fastlane 
 
 <!-- Run Locally -->
 
@@ -136,8 +153,8 @@ coming soon ...
 
 * [x] Boilerplate Integration (Clean Architecture, MVVM)
 * [x] Jetpack Compose Integration
+* [x] CI/CD (In progress)
 
-Coming soon...
 
 <!-- FAQ -->
 ## :grey_question: FAQ
